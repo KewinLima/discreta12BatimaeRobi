@@ -1,2 +1,2 @@
-# discreta12BatimaeRobi.git
-Redi de Petri com processos paralelos
+# discreta12BatimaeRobi
+Rede de Petri com processos paralelos
