@@ -19,7 +19,7 @@
 .PRECIOUS: %.o
 SHELL=/bin/bash -o pipefail
 <<<<<<< HEAD
- 
+
 =======
 
 >>>>>>> master
@@ -35,18 +35,18 @@ CFLAGS = "mylib.c" -Wall -g -O0 -std=gnu99
 CPPFLAGS = -DVERSION=$(VERSION) -DBUILD="\"$(BUILD)\""
 LDLIBS = -Wl,--defsym,BUILD_$(DEFSYM)=0 -lpthread -lm -lgmp `allegro-config --cflags --libs`
 =======
-CFLAGS = "mylib.c" -Wall -g -O0 -std=gnu99 -lhpthread
+CFLAGS = "mylib.c" -Wall -g -O0 -std=gnu99
 #-ansi -pedantic-errors -c -Ofast -Wextra
 CPPFLAGS = -DVERSION=$(VERSION) -DBUILD="\"$(BUILD)\""
-LDLIBS = -Wl,--defsym,BUILD_$(DEFSYM)=0 -pthread -lm -lgmp `allegro-config --cflags --libs`
+LDLIBS = -Wl,--defsym,BUILD_$(DEFSYM)=0 -lpthread -lm -lgmp `allegro-config --cflags --libs`
 >>>>>>> master
 
 %.x : %.c $(obj)
     $(CC) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) $^ -o $@ |& tee errors.err
 
 <<<<<<< HEAD
-        clean:
-                rm -f *.x *.o errors.err
+    clean:
+        rm -f *.x *.o errors.err
 =======
     clean:
         rm -f *.x *.o errors.err
