@@ -32,6 +32,7 @@ int main(void)
     }
     int *lugar = cria_lugares(q[0]); //cria n-lugares
     int arcotrans[q[3]][3];  
+    int arcolugar[q[4]][3];
 
     for(n=0;n<( q[2] );n++)
     {
@@ -41,7 +42,7 @@ int main(void)
     }
     for(n=0; n<q[3]; n++)
     {
-        for(n1 = 0; n1 < QINFO; n1++)
+        for(n1=0; n1 < QINFO; n1++)
         {
                 fscanf(a, "%d", &arcotrans[n][n1]);
         }
@@ -50,6 +51,14 @@ int main(void)
     // arct[n][1] = quantidade de tokens consumidos
     // arct[n][2] = transição de destino
     
+    for(n=0; n<q[4]; n++)
+    {
+        for(n1=0; n1<QINFO; n1++)
+        {
+               fscanf(a,"%d", &arcolugar[n][n1]);
+        }
+    }
+
     free(lugar); // limpando a alocação dinamica
     fclose(a);// fechando o arquivo de entrada
     return 0;
