@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #define NENTRADA 5
+#define QINFO 3
 
 //Protótipos
 int *cria_lugares(int numero_de_lugares);
@@ -18,11 +19,11 @@ int main(void)
     //q[0] = qunatidade de lugar, 
     //q[1] = quantidade de trans,
     //q[2] = quantidade de lugartoke,
-    //q[3] = qarcolugar,
-    //q[4] = qarcotrans,
+    //q[3] = qarcotrans,
+    //q[4] = qarcolugar,
 
-    int n,q[NENTRADA],n1;
-    
+    int n,q[NENTRADA],n1; 
+
     FILE *a = fopen("entrada.txt","r"); // Abrindo o arquivo de entrada
 
     for(n=0;n<NENTRADA;n++) //Laço para o vetor q
@@ -30,14 +31,24 @@ int main(void)
         fscanf(a,"%d", &q[n]);
     }
     int *lugar = cria_lugares(q[0]); //cria n-lugares
-    
+    int arcotrans[q[3]][3];  
+
     for(n=0;n<( q[2] );n++)
     {
          fscanf(a,"%d", &n1);
          fscanf(a,"%d", &lugar[n1]);
          printf(" %d %d\n", n1, lugar[n1]);
     }
-    
+    for(n=0; n<q[3]; n++)
+    {
+        for(n1 = 0; n1 < QINFO; n1++)
+        {
+                fscanf(a, "%d", &arcotrans[n][n1]);
+        }
+    }    
+    // arct[n][0] = lugar de origem
+    // arct[n][1] = quantidade de tokens consumidos
+    // arct[n][2] = transição de destino
     
     free(lugar); // limpando a alocação dinamica
     fclose(a);// fechando o arquivo de entrada
