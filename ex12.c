@@ -1,6 +1,14 @@
-#define NENTRADA 5
+/* *******************************************************
+ **| Programa   : Rede de Petri com Processos Paralelos|**
+ **| Autores    : Isabella Galvão e Kewin Lima         |**
+ **| Orientador : Ruben Carlo                          |**
+ *********************************************************
+ **/
+
 #include <stdio.h>
+#include <pthread.h>
 #include <stdlib.h>
+#define NENTRADA 5
 
 int *cria_lugares(int numero_de_lugares);
     
