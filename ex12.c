@@ -1,6 +1,9 @@
 #define NENTRADA 5;
 #include <stdio.h>
+#include <stdlib.h>
 
+int *cria_lugares(int numero_de_lugares);
+    
 int main(void)
 {
     //q[0] = qunatidade de lugar, 
@@ -9,18 +12,24 @@ int main(void)
     //q[3] = qarcolugar,
     //q[4] = qarcotrans,
 
-    int n;
+    int n,q[NENTRADA];
     
-    FILE *a = fopen("sena1450.txt","r"); // Abrindo o arquivo de entrada
+    FILE *a = fopen("entrada.txt","r"); // Abrindo o arquivo de entrada
 
     for(n=0;n<NENTRADA;n++) //Laço para o vetor q
     {
         fscanf("%d", &q[n]);
     }
 
-    int *lugares = cria_lugares(q[0]);
+    int *lugar = cria_lugares(q[0]);
+    lugar[0] = 1;
+    lugar[1] = 2;
+    lugar[2] = 3;
 
-    free(lugares); // limpando a alocação dinamica
+    for(n=0;n<3;n++)
+        printf("%d", lugar[n]);
+
+    free(lugar); // limpando a alocação dinamica
     fclose(a);// fechando o arquivo de entrada
     return 0;
 }

@@ -33,5 +33,6 @@ LDLIBS = -Wl,--defsym,BUILD_$(DEFSYM)=0 -lpthread -lm -lgmp `allegro-config --cf
 %.x : %.c $(obj)
 $(CC) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) $^ -o $@ |& tee errors.err
 
-   clean:
+    clean:
        rm -f *.x *.o errors.err
+
