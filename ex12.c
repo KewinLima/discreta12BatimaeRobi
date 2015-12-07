@@ -1,4 +1,4 @@
-#define NENTRADA 5;
+#define NENTRADA 5
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -18,7 +18,7 @@ int main(void)
 
     for(n=0;n<NENTRADA;n++) //Laço para o vetor q
     {
-        fscanf("%d", &q[n]);
+        fscanf(a,"%d", &q[n]);
     }
 
     int *lugar = cria_lugares(q[0]);
@@ -36,5 +36,5 @@ int main(void)
 
 int *cria_lugares(int numero_de_lugares)
 {
-    return malloc(numero_de_lugares * (sizeof int));
+    return malloc(numero_de_lugares * (sizeof(int)));
 }
