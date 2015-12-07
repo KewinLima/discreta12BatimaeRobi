@@ -11,6 +11,58 @@
 #define NENTRADA 5
 #define QINFO 3
 
+typedef struct_token token;
+struct struct_token
+{
+    token *proximo;
+};
+
+typedef struct_pilha pilha;
+struct struct_pilha
+{
+    token *topo;
+};
+
+pilha cria_pilha(void)
+{
+    pilha nova_pilha;
+    nova_pilha.topo = NULL;
+    return nova_pilha;
+}
+
+void adiciona_elemento(pilha *p)
+{
+    if(p.topo == NULL)
+    {
+        token t;
+        t.proximo = NULL;
+        p.topo = t;
+    }
+    else 
+    {
+        token t;
+        t.proximo = p.topo;
+        p.topo = t;
+    }
+}
+
+
+void remove_elemento(pilha *p)
+{
+    if(p.topo != NULL)
+    {
+       p.topo = p.topo.proximo;
+    }
+}
+
+int pilha_esta_vazia(pilha *p)
+{
+    if(p.topo == NULL)
+        return 1;
+    else
+        return 0;
+}
+
 //Protótipos
 int *cria_lugares(int numero_de_lugares);
     
@@ -59,11 +111,14 @@ int main(void)
         }
     }
 
+    // arlg[n][0] = transição de origem
+    // arlg[n][1] = quantidade de tokens consumidos
+    // arlg[n][2] = lugar de destino
+    
     free(lugar); // limpando a alocação dinamica
     fclose(a);// fechando o arquivo de entrada
     return 0;
 }
-
 
 int *cria_lugares(int numero_de_lugares)
 {
