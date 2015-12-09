@@ -18,6 +18,7 @@ struct struct_token
 };
 
 typedef struct_pilha pilha;
+
 struct struct_pilha
 {
     token *topo;
@@ -45,7 +46,6 @@ void adiciona_elemento(pilha *p)
         p.topo = t;
     }
 }
-
 
 void remove_elemento(pilha *p)
 {
@@ -75,7 +75,6 @@ int main(void)
     //q[4] = qarcolugar,
 
     int n,q[NENTRADA],n1; 
-
     FILE *a = fopen("entrada.txt","r"); // Abrindo o arquivo de entrada
 
     for(n=0;n<NENTRADA;n++) //Laço para o vetor q
