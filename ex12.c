@@ -113,6 +113,8 @@ void limpa_lista_arco_transicao(lista_arco_transicao *l);
 
 /*           Operações para listas transições          */
 lista_transicao *cria_lista_transicao(void);
+void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor);
+node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
 
 int main(void)
 {
@@ -366,3 +368,43 @@ lista_transicao *cria_lista_transicao(void)
     return l;
 }
 
+/*Adiciona um valor ao final da lista*/
+/*O valor deve ser do mesmo tipo que o conteúdo do node*/
+void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
+{
+    /*Cria um novo node com o valor a ser adicionado*/
+    node_transicao *novo_node = malloc(sizeof(node_transicao));
+    novo_node->conteudo = valor;
+    novo_node->proximo = NULL;
+
+    /* Verifica se a lista é vazia*/
+    /* Se sim, adiciona o novo_node na cabeça*/
+    if(l->cabeca == NULL)
+    {
+        l->cabeca = novo_node;
+    }
+    else {
+        /* Se não for vazia, procura o último node da lista*/
+        node_transicao *no;
+        for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
+
+        /* Nesse último node, adiciona o novo_node como proximo*/
+        no->proximo = novo_node;
+    }
+}
+
+/*Recebe uma lista e um indice*/
+/*Retorna o elemento posicionado no índice desejado*/
+/*Caso o indice não exista, a função retorna null*/
+node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice)
+{
+    int i;
+    node_transicao *no = l->cabeca;
+
+    for(i = 0; i < indice; i++)
+    {
+        no = no->proximo;
+    }
+
+    return no;
+}
