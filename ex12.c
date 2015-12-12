@@ -217,9 +217,10 @@ int main(void)
         al->origem->emissor = quantidade;
         adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
-
+#ifdef DEBUG
     imprime_lista_arco_lugar(arcos_lugar);
-    
+#endif
+
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
