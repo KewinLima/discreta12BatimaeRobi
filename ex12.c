@@ -36,7 +36,7 @@ struct struct_arco_lugar
             node *destino;
 };
 
-/*Define um nó que armazena arcos transição*/
+/*Define um nó que armazena arcos transição.*/
 typedef struct struct_node_at node_arco_transicao;
 struct struct_node_at
 {
