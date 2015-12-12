@@ -99,6 +99,7 @@ void limpa_lista(lista *l);
 
 /*         Operações para listas de arco-lugar         */
 lista_arco_lugar *cria_lista_arco_lugar(void);
+void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor);
 
 int main(void)
 {
@@ -214,4 +215,26 @@ lista_arco_lugar *cria_lista_arco_lugar(void)
     l->cabeca = NULL;
     return l; /* retorna seu endereço */
 }
+/*Adiciona um arco lugar na lista*/
+void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor)
+{
+    /*Cria um novo node com o valor a ser adicionado*/
+    node_arco_lugar *novo_node = malloc(sizeof(node_arco_lugar));
+    novo_node->conteudo = valor;
+    novo_node->proximo = NULL;
 
+    /*Verifica se a lista é vazia*/
+    /*Se sim, adiciona o novo_node na cabeça*/
+    if(l->cabeca == NULL)
+    {
+        l->cabeca = novo_node;
+    }
+    else {
+        /*Se não for vazia, procura o último node da lista*/
+        node_arco_lugar *no;
+        for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
+
+        /*Nesse último node, adiciona o novo_node como proximo*/
+        no->proximo = novo_node;
+    }
+}
