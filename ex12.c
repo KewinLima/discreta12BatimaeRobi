@@ -93,6 +93,7 @@ struct struct_lista_transicao
 lista *cria_lista(void);
 void adiciona_na_lista(lista l, int valor);
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
+void imprime_lista(lista *l)
 
 int main(void)
 {
@@ -180,3 +181,13 @@ node *busca_elemento_por_indice(lista *l, int indice)
 
     return no;
 }
+/* Imprime a lista, elemento por elemento */
+void imprime_lista(lista *l)
+{
+    node *no;
+    for(no = l->cabeca; no != NULL; no = no->proximo)
+    {
+        printf(" %d ", no->conteudo);
+    }
+}
+
