@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG 1
-/*#undef DEBUG*/ /* Caso queira um debug comente essa linha. */ 
+/*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
 
 /************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
