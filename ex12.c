@@ -190,4 +190,16 @@ void imprime_lista(lista *l)
         printf(" %d ", no->conteudo);
     }
 }
-
+/*Libera a memória alocada para a lista e seus nós*/
+void limpa_lista(lista *l)
+{
+    node *no = l->cabeca;
+    node *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no);
+        no = proximo;
+    }   
+    free(l);
+}
