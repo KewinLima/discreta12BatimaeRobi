@@ -11,6 +11,15 @@
 #define NENTRADA 5
 #define QINFO 3
 
+//************** Definição dos tipos para as listas  ****************
+////Define uma transição
+typedef struct struct_transicao transicao;
+struct struct_transicao
+{
+    int coletor;
+    int emissor;
+};
+
 typedef struct_token token;
 struct struct_token
 {
@@ -51,7 +60,7 @@ void remove_elemento(pilha *p)
 {
     if(p.topo != NULL)
     {
-       p.topo = p.topo.proximo;
+        p.topo = p.topo.proximo;
     }
 }
 
@@ -65,7 +74,7 @@ int pilha_esta_vazia(pilha *p)
 
 //Protótipos
 int *cria_lugares(int numero_de_lugares);
-    
+
 int main(void)
 {
     //q[0] = qunatidade de lugar, 
@@ -87,33 +96,33 @@ int main(void)
 
     for(n=0;n<( q[2] );n++)
     {
-         fscanf(a,"%d", &n1);
-         fscanf(a,"%d", &lugar[n1]);
-         printf(" %d %d\n", n1, lugar[n1]);
+        fscanf(a,"%d", &n1);
+        fscanf(a,"%d", &lugar[n1]);
+        printf(" %d %d\n", n1, lugar[n1]);
     }
     for(n=0; n<q[3]; n++)
     {
         for(n1=0; n1 < QINFO; n1++)
         {
-                fscanf(a, "%d", &arcotrans[n][n1]);
+            fscanf(a, "%d", &arcotrans[n][n1]);
         }
     }    
     // arct[n][0] = lugar de origem
     // arct[n][1] = quantidade de tokens consumidos
     // arct[n][2] = transição de destino
-    
+
     for(n=0; n<q[4]; n++)
     {
         for(n1=0; n1<QINFO; n1++)
         {
-               fscanf(a,"%d", &arcolugar[n][n1]);
+            fscanf(a,"%d", &arcolugar[n][n1]);
         }
     }
 
     // arlg[n][0] = transição de origem
     // arlg[n][1] = quantidade de tokens consumidos
     // arlg[n][2] = lugar de destino
-    
+
     free(lugar); // limpando a alocação dinamica
     fclose(a);// fechando o arquivo de entrada
     return 0;
