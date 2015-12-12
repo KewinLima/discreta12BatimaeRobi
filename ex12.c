@@ -146,10 +146,23 @@ int main(void)
     lugares = cria_lista();
     for(n = 0; n < x; n++)
         adiciona_na_lista(lugares, 0); 
-
+#ifdef DEBUG
     imprime_lista(lugares);
+#endif
 
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
+    /* Lê quantidade de transições e cria x transições vazias*/
+    x = busca_elemento_por_indice(entrada, 1)->conteudo;
+    transicoes = cria_lista_transicao();
+    for(n = 0; n < x; n++)
+    {
+        transicao *t = malloc(sizeof(transicao));
+        t->coletor = 0;
+        t->emissor = 0;
+        adiciona_na_lista_transicao(transicoes, t);
+    }
+
+    imprime_lista_transicao(transicoes);
 
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
