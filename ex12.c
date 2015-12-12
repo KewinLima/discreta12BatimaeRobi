@@ -194,7 +194,10 @@ int main(void)
         at->destino->coletor = quantidade;
         adiciona_na_lista_arco_transicao(arcos_transicao, at);
     }
-    
+#ifdef DEBUG    
+    imprime_lista_arco_transicao(arcos_transicao);    
+#endif
+
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
