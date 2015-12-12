@@ -115,6 +115,7 @@ void limpa_lista_arco_transicao(lista_arco_transicao *l);
 lista_transicao *cria_lista_transicao(void);
 void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor);
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
+void imprime_lista_transicao(lista_transicao *l);
 
 int main(void)
 {
@@ -408,3 +409,13 @@ node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, in
 
     return no;
 }
+/* Imprime a lista, elemento por elemento */
+void imprime_lista_transicao(lista_transicao *l)
+{
+    node_transicao *no;
+    for(no = l->cabeca; no != NULL; no = no->proximo)
+    {
+        printf(" tr ");
+    }
+}
+
