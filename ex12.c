@@ -52,7 +52,7 @@ struct struct_node_al
             node_arco_lugar *proximo;
 };
 
-/*Define um no que armazena trasicao */
+/*Define um nó que armazena trasicao */
 typedef struct struct_node_transicao node_transicao;
 struct struct_node_transicao
 {
@@ -73,6 +73,13 @@ typedef struct struct_lista_at lista_arco_transicao;
 struct struct_lista_at
 {
     node_arco_transicao *cabeca;
+};
+
+/*Define a lista que guarda arcos lugar*/
+typedef struct struct_lista_al lista_arco_lugar;
+struct struct_lista_al
+{
+        node_arco_lugar *cabeca;
 };
 
 //Protótipos
