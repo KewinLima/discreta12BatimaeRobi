@@ -9,7 +9,6 @@
 #include <pthread.h>
 #include <stdlib.h>
 #define NENTRADA 5
-#define QINFO 3
 
 /************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
