@@ -44,13 +44,13 @@ struct struct_node_at
             node_arco_transicao *proximo;
 };
 
-void remove_elemento(pilha *p)
+/*Define um nó que armazena arcos lugar*/
+typedef struct struct_node_al node_arco_lugar;
+struct struct_node_al
 {
-    if(p.topo != NULL)
-    {
-        p.topo = p.topo.proximo;
-    }
-}
+        arco_lugar *conteudo;
+            node_arco_lugar *proximo;
+};
 
 int pilha_esta_vazia(pilha *p)
 {
