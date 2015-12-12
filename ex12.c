@@ -89,11 +89,14 @@ struct struct_lista_transicao
 };
 
 /********************* Protótipos **********************/
+
 /*               Operações para a lista                */
 lista *cria_lista(void);
 void adiciona_na_lista(lista *l, int valor);
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
 void imprime_lista(lista *l);
+void limpa_lista(lista *l);
+
 
 int main(void)
 {
@@ -130,7 +133,6 @@ int main(void)
         }
     }
 
-    free(lugar); /* limpando a alocação dinamica*/
     fclose(a);/* fechando o arquivo de entrada*/
     return 0;
 }
@@ -203,3 +205,4 @@ void limpa_lista(lista *l)
     }   
     free(l);
 }
+
