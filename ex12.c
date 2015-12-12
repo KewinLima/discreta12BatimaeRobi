@@ -92,6 +92,7 @@ struct struct_lista_transicao
 /*               Operações para a lista                */
 lista *cria_lista(void);
 void adiciona_na_lista(lista l, int valor);
+node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
 
 int main(void)
 {
@@ -163,4 +164,19 @@ void adiciona_na_lista(lista l, int valor)
         /*Nesse último node, adiciona o novo_node como proximo*/
         no->proximo = novo_node;
     }
+}
+node *busca_elemento_por_indice(lista *l, int indice)
+{
+    int i;
+    node *no = l->cabeca;
+
+    for(i = 0; i < indice; i++)
+    {
+        if(no == NULL)
+            break;
+
+        no = no->proximo;
+    }
+
+    return no;
 }
