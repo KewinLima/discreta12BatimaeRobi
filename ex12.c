@@ -52,13 +52,13 @@ struct struct_node_al
             node_arco_lugar *proximo;
 };
 
-int pilha_esta_vazia(pilha *p)
+/*Define um no que armazena trasicao */
+typedef struct struct_node_transicao node_transicao;
+struct struct_node_transicao
 {
-    if(p.topo == NULL)
-        return 1;
-    else
-        return 0;
-}
+        transicao *conteudo;
+            node_transicao *proximo;
+};
 
 //Protótipos
 int *cria_lugares(int numero_de_lugares);
