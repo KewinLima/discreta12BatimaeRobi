@@ -175,7 +175,26 @@ int main(void)
         fscanf(arquivo, "%d", &quantidade);
         busca_elemento_por_indice(lugares, indice)->conteudo = quantidade;
     }
+    //Lê as informações sobre os arcos transicao, cria cada um e os guarda na lista adequada
+    x = busca_elemento_por_indice(entrada, 3)->conteudo;
+    arcos_transicao = cria_lista_arco_transicao();
+    for(n = 0; n < x; n++)
+    {
+        int lugar;
+        int quantidade;
+        int transicao;
+        arco_transicao *at = malloc(sizeof(arco_transicao));
 
+        fscanf(arquivo, "%d", &lugar);
+        fscanf(arquivo, "%d", &quantidade);
+        fscanf(arquivo, "%d", &transicao);
+
+        at->origem = busca_elemento_por_indice(lugares, lugar);
+        at->destino = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
+        at->destino->coletor = quantidade;
+        adiciona_na_lista_arco_transicao(arcos_transicao, at);
+    }
+    
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
