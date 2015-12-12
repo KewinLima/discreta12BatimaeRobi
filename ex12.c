@@ -100,6 +100,9 @@ void limpa_lista(lista *l);
 /*         Operações para listas de arco-lugar         */
 lista_arco_lugar *cria_lista_arco_lugar(void);
 void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor);
+node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
+void imprime_lista_arco_lugar(lista_arco_lugar *l);
+void limpa_lista_arco_lugar(lista_arco_lugar *l);
 
 int main(void)
 {
@@ -152,6 +155,7 @@ lista *cria_lista(void)
 void adiciona_na_lista(lista *l, int valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
+    de_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
     node *novo_node = malloc(sizeof(node));
     novo_node->conteudo = valor;
     novo_node->proximo = NULL;
@@ -238,3 +242,42 @@ void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor)
         no->proximo = novo_node;
     }
 }
+node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice)
+{
+    int i;
+    node_arco_lugar *no = l->cabeca;
+
+    for(i = 0; i < indice; i++)
+    {
+        if(no == NULL)
+            break;
+
+        no = no->proximo;
+    }
+
+    return no;
+}
+/* Imprime a lista, elemento por elemento*/
+void imprime_lista_arco_lugar(lista_arco_lugar *l)
+{
+    node_arco_lugar *no;
+    for(no = l->cabeca; no != NULL; no = no->proximo)
+    {
+        printf(" al ");
+    }
+}
+/* Limpa a alocação dinamica da lista*/
+void limpa_lista_arco_lugar(lista_arco_lugar *l)
+{
+    node_arco_lugar *no = l->cabeca;
+    node_arco_lugar *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no->conteudo);
+        free(no);
+        no = proximo;
+    }   
+    free(l);
+}
+
