@@ -121,21 +121,34 @@ void limpa_lista_transicao(lista_transicao *l);
 
 int main(void)
 { 
-    int n;
+    int n; /* variável para o laço da leitura do primeiro bloco de entrada */
+    int x; /* Variavel para determinar o limite do laço */
+    lista *lugares;                         /*Cria ponteiro de  lista de lugares, que serão inteiros*/
+    lista_arco_lugar *arcos_lugar;          /*Cria ponteiro de lista de arcos lugar*/
+    lista_arco_transicao *arcos_transicao;  /*Cria ponteiro de lista de arcos transição*/
+    lista_transicao *transicoes;            /*Cria ponteiro de lista de inteiros*/
+    lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
+    FILE *a = fopen("entrada1.txt","r");    /* Abrindo o arquivo de entrada*/
 
-    FILE *a = fopen("entrada1.txt","r"); /* Abrindo o arquivo de entrada*/
-
-    for(n = 0; n < BLOCO_DE_ENTRADA; n++)      /*Laço para leitura do primeiro bloco de entradas*/
+    for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
     {
         int leitura;
         fscanf(arquivo,"%d", &leitura);
 
         adiciona_na_lista(entrada, leitura);
     }
-    #ifdef DEBUG
-        imprime_lista(entrada);
-    #endif
-    
+#ifdef DEBUG
+    imprime_lista(entrada);
+#endif
+
+    /*Lê quantidade de lugares requerida e cria x lugares com 0 (zero) tokens*/
+    x = busca_elemento_por_indice(entrada, 0)->conteudo;
+    lugares = cria_lista();
+    for(n = 0; n < x; n++)
+        adiciona_na_lista(lugares, 0); 
+
+    imprime_lista(lugares);
+
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
 
     limpa_lista(lugares);
@@ -150,8 +163,8 @@ int main(void)
 lista *cria_lista(void)
 {
     lista *l = malloc(sizeof(lista));
-    l->cabeca = NULL
-        return l;
+    l->cabeca = NULL;
+    return l;
 }
 /*Adiciona um valor ao final da lista*/
 /*O valor deve ser do mesmo tipo que o conteúdo do node*/
