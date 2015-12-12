@@ -109,6 +109,10 @@ lista_arco_transicao *cria_lista_arco_transicao(void);
 void adiciona_na_lista_arco_transicao(lista_arco_transicao *l, arco_transicao *valor);
 node_arco_transicao *busca_elemento_por_indice_arco_transicao(lista_arco_transicao *l, int indice);
 void imprime_lista_arco_transicao(lista_arco_transicao *l);
+void limpa_lista_arco_transicao(lista_arco_transicao *l);
+
+/*           Operações para listas transições          */
+lista_transicao *cria_lista_transicao(void);
 
 int main(void)
 {
@@ -330,7 +334,7 @@ node_arco_transicao *busca_elemento_por_indice_arco_transicao(lista_arco_transic
 
     return no;
 }
-// Imprime a lista, elemento por elemento
+/* Imprime a lista, elemento por elemento*/
 void imprime_lista_arco_transicao(lista_arco_transicao *l)
 {
     node_arco_transicao *no;
@@ -339,3 +343,26 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
         printf(" at ");
     }
 }
+/*Libera a memória alocada para a lista e seus nós*/
+void limpa_lista_arco_transicao(lista_arco_transicao *l)
+{
+    node_arco_transicao *no = l->cabeca;
+    node_arco_transicao *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no->conteudo);
+        free(no);
+        no = proximo;
+    }   
+
+    free(l);
+}
+/* Cria a lista transicao */
+lista_transicao *cria_lista_transicao(void)
+{
+    lista_transicao *l = malloc(sizeof(lista_transicao));
+    l->cabeca = NULL;
+    return l;
+}
+
