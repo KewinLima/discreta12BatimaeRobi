@@ -89,11 +89,34 @@ struct struct_lista_transicao
 };
 
 /********************* Protótipos **********************/
+
 /*               Operações para a lista                */
 lista *cria_lista(void);
 void adiciona_na_lista(lista *l, int valor);
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
 void imprime_lista(lista *l);
+void limpa_lista(lista *l);
+
+/*         Operações para listas de arco-lugar         */
+lista_arco_lugar *cria_lista_arco_lugar(void);
+void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor);
+node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
+void imprime_lista_arco_lugar(lista_arco_lugar *l);
+void limpa_lista_arco_lugar(lista_arco_lugar *l);
+
+/*       Operações para listas de arco-transicoes      */
+lista_arco_transicao *cria_lista_arco_transicao(void);
+void adiciona_na_lista_arco_transicao(lista_arco_transicao *l, arco_transicao *valor);
+node_arco_transicao *busca_elemento_por_indice_arco_transicao(lista_arco_transicao *l, int indice);
+void imprime_lista_arco_transicao(lista_arco_transicao *l);
+void limpa_lista_arco_transicao(lista_arco_transicao *l);
+
+/*           Operações para listas transições          */
+lista_transicao *cria_lista_transicao(void);
+void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor);
+node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
+void imprime_lista_transicao(lista_transicao *l);
+void limpa_lista_transicao(lista_transicao *l);
 
 int main(void)
 {
@@ -130,7 +153,6 @@ int main(void)
         }
     }
 
-    free(lugar); /* limpando a alocação dinamica*/
     fclose(a);/* fechando o arquivo de entrada*/
     return 0;
 }
@@ -147,6 +169,7 @@ lista *cria_lista(void)
 void adiciona_na_lista(lista *l, int valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
+    de_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
     node *novo_node = malloc(sizeof(node));
     novo_node->conteudo = valor;
     novo_node->proximo = NULL;
@@ -201,5 +224,213 @@ void limpa_lista(lista *l)
         free(no);
         no = proximo;
     }   
+    free(l);
+}
+/* Cria a lista arco_lugar */
+lista_arco_lugar *cria_lista_arco_lugar(void)
+{
+    lista_arco_lugar *l = malloc(sizeof(lista_arco_lugar));
+    l->cabeca = NULL;
+    return l; /* retorna seu endereço */
+}
+/*Adiciona um arco lugar na lista*/
+void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor)
+{
+    /*Cria um novo node com o valor a ser adicionado*/
+    node_arco_lugar *novo_node = malloc(sizeof(node_arco_lugar));
+    novo_node->conteudo = valor;
+    novo_node->proximo = NULL;
+
+    /*Verifica se a lista é vazia*/
+    /*Se sim, adiciona o novo_node na cabeça*/
+    if(l->cabeca == NULL)
+    {
+        l->cabeca = novo_node;
+    }
+    else {
+        /*Se não for vazia, procura o último node da lista*/
+        node_arco_lugar *no;
+        for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
+
+        /*Nesse último node, adiciona o novo_node como proximo*/
+        no->proximo = novo_node;
+    }
+}
+node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice)
+{
+    int i;
+    node_arco_lugar *no = l->cabeca;
+
+    for(i = 0; i < indice; i++)
+    {
+        if(no == NULL)
+            break;
+
+        no = no->proximo;
+    }
+
+    return no;
+}
+/* Imprime a lista, elemento por elemento*/
+void imprime_lista_arco_lugar(lista_arco_lugar *l)
+{
+    node_arco_lugar *no;
+    for(no = l->cabeca; no != NULL; no = no->proximo)
+    {
+        printf(" al ");
+    }
+}
+/* Limpa a alocação dinamica da lista*/
+void limpa_lista_arco_lugar(lista_arco_lugar *l)
+{
+    node_arco_lugar *no = l->cabeca;
+    node_arco_lugar *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no->conteudo);
+        free(no);
+        no = proximo;
+    }   
+    free(l);
+}
+/* Cria a lista arco_transicao */
+lista_arco_transicao *cria_lista_arco_transicao(void)
+{
+        lista_arco_transicao *l = malloc(sizeof(lista_arco_transicao));
+            l->cabeca = NULL;
+                return l;
+}
+void adiciona_na_lista_arco_transicao(lista_arco_transicao *l, arco_transicao *valor)
+{
+    /*Cria um novo node com o valor a ser adicionado*/
+    node_arco_transicao *novo_node = malloc(sizeof(node_arco_transicao));
+    novo_node->conteudo = valor;
+    novo_node->proximo = NULL;
+
+    /*Verifica se a lista é vazia*/
+    /*Se sim, adiciona o novo_node na cabeça*/
+    if(l->cabeca == NULL)
+    {
+        l->cabeca = novo_node;
+    }
+    else {
+        /*Se não for vazia, procura o último node da lista*/
+        node_arco_transicao *no;
+        for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
+
+        /*Nesse último node, adiciona o novo_node como proximo*/
+        no->proximo = novo_node;
+    }
+}
+node_arco_transicao *busca_elemento_por_indice_arco_transicao(lista_arco_transicao *l, int indice)
+{
+    int i;
+    node_arco_transicao *no = l->cabeca;
+
+    for(i = 0; i < indice; i++)
+    {
+        if(no == NULL)
+            break;
+
+        no = no->proximo;
+    }
+
+    return no;
+}
+/* Imprime a lista, elemento por elemento*/
+void imprime_lista_arco_transicao(lista_arco_transicao *l)
+{
+    node_arco_transicao *no;
+    for(no = l->cabeca; no != NULL; no = no->proximo)
+    {
+        printf(" at ");
+    }
+}
+/*Libera a memória alocada para a lista e seus nós*/
+void limpa_lista_arco_transicao(lista_arco_transicao *l)
+{
+    node_arco_transicao *no = l->cabeca;
+    node_arco_transicao *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no->conteudo);
+        free(no);
+        no = proximo;
+    }   
+
+    free(l);
+}
+/* Cria a lista transicao */
+lista_transicao *cria_lista_transicao(void)
+{
+    lista_transicao *l = malloc(sizeof(lista_transicao));
+    l->cabeca = NULL;
+    return l;
+}
+
+/*Adiciona um valor ao final da lista*/
+/*O valor deve ser do mesmo tipo que o conteúdo do node*/
+void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
+{
+    /*Cria um novo node com o valor a ser adicionado*/
+    node_transicao *novo_node = malloc(sizeof(node_transicao));
+    novo_node->conteudo = valor;
+    novo_node->proximo = NULL;
+
+    /* Verifica se a lista é vazia*/
+    /* Se sim, adiciona o novo_node na cabeça*/
+    if(l->cabeca == NULL)
+    {
+        l->cabeca = novo_node;
+    }
+    else {
+        /* Se não for vazia, procura o último node da lista*/
+        node_transicao *no;
+        for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
+
+        /* Nesse último node, adiciona o novo_node como proximo*/
+        no->proximo = novo_node;
+    }
+}
+
+/*Recebe uma lista e um indice*/
+/*Retorna o elemento posicionado no índice desejado*/
+/*Caso o indice não exista, a função retorna null*/
+node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice)
+{
+    int i;
+    node_transicao *no = l->cabeca;
+
+    for(i = 0; i < indice; i++)
+    {
+        no = no->proximo;
+    }
+
+    return no;
+}
+/* Imprime a lista, elemento por elemento */
+void imprime_lista_transicao(lista_transicao *l)
+{
+    node_transicao *no;
+    for(no = l->cabeca; no != NULL; no = no->proximo)
+    {
+        printf(" tr ");
+    }
+}
+//Libera a memória alocada para a lista e seus nós
+void limpa_lista_transicao(lista_transicao *l)
+{
+    node_transicao *no = l->cabeca;
+    node_transicao *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no->conteudo);
+        free(no);
+        no = proximo;
+    }   
+
     free(l);
 }
