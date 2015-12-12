@@ -28,7 +28,13 @@ struct struct_node
     int conteudo;
     node *proximo;
 };
-
+/*Define um arco transição*/
+typedef struct struct_arco_transicao arco_transicao;
+struct struct_arco_transicao
+{
+    node *origem;
+    transicao *destino;
+};
 /*Define um arco lugar*/
 typedef struct struct_arco_lugar arco_lugar;
 struct struct_arco_lugar
