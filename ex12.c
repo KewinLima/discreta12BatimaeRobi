@@ -91,9 +91,9 @@ struct struct_lista_transicao
 /********************* Protótipos **********************/
 /*               Operações para a lista                */
 lista *cria_lista(void);
-void adiciona_na_lista(lista l, int valor);
+void adiciona_na_lista(lista *l, int valor);
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
-void imprime_lista(lista *l)
+void imprime_lista(lista *l);
 
 int main(void)
 {
@@ -144,7 +144,7 @@ lista *cria_lista(void)
 /*Adiciona um valor ao final da lista*/
 /*O valor deve ser do mesmo tipo que o conteúdo do node*/
 
-void adiciona_na_lista(lista l, int valor)
+void adiciona_na_lista(lista *l, int valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
     node *novo_node = malloc(sizeof(node));
