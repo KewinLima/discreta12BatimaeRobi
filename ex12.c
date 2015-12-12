@@ -60,6 +60,21 @@ struct struct_node_transicao
             node_transicao *proximo;
 };
 
+/*A lista é definida como um ponteiro para o primeiro elemento da lista
+  Define a lista que guarda inteiros*/
+typedef struct struct_lista lista;
+struct struct_lista
+{
+    node *cabeca;
+};
+
+/*Define a lista que guarda arcos transição*/
+typedef struct struct_lista_at lista_arco_transicao;
+struct struct_lista_at
+{
+    node_arco_transicao *cabeca;
+};
+
 //Protótipos
 int *cria_lugares(int numero_de_lugares);
 
