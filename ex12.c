@@ -121,36 +121,8 @@ int main(void)
 {
 
     int n,q[NENTRADA],n1; 
-    FILE *a = fopen("entrada.txt","r"); /* Abrindo o arquivo de entrada*/
+    FILE *a = fopen("entrada1.txt","r"); /* Abrindo o arquivo de entrada*/
 
-    for(n=0;n<NENTRADA;n++) /*Laço para o vetor q*/
-    {
-        fscanf(a,"%d", &q[n]);
-    }
-    int *lugar = cria_lugares(q[0]); /*cria n-lugares*/
-    int arcotrans[q[3]][3];  
-    int arcolugar[q[4]][3];
-
-    for(n=0;n<( q[2] );n++)
-    {
-        fscanf(a,"%d", &n1);
-        fscanf(a,"%d", &lugar[n1]);
-        printf(" %d %d\n", n1, lugar[n1]);
-    }
-    for(n=0; n<q[3]; n++)
-    {
-        for(n1=0; n1 < QINFO; n1++)
-        {
-            fscanf(a, "%d", &arcotrans[n][n1]);
-        }
-    }    
-    for(n=0; n<q[4]; n++)
-    {
-        for(n1=0; n1<QINFO; n1++)
-        {
-            fscanf(a,"%d", &arcolugar[n][n1]);
-        }
-    }
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     
     limpa_lista(lugares);
