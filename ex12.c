@@ -1,9 +1,9 @@
-/* *******************************************************
- **| Programa   : Rede de Petri com Processos Paralelos|**
- **| Autores    : Isabella Galvão e Kewin Lima         |**
- **| Orientador : Ruben Carlo                          |**
- *********************************************************
- **/
+/********************************************************
+**| Programa   : Rede de Petri com Processos Paralelos|**
+**| Autores    : Isabella Galvão e Kewin Lima         |**
+**| Orientador : Ruben Carlo                          |**
+*********************************************************
+**/
 
 #include <stdio.h>
 #include <pthread.h>
@@ -11,7 +11,7 @@
 #define NENTRADA 5
 #define QINFO 3
 
-//************** Definição dos tipos para as listas  ****************
+/************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
 typedef struct struct_transicao transicao;
 struct struct_transicao
