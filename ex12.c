@@ -104,6 +104,10 @@ node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int i
 void imprime_lista_arco_lugar(lista_arco_lugar *l);
 void limpa_lista_arco_lugar(lista_arco_lugar *l);
 
+/*       Operações para listas de arco-transicoes      */
+lista_arco_transicao *cria_lista_arco_transicao(void);
+
+
 int main(void)
 {
 
@@ -279,5 +283,12 @@ void limpa_lista_arco_lugar(lista_arco_lugar *l)
         no = proximo;
     }   
     free(l);
+}
+/* Cria a lista arco_transicao */
+lista_arco_transicao *cria_lista_arco_transicao(void)
+{
+        lista_arco_transicao *l = malloc(sizeof(lista_arco_transicao));
+            l->cabeca = NULL;
+                return l;
 }
 
