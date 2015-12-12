@@ -151,7 +151,13 @@ int main(void)
             fscanf(a,"%d", &arcolugar[n][n1]);
         }
     }
-
+    /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
+    
+    limpa_lista(lugares);
+    limpa_lista_arco_lugar(arcos_lugar);
+    limpa_lista_arco_transicao(arcos_transicao);
+    limpa_lista_transicao(transicoes);
+    
     fclose(a);/* fechando o arquivo de entrada*/
     return 0;
 }
@@ -296,9 +302,9 @@ void limpa_lista_arco_lugar(lista_arco_lugar *l)
 /* Cria a lista arco_transicao */
 lista_arco_transicao *cria_lista_arco_transicao(void)
 {
-        lista_arco_transicao *l = malloc(sizeof(lista_arco_transicao));
-            l->cabeca = NULL;
-                return l;
+    lista_arco_transicao *l = malloc(sizeof(lista_arco_transicao));
+    l->cabeca = NULL;
+    return l;
 }
 void adiciona_na_lista_arco_transicao(lista_arco_transicao *l, arco_transicao *valor)
 {
