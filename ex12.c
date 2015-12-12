@@ -24,39 +24,39 @@ struct struct_transicao
 typedef struct struct_node node;
 struct struct_node
 {
-        int conteudo;
-            node *proximo;
+    int conteudo;
+    node *proximo;
 };
 
 /*Define um arco lugar*/
 typedef struct struct_arco_lugar arco_lugar;
 struct struct_arco_lugar
 {
-        transicao *origem;
-            node *destino;
+    transicao *origem;
+    node *destino;
 };
 
 /*Define um nó que armazena arcos transição.*/
 typedef struct struct_node_at node_arco_transicao;
 struct struct_node_at
 {
-        arco_transicao *conteudo;
-            node_arco_transicao *proximo;
+    arco_transicao *conteudo;
+    node_arco_transicao *proximo;
 };
 
 /*Define um nó que armazena arcos lugar*/
 typedef struct struct_node_al node_arco_lugar;
 struct struct_node_al
 {
-        arco_lugar *conteudo;
-            node_arco_lugar *proximo;
+    arco_lugar *conteudo;
+    node_arco_lugar *proximo;
 };
 
 typedef struct struct_node_transicao node_transicao;
 struct struct_node_transicao
 {
-        transicao *conteudo;
-            node_transicao *proximo;
+    transicao *conteudo;
+    node_transicao *proximo;
 };
 
 /*A lista é definida como um ponteiro para o primeiro elemento da lista*/
@@ -79,19 +79,19 @@ struct struct_lista_at
 typedef struct struct_lista_al lista_arco_lugar;
 struct struct_lista_al
 {
-        node_arco_lugar *cabeca;
+    node_arco_lugar *cabeca;
 };
 
 typedef struct struct_lista_transicao lista_transicao;
 struct struct_lista_transicao
 {
-        node_transicao *cabeca;
+    node_transicao *cabeca;
 };
 
 /********************* Protótipos **********************/
 /*               Operações para a lista                */
 lista *cria_lista(void);
-
+void adiciona_na_lista(lista l, int valor);
 
 int main(void)
 {
@@ -145,5 +145,30 @@ lista *cria_lista(void)
 {
     lista *l = malloc(sizeof(lista));
     l->cabeca = NULL
-    return l;
+        return l;
+}
+//Adiciona um valor ao final da lista
+//O valor deve ser do mesmo tipo que o conteúdo do node
+
+void adiciona_na_lista(lista l, int valor)
+{
+    /*Cria um novo node com o valor a ser adicionado*/
+    node *novo_node = malloc(sizeof(node));
+    novo_node->conteudo = valor;
+    novo_node->proximo = NULL;
+
+    /*Verifica se a lista é vazia*/
+    /*Se sim, adiciona o novo_node na cabeça*/
+    if(l->cabeca == NULL)
+    {
+        l->cabeca = novo_node;
+    }
+    else {
+        /*Se não for vazia, procura o último node da lista*/
+        node *no;
+        for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
+
+        /*Nesse último node, adiciona o novo_node como proximo*/
+        no->proximo = novo_node;
+    }
 }
