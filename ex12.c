@@ -52,7 +52,6 @@ struct struct_node_al
             node_arco_lugar *proximo;
 };
 
-/*Define um nó que armazena trasicao */
 typedef struct struct_node_transicao node_transicao;
 struct struct_node_transicao
 {
@@ -60,8 +59,9 @@ struct struct_node_transicao
             node_transicao *proximo;
 };
 
-/*A lista é definida como um ponteiro para o primeiro elemento da lista
-  Define a lista que guarda inteiros*/
+/*A lista é definida como um ponteiro para o primeiro elemento da lista*/
+
+/*Define a lista que guarda inteiros*/
 typedef struct struct_lista lista;
 struct struct_lista
 {
@@ -82,16 +82,19 @@ struct struct_lista_al
         node_arco_lugar *cabeca;
 };
 
-//Protótipos
-int *cria_lugares(int numero_de_lugares);
+typedef struct struct_lista_transicao lista_transicao;
+struct struct_lista_transicao
+{
+        node_transicao *cabeca;
+};
+
+/********************* Protótipos **********************/
+/*               Operações para a lista                */
+lista *cria_lista(void);
+
 
 int main(void)
 {
-    //q[0] = qunatidade de lugar, 
-    //q[1] = quantidade de trans,
-    //q[2] = quantidade de lugartoke,
-    //q[3] = qarcotrans,
-    //q[4] = qarcolugar,
 
     int n,q[NENTRADA],n1; 
     FILE *a = fopen("entrada.txt","r"); // Abrindo o arquivo de entrada
@@ -138,7 +141,9 @@ int main(void)
     return 0;
 }
 
-int *cria_lugares(int numero_de_lugares)
+lista *cria_lista(void)
 {
-    return malloc(numero_de_lugares * (sizeof(int))); //Alocação dinâmica
+    lista *l = malloc(sizeof(lista));
+    l->cabeca = NULL
+    return l;
 }
