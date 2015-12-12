@@ -198,6 +198,28 @@ int main(void)
     imprime_lista_arco_transicao(arcos_transicao);    
 #endif
 
+    /*Lê as informações sobre os arcos lugar, cria cada um e os guarda na lista adequada*/
+    x = busca_elemento_por_indice(entrada, 4)->conteudo;
+    arcos_lugar = cria_lista_arco_lugar();
+    for(n = 0; n < x; n++)
+    {
+        int lugar;
+        int quantidade;
+        int transicao;
+        arco_lugar *al = malloc(sizeof(arco_lugar));
+
+        fscanf(arquivo, "%d", &transicao);
+        fscanf(arquivo, "%d", &quantidade);
+        fscanf(arquivo, "%d", &lugar);
+        al->destino = busca_elemento_por_indice(lugares, lugar);
+        al->origem = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
+        printf(" %d ", al->origem);
+        al->origem->emissor = quantidade;
+        adiciona_na_lista_arco_lugar(arcos_lugar, al);
+    }
+
+    imprime_lista_arco_lugar(arcos_lugar);
+    
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
