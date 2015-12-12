@@ -116,6 +116,7 @@ lista_transicao *cria_lista_transicao(void);
 void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor);
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
 void imprime_lista_transicao(lista_transicao *l);
+void limpa_lista_transicao(lista_transicao *l);
 
 int main(void)
 {
@@ -418,4 +419,18 @@ void imprime_lista_transicao(lista_transicao *l)
         printf(" tr ");
     }
 }
+//Libera a memória alocada para a lista e seus nós
+void limpa_lista_transicao(lista_transicao *l)
+{
+    node_transicao *no = l->cabeca;
+    node_transicao *proximo;
+    while(no != NULL)
+    {
+        proximo = no->proximo;
+        free(no->conteudo);
+        free(no);
+        no = proximo;
+    }   
 
+    free(l);
+}
