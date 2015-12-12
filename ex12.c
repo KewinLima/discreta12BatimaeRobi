@@ -12,7 +12,7 @@
 #define QINFO 3
 
 //************** Definição dos tipos para as listas  ****************
-////Define uma transição
+/*Define uma transição*/
 typedef struct struct_transicao transicao;
 struct struct_transicao
 {
@@ -20,10 +20,12 @@ struct struct_transicao
     int emissor;
 };
 
-typedef struct_token token;
-struct struct_token
+/*Define um node que armazena um inteiro*/
+typedef struct struct_node node;
+struct struct_node
 {
-    token *proximo;
+        int conteudo;
+            node *proximo;
 };
 
 typedef struct_pilha pilha;
