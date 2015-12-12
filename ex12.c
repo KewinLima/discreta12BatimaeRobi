@@ -8,7 +8,9 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-#define NENTRADA 5
+#define BLOCO_DE_ENTRADA 5
+#define DEBUG 1
+/*#undef DEBUG*/ /* Caso queira um debug comente essa linha */ 
 
 /************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
@@ -118,18 +120,29 @@ void imprime_lista_transicao(lista_transicao *l);
 void limpa_lista_transicao(lista_transicao *l);
 
 int main(void)
-{
+{ 
+    int n;
 
-    int n,q[NENTRADA],n1; 
     FILE *a = fopen("entrada1.txt","r"); /* Abrindo o arquivo de entrada*/
 
-    /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
+    for(n = 0; n < BLOCO_DE_ENTRADA; n++)      /*Laço para leitura do primeiro bloco de entradas*/
+    {
+        int leitura;
+        fscanf(arquivo,"%d", &leitura);
+
+        adiciona_na_lista(entrada, leitura);
+    }
+    #ifdef DEBUG
+        imprime_lista(entrada);
+    #endif
     
+    /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
+
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
     limpa_lista_arco_transicao(arcos_transicao);
     limpa_lista_transicao(transicoes);
-    
+
     fclose(a);/* fechando o arquivo de entrada*/
     return 0;
 }
