@@ -28,35 +28,21 @@ struct struct_node
             node *proximo;
 };
 
-typedef struct_pilha pilha;
-
-struct struct_pilha
+/*Define um arco lugar*/
+typedef struct struct_arco_lugar arco_lugar;
+struct struct_arco_lugar
 {
-    token *topo;
+        transicao *origem;
+            node *destino;
 };
 
-pilha cria_pilha(void)
+/*Define um nó que armazena arcos transição*/
+typedef struct struct_node_at node_arco_transicao;
+struct struct_node_at
 {
-    pilha nova_pilha;
-    nova_pilha.topo = NULL;
-    return nova_pilha;
-}
-
-void adiciona_elemento(pilha *p)
-{
-    if(p.topo == NULL)
-    {
-        token t;
-        t.proximo = NULL;
-        p.topo = t;
-    }
-    else 
-    {
-        token t;
-        t.proximo = p.topo;
-        p.topo = t;
-    }
-}
+        arco_transicao *conteudo;
+            node_arco_transicao *proximo;
+};
 
 void remove_elemento(pilha *p)
 {
