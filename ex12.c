@@ -150,7 +150,6 @@ int main(void)
     imprime_lista(lugares);
 #endif
 
-    /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     /* Lê quantidade de transições e cria x transições vazias*/
     x = busca_elemento_por_indice(entrada, 1)->conteudo;
     transicoes = cria_lista_transicao();
@@ -161,9 +160,13 @@ int main(void)
         t->emissor = 0;
         adiciona_na_lista_transicao(transicoes, t);
     }
-
+#ifdef DEBUG
     imprime_lista_transicao(transicoes);
+#endif
 
+
+
+    /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
     limpa_lista_arco_transicao(arcos_transicao);
