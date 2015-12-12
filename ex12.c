@@ -165,6 +165,16 @@ int main(void)
 #endif
 
 
+    //Lê a quantidade de tokens em um dado lugar e adiciona esses tokens apropriadamente
+    x = busca_elemento_por_indice(entrada, 2)->conteudo;
+    for(n = 0; n < x; n++)
+    {
+        int quantidade;
+        int indice;
+        fscanf(arquivo, "%d", &indice);
+        fscanf(arquivo, "%d", &quantidade);
+        busca_elemento_por_indice(lugares, indice)->conteudo = quantidade;
+    }
 
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
