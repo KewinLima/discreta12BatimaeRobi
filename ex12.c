@@ -97,13 +97,13 @@ int main(void)
 {
 
     int n,q[NENTRADA],n1; 
-    FILE *a = fopen("entrada.txt","r"); // Abrindo o arquivo de entrada
+    FILE *a = fopen("entrada.txt","r"); /* Abrindo o arquivo de entrada*/
 
-    for(n=0;n<NENTRADA;n++) //Laço para o vetor q
+    for(n=0;n<NENTRADA;n++) /*Laço para o vetor q*/
     {
         fscanf(a,"%d", &q[n]);
     }
-    int *lugar = cria_lugares(q[0]); //cria n-lugares
+    int *lugar = cria_lugares(q[0]); /*cria n-lugares*/
     int arcotrans[q[3]][3];  
     int arcolugar[q[4]][3];
 
@@ -120,10 +120,6 @@ int main(void)
             fscanf(a, "%d", &arcotrans[n][n1]);
         }
     }    
-    // arct[n][0] = lugar de origem
-    // arct[n][1] = quantidade de tokens consumidos
-    // arct[n][2] = transição de destino
-
     for(n=0; n<q[4]; n++)
     {
         for(n1=0; n1<QINFO; n1++)
@@ -132,12 +128,8 @@ int main(void)
         }
     }
 
-    // arlg[n][0] = transição de origem
-    // arlg[n][1] = quantidade de tokens consumidos
-    // arlg[n][2] = lugar de destino
-
-    free(lugar); // limpando a alocação dinamica
-    fclose(a);// fechando o arquivo de entrada
+    free(lugar); /* limpando a alocação dinamica*/
+    fclose(a);/* fechando o arquivo de entrada*/
     return 0;
 }
 
@@ -147,8 +139,8 @@ lista *cria_lista(void)
     l->cabeca = NULL
         return l;
 }
-//Adiciona um valor ao final da lista
-//O valor deve ser do mesmo tipo que o conteúdo do node
+/*Adiciona um valor ao final da lista*/
+/*O valor deve ser do mesmo tipo que o conteúdo do node*/
 
 void adiciona_na_lista(lista l, int valor)
 {

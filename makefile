@@ -25,14 +25,14 @@ BUILD = $(shell date +"%g%m%d.%H%M%S")
 DEFSYM = $(subst .,_,$(BUILD))
 VERSION = "\"$(MAJOR).$(MINOR).$(BUILD)\""
 CC = gcc
-CFLAGS = "mylib.c" -Wall -g -O0 -std=gnu99
+CFLAGS =  -Wall -g -O0 -std=gnu99
 #-ansi -pedantic-errors -c -Ofast -Wextra
 CPPFLAGS = -DVERSION=$(VERSION) -DBUILD="\"$(BUILD)\""
 LDLIBS = -Wl,--defsym,BUILD_$(DEFSYM)=0 -lpthread -lm -lgmp `allegro-config --cflags --libs`
 
 %.x : %.c $(obj)
-$(CC) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) $^ -o $@ |& tee errors.err
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDLIBS) $^ -o $@ |& tee errors.err
 
-    clean:
-       rm -f *.x *.o errors.err
+^Iclean:
+	^Irm -f *.x *.o errors.err
 
