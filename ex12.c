@@ -101,7 +101,7 @@ struct struct_lista_transicao
 lista *cria_lista(void);
 void adiciona_na_lista(lista *l, int valor);
 node *busca_elemento_por_indice(lista *l, int indice);
-void imprime_lista(lista *l);
+void imprime_lista(lista *l, char entrada_lugar);
 void limpa_lista(lista *l);
 
 /*         Operações para listas de arco-lugar         */
@@ -214,11 +214,11 @@ int main(void)
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
-    imprime_lista(entrada);    
+    imprime_lista(entrada, 'e');    
     imprime_lista_arco_lugar(arcos_lugar);
     imprime_lista_arco_transicao(arcos_transicao);
     imprime_lista_transicao(transicoes);
-    imprime_lista(lugares);
+    imprime_lista(lugares, 'l');
 #endif
 
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
@@ -230,6 +230,8 @@ int main(void)
     fclose(arquivo);/* fechando o arquivo de entrada*/
     return EXIT_SUCCESS;
 }
+/****************Inicio das funções - Inicio Cria lista***************/
+
 lista *cria_lista(void)
 {
     lista *l = malloc(sizeof(lista));
@@ -476,14 +478,22 @@ void limpa_lista_transicao(lista_transicao *l)
     free(l);
 }
 
-/**************************** Fim de libera - Começo de imprime ********************/
+/**************************** Fim de libera - Começo de imprime *************************/
 /* Imprime a lista, elemento por elemento */
-void imprime_lista(lista *l)
+void imprime_lista(lista *l, char entrada_lugar)
 {
     node *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d lista - linha 295 \n ", no->conteudo);
+        if(entrada_lugar == 'e')/* Caso seja referente a entrada */
+        {
+            printf(" %d = entrada\n", no->conteudo);
+        }
+        else 
+        {
+            if(entrada_lugar == 'l')/* Caso seja referente a lugar */
+            printf(" %d = lugar\n", no->conteudo);
+        }
     }
 }
 
@@ -492,9 +502,11 @@ void imprime_lista(lista *l)
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
     node_arco_lugar *no;
+    
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" al \n ");
+        printf(" %d = al origem\n", no->origem );
+        printf(" %d = al destino\n", no->destino);
     }
 }
 
@@ -504,7 +516,7 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
     node_arco_transicao *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" at \n");
+        printf(" %d = at \n", no->conteudo);
     }
 }
 
@@ -515,7 +527,7 @@ void imprime_lista_transicao(lista_transicao *l)
     node_transicao *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" tr \n");
+        printf(" %d = tr \n", no->conteudo);
     }
 }
 /*************************** Fim de imprime ************************/
