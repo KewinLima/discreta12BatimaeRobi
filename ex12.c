@@ -100,7 +100,7 @@ struct struct_lista_transicao
 /*               Operações para a lista                */
 lista *cria_lista(void);
 void adiciona_na_lista(lista *l, int valor);
-node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice);
+node *busca_elemento_por_indice(lista *l, int indice);
 void imprime_lista(lista *l);
 void limpa_lista(lista *l);
 
@@ -125,6 +125,7 @@ node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, in
 void imprime_lista_transicao(lista_transicao *l);
 void limpa_lista_transicao(lista_transicao *l);
 
+/****************** Fim dos Protótipos ******************/
 int main(void)
 { 
     int n; /* variável para o laço da leitura do primeiro bloco de entrada */
@@ -134,7 +135,7 @@ int main(void)
     lista_arco_transicao *arcos_transicao;  /*Cria ponteiro de lista de arcos transição*/
     lista_transicao *transicoes;            /*Cria ponteiro de lista de inteiros*/
     lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
-    FILE *a = fopen("entrada1.txt","r");    /* Abrindo o arquivo de entrada*/
+    FILE *arquivo = fopen("entrada1.txt","r");    /* Abrindo o arquivo de entrada*/
 
     for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
     {
@@ -233,8 +234,8 @@ int main(void)
     limpa_lista_arco_transicao(arcos_transicao);
     limpa_lista_transicao(transicoes);
 
-    fclose(a);/* fechando o arquivo de entrada*/
-    return 0;
+    fclose(arquivo);/* fechando o arquivo de entrada*/
+    return EXIT_SUCCESS;
 }
 
 lista *cria_lista(void)
@@ -249,7 +250,7 @@ lista *cria_lista(void)
 void adiciona_na_lista(lista *l, int valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
-    de_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
+    node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
     node *novo_node = malloc(sizeof(node));
     novo_node->conteudo = valor;
     novo_node->proximo = NULL;
