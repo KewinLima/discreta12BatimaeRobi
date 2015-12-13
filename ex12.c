@@ -35,6 +35,7 @@ struct struct_arco_transicao
     node *origem;
     transicao *destino;
 };
+
 /*Define um arco lugar*/
 typedef struct struct_arco_lugar arco_lugar;
 struct struct_arco_lugar
@@ -42,6 +43,7 @@ struct struct_arco_lugar
     transicao *origem;
     node *destino;
 };
+
 
 /*Define um nó que armazena arcos transição.*/
 typedef struct struct_node_at node_arco_transicao;
@@ -215,14 +217,15 @@ int main(void)
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
     imprime_lista(entrada, 'e');    
+    imprime_lista(lugares, 'l');
     imprime_lista_arco_lugar(arcos_lugar);
     imprime_lista_arco_transicao(arcos_transicao);
     imprime_lista_transicao(transicoes);
-    imprime_lista(lugares, 'l');
 #endif
 
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
+    limpa_lista(entrada);
     limpa_lista_arco_lugar(arcos_lugar);
     limpa_lista_arco_transicao(arcos_transicao);
     limpa_lista_transicao(transicoes);
@@ -230,7 +233,7 @@ int main(void)
     fclose(arquivo);/* fechando o arquivo de entrada*/
     return EXIT_SUCCESS;
 }
-/****************Inicio das funções - Inicio Cria lista***************/
+/****************Inicio das funções - Inicio Cria Lista***************/
 
 lista *cria_lista(void)
 {
@@ -505,8 +508,8 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d = al origem\n", no->origem );
-        printf(" %d = al destino\n", no->destino);
+        printf(" %d = al origem\n", no->conteudo->origem );
+        printf(" %d = al destino\n", no->conteudo->destino);
     }
 }
 
