@@ -144,18 +144,12 @@ int main(void)
 
         adiciona_na_lista(entrada, leitura);
     }
-#ifdef DEBUG
-    imprime_lista(entrada);
-#endif
 
     /*Lê quantidade de lugares requerida e cria x lugares com 0 (zero) tokens*/
     x = busca_elemento_por_indice(entrada, 0)->conteudo;
     lugares = cria_lista();
     for(n = 0; n < x; n++)
         adiciona_na_lista(lugares, 0); 
-#ifdef DEBUG
-    imprime_lista(lugares);
-#endif
 
     /* Lê quantidade de transições e cria x transições vazias*/
     x = busca_elemento_por_indice(entrada, 1)->conteudo;
@@ -167,9 +161,6 @@ int main(void)
         t->emissor = 0;
         adiciona_na_lista_transicao(transicoes, t);
     }
-#ifdef DEBUG
-    imprime_lista_transicao(transicoes);
-#endif
 
 
     //Lê a quantidade de tokens em um dado lugar e adiciona esses tokens apropriadamente
@@ -201,9 +192,6 @@ int main(void)
         at->destino->coletor = quantidade;
         adiciona_na_lista_arco_transicao(arcos_transicao, at);
     }
-#ifdef DEBUG    
-    imprime_lista_arco_transicao(arcos_transicao);    
-#endif
 
     /*Lê as informações sobre os arcos lugar, cria cada um e os guarda na lista adequada*/
     x = busca_elemento_por_indice(entrada, 4)->conteudo;
@@ -220,14 +208,19 @@ int main(void)
         fscanf(arquivo, "%d", &lugar);
         al->destino = busca_elemento_por_indice(lugares, lugar);
         al->origem = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
-        printf(" %d ", al->origem);
         al->origem->emissor = quantidade;
         adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
-#ifdef DEBUG
-    imprime_lista_arco_lugar(arcos_lugar);
-#endif
 
+    /*Com o objetivo de um debug funções de imprimir na tela*/
+#ifdef DEBUG
+    imprime_lista(entrada);    
+    imprime_lista_arco_lugar(arcos_lugar);
+    imprime_lista_arco_transicao(arcos_transicao);
+    imprime_lista_transicao(transicoes);
+    imprime_lista(lugares);
+#endif
+   
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista_arco_lugar(arcos_lugar);
@@ -254,7 +247,7 @@ void adiciona_na_lista(lista *l, int valor)
     node *novo_node = malloc(sizeof(node));
     novo_node->conteudo = valor;
     novo_node->proximo = NULL;
-
+    
     /*Verifica se a lista é vazia*/
     /*Se sim, adiciona o novo_node na cabeça*/
     if(l->cabeca == NULL)
@@ -268,6 +261,7 @@ void adiciona_na_lista(lista *l, int valor)
 
         /*Nesse último node, adiciona o novo_node como proximo*/
         no->proximo = novo_node;
+    /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     }
 }
 node *busca_elemento_por_indice(lista *l, int indice)
@@ -291,7 +285,7 @@ void imprime_lista(lista *l)
     node *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d ", no->conteudo);
+        printf(" %d lista - linha 295 \n ", no->conteudo);
     }
 }
 /*Libera a memória alocada para a lista e seus nós*/
@@ -358,7 +352,7 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     node_arco_lugar *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" al ");
+        printf(" al \n ");
     }
 }
 /* Limpa a alocação dinamica da lista*/
@@ -425,7 +419,7 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
     node_arco_transicao *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" at ");
+        printf(" at \n");
     }
 }
 /*Libera a memória alocada para a lista e seus nós*/
@@ -497,7 +491,7 @@ void imprime_lista_transicao(lista_transicao *l)
     node_transicao *no;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" tr ");
+        printf(" tr \n");
     }
 }
 //Libera a memória alocada para a lista e seus nós
