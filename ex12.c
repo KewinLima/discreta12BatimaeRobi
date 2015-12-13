@@ -135,7 +135,7 @@ int main(void)
     lista_arco_transicao *arcos_transicao;  /*Cria ponteiro de lista de arcos transição*/
     lista_transicao *transicoes;            /*Cria ponteiro de lista de inteiros*/
     lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
-    FILE *arquivo = fopen("entrada1.txt","r");    /* Abrindo o arquivo de entrada*/
+    FILE *arquivo = fopen("entrada-petri-1.txt","r");    /* Abrindo o arquivo de entrada*/
 
     for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
     {
