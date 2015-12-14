@@ -20,7 +20,7 @@
 #define CORVERMELHO      (makecol(255, 0, 0))
 #define TAMANHO_X        800
 #define TAMANHO_Y        800
-#define NOME_IMAGEM      "ex12"
+#define NOME_IMAGEM      "ex12.bmp"
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG 1
 /*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
@@ -554,14 +554,15 @@ void imprime_lista_transicao(lista_transicao *l)
 /*************************** Fim de imprime ************************/
 void imprimir_lugar_allegro(void)
 {
-    BITMAP *buff;
-    PALETTE pal;
+    /* Declaração das variáveis que irmão guardar as imagens */
+    BITMAP *buff;  /* Arquivos de bitmap */
+    PALETTE pal;   /* Paletas            */
 
-    if(install_allegro(SYSTEM_NONE, &errno, atexit)!=0)
+    if(install_allegro(SYSTEM_NONE, &errno, atexit)!=0) /* Instala o allegro para que ele seja usado no codigo */
         exit(EXIT_FAILURE);
 
-    set_color_depth(16);
-    get_palette(pal);
+    set_color_depth(16);/* Definindo o numero de cores usadas  */
+    get_palette(pal);   /* Pega as pelates para usar no codigo */
 
     // Criando um buffer para a imagem.
     buff = create_bitmap(TAMANHO_X,TAMANHO_Y);
@@ -572,11 +573,11 @@ void imprimir_lugar_allegro(void)
     }
 
     circle(buff, 100, 100, 50, CORAMARELO);/* desenha um circulo de xc = 160 yc =120 e raio = 100 e cor amarela*/
-    textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");
+    //textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");
 
-    save_bitmap(NOME_IMAGEM, buff, pal);
-    destroy_bitmap(buff);
-    allegro_exit();
+    save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
+    destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
+    allegro_exit();                     /* Termina o allegro           */
     
 #ifdef DEBUG
     printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
