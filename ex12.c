@@ -576,10 +576,10 @@ void imprime_lista_transicao(lista_transicao *l)
 void *transicao_pt(void *arg)
 {
     int *pvalor;
+
     pvalor = arg;
     printf(" Thread da transicao %d executando \n", *pvalor);
-    
-//    return;
+
 }
 
 void threads(lista *l)
@@ -587,12 +587,10 @@ void threads(lista *l)
     node *no;
     no = l->cabeca->proximo;
 
-    int Qtran = no->conteudo;
+    pthread_t threads[no->conteudo];
+    int i, arg[no->conteudo];
 
-    pthread_t threads[Qtran];
-    int i, arg[Qtran];
-
-    for(i=0; i < Qtran; i++)
+    for(i=0; i < (no->conteudo); i++)
     {
         arg[i] = i+1;
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[i]);
