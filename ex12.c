@@ -8,6 +8,16 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+
+#define CORBRANCO    (makecol(255,255,255))
+#define CORPRETO     (makecol(0,0,0))
+#define TRANSPARENTE (makecol(255,0,255))
+#define CORCINZA     (makecol(160,160,160))
+#define CORAZUL      (makecol(0, 0, 255))
+#define CORVERDE     (makecol(0, 255, 0))
+#define CORAMARELO   (makecol(255,255,100))
+#define CORVERMELHO  (makecol(255, 0, 0))
+
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG 1
 /*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
