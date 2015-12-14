@@ -509,7 +509,7 @@ void limpa_lista_transicao(lista_transicao *l)
 void imprime_lista(lista *l, char entrada_lugar)
 {
     node *no;
-    int n=1;
+    int n=0;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         if(entrada_lugar == 'e')/* Caso seja referente a entrada */
@@ -517,19 +517,19 @@ void imprime_lista(lista *l, char entrada_lugar)
             printf(" %d ", no->conteudo);
             switch(n)
             {
-                case 1:
+                case 0:
                     printf(" Numero de lugares \n");
                     break;
-                case 2:
+                case 1:
                     printf(" Numero de transicaoes \n");
                     break;
-                case 3:
+                case 2:
                     printf(" Numero de lugares com tokens \n");
                     break;
-                case 4:
+                case 3:
                     printf(" Numero de arco transicões \n");
                     break;
-                case 5:
+                case 4:
                     printf(" Numero de arco lugares \n");
                     break;
             }
@@ -537,7 +537,7 @@ void imprime_lista(lista *l, char entrada_lugar)
         else 
         {
             if(entrada_lugar == 'l')/* Caso seja referente a lugar */
-                printf(" %d = lugar\n", no->conteudo);
+                printf(" %dº lugar | %d Quantidade de tokens \n",n, no->conteudo);
         }
         n++;
     }
@@ -618,8 +618,7 @@ void imprimir_lugar_allegro(lista *l)
 {
     node *no;
     no = l->cabeca;
-    int n,Qlugar = no->conteudo;
-    printf(" %d = Qlugar\n", Qlugar);
+    int n;
 
     /* Declaração das variáveis que irmão guardar as imagens */
     BITMAP *buff;  /* Arquivos de bitmap */
@@ -639,7 +638,7 @@ void imprimir_lugar_allegro(lista *l)
         exit(EXIT_FAILURE);
     }
 
-    for(n=0; n<Qlugar ; n++)
+    for(n=0; n< (no->conteudo) ; n++)
     {
         circle(buff, 50+n*100, 100, 50, CORAMARELO);/* desenha um circulo */
     }
