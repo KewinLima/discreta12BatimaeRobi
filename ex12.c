@@ -8,16 +8,19 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
+#include <allegro.h>
 
-#define CORBRANCO    (makecol(255,255,255))
-#define CORPRETO     (makecol(0,0,0))
-#define TRANSPARENTE (makecol(255,0,255))
-#define CORCINZA     (makecol(160,160,160))
-#define CORAZUL      (makecol(0, 0, 255))
-#define CORVERDE     (makecol(0, 255, 0))
-#define CORAMARELO   (makecol(255,255,100))
-#define CORVERMELHO  (makecol(255, 0, 0))
-
+#define CORBRANCO        (makecol(255,255,255))
+#define CORPRETO         (makecol(0,0,0))
+#define TRANSPARENTE     (makecol(255,0,255))
+#define CORCINZA         (makecol(160,160,160))
+#define CORAZUL          (makecol(0, 0, 255))
+#define CORVERDE         (makecol(0, 255, 0))
+#define CORAMARELO       (makecol(255,255,100))
+#define CORVERMELHO      (makecol(255, 0, 0))
+#define TAMANHO_X        800
+#define TAMANHO_Y        800
+#define NOME_IMAGEM      "ex12"
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG 1
 /*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
@@ -151,7 +154,6 @@ int main(void)
     lista_transicao *transicoes;            /*Cria ponteiro de lista de inteiros*/
     lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
     FILE *arquivo = fopen("entrada-petri-1.txt","r");    /* Abrindo o arquivo de entrada*/
-
     
     for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
     {
@@ -227,6 +229,8 @@ int main(void)
         al->origem->emissor = quantidade;
         adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
+    
+    imprimir_lugar_allegro();
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -548,7 +552,7 @@ void imprime_lista_transicao(lista_transicao *l)
     }
 }
 /*************************** Fim de imprime ************************/
-void imprimir_lugar__allegro(void)
+void imprimir_lugar_allegro(void)
 {
     BITMAP *buff;
     PALETTE pal;
@@ -559,23 +563,23 @@ void imprimir_lugar__allegro(void)
     set_color_depth(16);
     get_palette(pal);
 
-    // Create a buffer for smooth animation.
-    buff = create_bitmap(320,240);
+    // Criando um buffer para a imagem.
+    buff = create_bitmap(TAMANHO_X,TAMANHO_Y);
     if(buff == NULL)
     {
-        printf("Could not create buffer!\n");
+        printf(" Não foi possivel criar o buffer!\n");
         exit(EXIT_FAILURE);
     }
 
-    circle(buff, 160, 120, 100, CORAMARELO);
-    textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo.");
+    circle(buff, 100, 100, 50, CORAMARELO);/* desenha um circulo de xc = 160 yc =120 e raio = 100 e cor amarela*/
+    textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");
 
-    save_bitmap(IMAGENAME, buff, pal);
+    save_bitmap(NOME_IMAGEM, buff, pal);
     destroy_bitmap(buff);
     allegro_exit();
-
-    printf("Imagem %s salva com sucesso!\n", IMAGENAME);
-
-    return EXIT_SUCCESS;
+    
+#ifdef DEBUG
+    printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
+#endif
 }
 END_OF_MAIN()
