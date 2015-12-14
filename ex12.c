@@ -127,6 +127,9 @@ node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, in
 void imprime_lista_transicao(lista_transicao *l);
 void limpa_lista_transicao(lista_transicao *l);
 
+/*                     Allegro                         */
+void imprimir_lugar_allegro(void);
+
 /****************** Fim dos Protótipos ******************/
 int main(void)
 { 
@@ -139,6 +142,7 @@ int main(void)
     lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
     FILE *arquivo = fopen("entrada-petri-1.txt","r");    /* Abrindo o arquivo de entrada*/
 
+    
     for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
     {
         int leitura;
@@ -534,3 +538,34 @@ void imprime_lista_transicao(lista_transicao *l)
     }
 }
 /*************************** Fim de imprime ************************/
+void imprimir_lugar__allegro(void)
+{
+    BITMAP *buff;
+    PALETTE pal;
+
+    if(install_allegro(SYSTEM_NONE, &errno, atexit)!=0)
+        exit(EXIT_FAILURE);
+
+    set_color_depth(16);
+    get_palette(pal);
+
+    // Create a buffer for smooth animation.
+    buff = create_bitmap(320,240);
+    if(buff == NULL)
+    {
+        printf("Could not create buffer!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    circle(buff, 160, 120, 100, CORAMARELO);
+    textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo.");
+
+    save_bitmap(IMAGENAME, buff, pal);
+    destroy_bitmap(buff);
+    allegro_exit();
+
+    printf("Imagem %s salva com sucesso!\n", IMAGENAME);
+
+    return EXIT_SUCCESS;
+}
+END_OF_MAIN()
