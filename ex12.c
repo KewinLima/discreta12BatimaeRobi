@@ -509,12 +509,25 @@ void limpa_lista_transicao(lista_transicao *l)
 void imprime_lista(lista *l, char entrada_lugar)
 {
     node *no;
-    int n;
+    int n=1;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         if(entrada_lugar == 'e')/* Caso seja referente a entrada */
         {
-            printf(" %d = entrada\n", no->conteudo);
+            printf(" %d ", no->conteudo);
+            switch(n)
+            {
+                case 1:
+                    printf(" Numero de lugares \n");
+                case 2:
+                    printf(" Numero de transicaoes \n");
+                case 3:
+                    printf(" Numero de lugares com tokens \n");
+                case 4:
+                    printf(" Numero de arco transicões \n");
+                case 5:
+                    printf(" Numero de arco lugares \n");
+            }
         }
         else 
         {
@@ -524,7 +537,6 @@ void imprime_lista(lista *l, char entrada_lugar)
         n++;
     }
 }
-
 
 /* Imprime a lista, elemento por elemento*/
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
