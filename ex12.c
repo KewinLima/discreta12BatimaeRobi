@@ -21,8 +21,9 @@
 #define TAMANHO_X        800
 #define TAMANHO_Y        800
 #define NOME_IMAGEM      "ex12.bmp"
+#define NOME_ENTRADA     "entrada-petri-2.txt"
 #define BLOCO_DE_ENTRADA 5
-#define DEBUG 1
+#define DEBUG            1
 /*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
 
 /************** Definição dos tipos para as listas  ****************/
@@ -157,7 +158,7 @@ int main(void)
     lista_arco_transicao *arcos_transicao;  /*Cria ponteiro de lista de arcos transição*/
     lista_transicao *transicoes;            /*Cria ponteiro de lista de inteiros*/
     lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
-    FILE *arquivo = fopen("entrada-petri-1.txt","r");    /* Abrindo o arquivo de entrada*/
+    FILE *arquivo = fopen(NOME_ENTRADA,"r");    /* Abrindo o arquivo de entrada*/
     
     for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
     {
@@ -602,12 +603,14 @@ void *transicao_pt(void *arg)
 void threads(lista *l)
 {
     node *no;
-    no = l->cabeca->proximo;
+    no = l->cabeca;
+    no = no->proximo;
+    int Qtran= no->conteudo;
 
-    pthread_t threads[no->conteudo];
-    int i, arg[no->conteudo];
+    pthread_t threads[Qtran];
+    int i, arg[Qtran];
 
-    for(i=0; i < (no->conteudo); i++)
+    for(i=0; i < Qtran; i++)
     {
         arg[i] = i+1;
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[i]);
