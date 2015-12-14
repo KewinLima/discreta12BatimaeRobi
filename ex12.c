@@ -143,6 +143,10 @@ void limpa_lista_transicao(lista_transicao *l);
 /*                     Allegro                         */
 void imprimir_lugar_allegro(lista *l);
 
+/*                     Thread                          */
+void threads(lista *l);
+void *transicao_pt(void *arg);
+
 /****************** Fim dos Protótipos ******************/
 int main(void)
 { 
@@ -231,6 +235,7 @@ int main(void)
     }
     
     imprimir_lugar_allegro(entrada);
+    threads(entrada);
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -526,7 +531,7 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d = al origem\n", no->conteudo->origem );
+        printf(" %d = al origem\n", no->conteudo->origem->emissor );
         printf(" %d = al destino\n", no->conteudo->destino);
     }
 }
@@ -546,12 +551,39 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
 void imprime_lista_transicao(lista_transicao *l)
 {
     node_transicao *no;
+    transicao *t ;//= no->conteudo;
+
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d = tr \n", no->conteudo);
+        t = no->conteudo;
+        printf(" %d = soletor %d = emissor \n", t->coletor,t->emissor);
     }
 }
 /*************************** Fim de imprime ************************/
+void *transicao_pt(void *arg)
+{
+    int *pvalor;
+    pvalor = arg;
+    printf(" Thread da transicao %d executando \n", *pvalor);
+
+}
+void threads(lista *l)
+{
+    node *no;
+    no = l->cabeca;
+    no = no->proximo;
+    int Qtran = no->conteudo;
+
+    pthread_t threads[Qtran];
+    int i, arg[Qtran];
+
+    for(i=0; i < Qtran; i++)
+    {
+        arg[i] = i+1;
+        pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[i]);
+    }
+
+}
 void imprimir_lugar_allegro(lista *l)
 {
     node *no;
@@ -576,7 +608,7 @@ void imprimir_lugar_allegro(lista *l)
         printf(" Não foi possivel criar o buffer!\n");
         exit(EXIT_FAILURE);
     }
-    
+
     for(n=0; n<Qlugar ; n++)
     {
         circle(buff, 50+n*100, 100, 50, CORAMARELO);/* desenha um circulo */
