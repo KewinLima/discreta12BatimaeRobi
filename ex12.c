@@ -509,6 +509,7 @@ void limpa_lista_transicao(lista_transicao *l)
 void imprime_lista(lista *l, char entrada_lugar)
 {
     node *no;
+    int n;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         if(entrada_lugar == 'e')/* Caso seja referente a entrada */
@@ -520,6 +521,7 @@ void imprime_lista(lista *l, char entrada_lugar)
             if(entrada_lugar == 'l')/* Caso seja referente a lugar */
                 printf(" %d = lugar\n", no->conteudo);
         }
+        n++;
     }
 }
 
@@ -529,14 +531,14 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
     node_arco_lugar *no;
     arco_lugar *al;
-    transicao *t;
     node *lugar;
+    transicao *t;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         al = no->conteudo;
         t = al->origem;
-        node = al->destino;//al->origen
-        printf(" Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \    n" lugar->conteudo, t->coletor, t->emissor);
+        lugar = al->destino;
+        printf(" Qtokensnesselugar =  %d valortransi = %d  transirouba -> %d \n", lugar->conteudo, t->coletor, t->emissor);
     }
 }
 
@@ -562,11 +564,12 @@ void imprime_lista_transicao(lista_transicao *l)
 {
     node_transicao *no;
     transicao *t ;//= no->conteudo;
-
+    int n=0;
     for(no = l->cabeca; no != NULL; no = no->proximo)
-    {
+    {   
         t = no->conteudo;
-        printf(" %d = soletor %d = emissor \n", t->coletor,t->emissor);
+        printf("Transicao = %d |  %d = Valor |  %d = Envia \n",n , t->coletor,t->emissor);
+        n++;
     }
 }
 /*************************** Fim de imprime ************************/
@@ -575,8 +578,10 @@ void *transicao_pt(void *arg)
     int *pvalor;
     pvalor = arg;
     printf(" Thread da transicao %d executando \n", *pvalor);
-
+    
+//    return;
 }
+
 void threads(lista *l)
 {
     node *no;
