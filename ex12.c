@@ -519,14 +519,19 @@ void imprime_lista(lista *l, char entrada_lugar)
             {
                 case 1:
                     printf(" Numero de lugares \n");
+                    break;
                 case 2:
                     printf(" Numero de transicaoes \n");
+                    break;
                 case 3:
                     printf(" Numero de lugares com tokens \n");
+                    break;
                 case 4:
                     printf(" Numero de arco transicões \n");
+                    break;
                 case 5:
                     printf(" Numero de arco lugares \n");
+                    break;
             }
         }
         else 
