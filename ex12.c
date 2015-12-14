@@ -141,7 +141,7 @@ void imprime_lista_transicao(lista_transicao *l);
 void limpa_lista_transicao(lista_transicao *l);
 
 /*                     Allegro                         */
-void imprimir_lugar_allegro(void);
+void imprimir_lugar_allegro(lista *l);
 
 /****************** Fim dos Protótipos ******************/
 int main(void)
@@ -230,7 +230,7 @@ int main(void)
         adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
     
-    imprimir_lugar_allegro();
+    imprimir_lugar_allegro(entrada);
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -513,7 +513,7 @@ void imprime_lista(lista *l, char entrada_lugar)
         else 
         {
             if(entrada_lugar == 'l')/* Caso seja referente a lugar */
-            printf(" %d = lugar\n", no->conteudo);
+                printf(" %d = lugar\n", no->conteudo);
         }
     }
 }
@@ -552,8 +552,13 @@ void imprime_lista_transicao(lista_transicao *l)
     }
 }
 /*************************** Fim de imprime ************************/
-void imprimir_lugar_allegro(void)
+void imprimir_lugar_allegro(lista *l)
 {
+    node *no;
+    no = l->cabeca;
+    int n,Qlugar = no->conteudo;
+    printf(" %d = Qlugar\n", Qlugar);
+
     /* Declaração das variáveis que irmão guardar as imagens */
     BITMAP *buff;  /* Arquivos de bitmap */
     PALETTE pal;   /* Paletas            */
@@ -571,14 +576,17 @@ void imprimir_lugar_allegro(void)
         printf(" Não foi possivel criar o buffer!\n");
         exit(EXIT_FAILURE);
     }
-
-    circle(buff, 100, 100, 50, CORAMARELO);/* desenha um circulo de xc = 160 yc =120 e raio = 100 e cor amarela*/
+    
+    for(n=0; n<Qlugar ; n++)
+    {
+        circle(buff, 50+n*100, 100, 50, CORAMARELO);/* desenha um circulo */
+    }
     //textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");
 
     save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
     destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
     allegro_exit();                     /* Termina o allegro           */
-    
+
 #ifdef DEBUG
     printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
 #endif
