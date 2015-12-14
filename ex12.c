@@ -528,24 +528,34 @@ void imprime_lista(lista *l, char entrada_lugar)
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
     node_arco_lugar *no;
-    
+    arco_lugar *al;
+    transicao *t;
+    node *lugar;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d = al origem\n", no->conteudo->origem->emissor );
-        printf(" %d = al destino\n", no->conteudo->destino);
+        al = no->conteudo;
+        t = al->origem;
+        node = al->destino;//al->origen
+        printf(" Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \    n" lugar->conteudo, t->coletor, t->emissor);
     }
 }
 
 /* Imprime a lista, elemento por elemento*/
+
 void imprime_lista_arco_transicao(lista_arco_transicao *l)
 {
     node_arco_transicao *no;
+    arco_transicao *al;
+    node *lugar;
+    transicao *t;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        printf(" %d = at \n", no->conteudo);
+        al = no->conteudo;
+        t = al->destino;
+        lugar = al->origem;
+        printf(" Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n", lugar->conteudo, t->coletor, t->emissor);
     }
 }
-
 
 /* Imprime a lista, elemento por elemento */
 void imprime_lista_transicao(lista_transicao *l)
@@ -570,8 +580,8 @@ void *transicao_pt(void *arg)
 void threads(lista *l)
 {
     node *no;
-    no = l->cabeca;
-    no = no->proximo;
+    no = l->cabeca->proximo;
+
     int Qtran = no->conteudo;
 
     pthread_t threads[Qtran];
