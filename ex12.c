@@ -148,7 +148,7 @@ void imprimie_lugar_allegro(lista *l);
 void threads(lista *l);
 void *transicao_pt(void *arg);
 
-/*                   Simulador                         */
+/*                    Simulador                        */
 void simulador(lista *l);
 
 /****************** Fim dos Protótipos ******************/
