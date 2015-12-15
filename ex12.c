@@ -149,7 +149,7 @@ void threads(lista *l);
 void *transicao_pt(void *arg);
 
 /*                    Simulador                        */
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao);
+void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes);
 
     
 /****************** Fim dos Protótipos ******************/
@@ -241,7 +241,7 @@ int main(void)
     
     imprimie_lugar_allegro(entrada);
    // threads(entrada);
-    simulador(entrada,lugares,arcos_lugar,arcos_transicao);
+    simulador(entrada,lugares,arcos_lugar,arcos_transicao, transicoes);
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
     imprime_lista(entrada, 'e');    
@@ -261,8 +261,10 @@ int main(void)
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao)
+void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes)
 {
+    int n=0;
+
     /* Referente a lista */
     node *no;
     no = lugar->cabeca;//cabeca e' o primeiro lugar
@@ -272,12 +274,12 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 
     node_arco_lugar *no_al;
     arco_lugar *al;
-    node *lugar_l;
-    transicao *t_l;
+    node *lugar_al;
+    transicao *t_al;
 
     no_al = a_lugar->cabeca;
     al = no_al->conteudo;
-    t_l= al -> origem;
+    t_al= al -> origem;
     // al->destino->conteudo  Quantidades de token no lugar de origem do arco
     // ou lugar_l=al->destino .. lugar1->conteudo ^
     // t_l->coletor             Valor da transicao
@@ -285,27 +287,37 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     
     /* Referente a lista_arco_transicao */
     node_arco_transicao *no_at;
-    arco_transicao *al_t;
-    node *lugar_t;
-    transicao *t_t;
+    arco_transicao *al_at;
+    node *lugar_at;
+    transicao *t_at;
 
     no_at = a_transicao->cabeca;
     
-    al_t = no_at->conteudo;
-    t_t = al_t->destino;
-    lugar_t= al_t -> origem;
+    al_at = no_at->conteudo;
+    t_at = al_at->destino;
+    lugar_at= al_at -> origem;
     
-    // al_t->origem->conteudo  Quantidades de token no lugar de origem do arco 
-    // lugar_t-> conteudo ^
-    // t_t->coletor             Valor da transicao
-    // t_t->emissor             Quandos tokens são enviados
+    // al_at->origem->conteudo  Quantidades de token no lugar de origem do arco 
+    // lugar_at-> conteudo ^
+    // t_at->coletor             Valor da transicao
+    // t_at->emissor             Quandos tokens são enviados
 
+    /*Referente as transições */
+    node_transicao *no_t;
+    transicao *t;
+
+    for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
+    {
+        t = no_t->conteudo;
+        printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
+        n++;
+    }
 
     printf("------------- %d ------------\n",no->conteudo);
-    //printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
-    //printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
-    printf("------ %d ---- %d ----- %d -----\n",al->destino->conteudo,t_l->coletor, t_l->emissor);
-    printf("------%d----- %d ------%d----\n",al_t->origem->conteudo, t_t->coletor,t_t->emissor);
+    printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
+    printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
+    printf("------ %d ---- %d ----- %d -----\n",al->destino->conteudo,t_al->coletor, t_al->emissor);
+    printf("------%d----- %d ------%d----\n",al_at->origem->conteudo, t_at->coletor,t_at->emissor);
 
 }
 /****************Inicio Cria lista - Fim Simulador********************/
