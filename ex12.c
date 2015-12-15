@@ -21,7 +21,7 @@
 #define TAMANHO_X        800
 #define TAMANHO_Y        800
 #define NOME_IMAGEM      "ex12.bmp"
-#define NOME_ENTRADA     "entrada-petri-2.txt"
+#define NOME_ENTRADA     "entrada-petri-1.txt"
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG            1
 /*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
@@ -148,6 +148,7 @@ void imprimir_lugar_allegro(lista *l);
 void threads(lista *l);
 void *transicao_pt(void *arg);
 
+int Qtrans;
 /****************** Fim dos Protótipos ******************/
 int main(void)
 { 
@@ -236,7 +237,7 @@ int main(void)
     }
     
     imprimir_lugar_allegro(entrada);
-    threads(entrada);
+    //threads(entrada);
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -246,7 +247,7 @@ int main(void)
     imprime_lista_arco_transicao(arcos_transicao);
     imprime_lista_transicao(transicoes);
 #endif
-
+    threads(entrada);
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista(entrada);
@@ -523,6 +524,7 @@ void imprime_lista(lista *l, char entrada_lugar)
                     break;
                 case 1:
                     printf(" Numero de transicaoes \n");
+                    Qtrans = no->conteudo;
                     break;
                 case 2:
                     printf(" Numero de lugares com tokens \n");
@@ -586,7 +588,7 @@ void imprime_lista_transicao(lista_transicao *l)
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {   
         t = no->conteudo;
-        printf("Transicao = %d |  %d = Valor |  %d = Envia \n",n , t->coletor,t->emissor);
+        printf(" Transicao = %d |  %d = Valor |  %d = Envia \n",n , t->coletor,t->emissor);
         n++;
     }
 }
@@ -597,23 +599,22 @@ void *transicao_pt(void *arg)
 
     pvalor = arg;
     printf(" Thread da transicao %d executando \n", *pvalor);
-
 }
 
 void threads(lista *l)
 {
-    node *no;
-    no = l->cabeca;
-    no = no->proximo;
-    int Qtran= no->conteudo;
+ //   node *no;
+ //   no = l->cabeca;
+ //   no = no->proximo;
+ //   int Qtran= no->conteudo;
+    pthread_t threads[Qtrans];
+    int i, arg[Qtrans];
 
-    pthread_t threads[Qtran];
-    int i, arg[Qtran];
-
-    for(i=0; i < Qtran; i++)
+    for(i=0; i < Qtrans; i++)
     {
         arg[i] = i+1;
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[i]);
+        printf( " Teoricamente criei a thread\n");
     }
 
 }
@@ -655,4 +656,4 @@ void imprimir_lugar_allegro(lista *l)
     printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
 #endif
 }
-END_OF_MAIN()
+END_OF_FUNCTION()
