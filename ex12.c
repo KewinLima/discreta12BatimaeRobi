@@ -142,26 +142,28 @@ void imprime_lista_transicao(lista_transicao *l);
 void limpa_lista_transicao(lista_transicao *l);
 
 /*                     Allegro                         */
-void imprimir_lugar_allegro(lista *l);
+void imprimie_lugar_allegro(lista *l);
 
 /*                     Thread                          */
 void threads(lista *l);
 void *transicao_pt(void *arg);
 
-int Qtrans;
+/*                   Simulador                         */
+void simulador(lista *l);
+
 /****************** Fim dos Protótipos ******************/
 int main(void)
 { 
     int n; /* variável para o laço da leitura do primeiro bloco de entrada */
     int x; /* Variavel para determinar o limite do laço */
-    lista *lugares;                         /*Cria ponteiro de  lista de lugares, que serão inteiros*/
-    lista_arco_lugar *arcos_lugar;          /*Cria ponteiro de lista de arcos lugar*/
-    lista_arco_transicao *arcos_transicao;  /*Cria ponteiro de lista de arcos transição*/
-    lista_transicao *transicoes;            /*Cria ponteiro de lista de inteiros*/
-    lista *entrada = cria_lista();          /*Cria uma lista para armazenar as entradas iniciais*/
-    FILE *arquivo = fopen(NOME_ENTRADA,"r");    /* Abrindo o arquivo de entrada*/
+    lista *lugares;                          /*Cria ponteiro de  lista de lugares, que serão inteiros*/
+    lista_arco_lugar *arcos_lugar;           /*Cria ponteiro de lista de arcos lugar*/
+    lista_arco_transicao *arcos_transicao;   /*Cria ponteiro de lista de arcos transição*/
+    lista_transicao *transicoes;             /*Cria ponteiro de lista de inteiros*/
+    lista *entrada = cria_lista();           /*Cria uma lista para armazenar as entradas iniciais*/
+    FILE *arquivo = fopen(NOME_ENTRADA,"r"); /* Abrindo o arquivo de entrada*/
     
-    for(n = 0; n < BLOCO_DE_ENTRADA; n++)   /*Laço para leitura do primeiro bloco de entradas*/
+    for(n = 0; n < BLOCO_DE_ENTRADA; n++)    /*Laço para leitura do primeiro bloco de entradas*/
     {
         int leitura;
         fscanf(arquivo,"%d", &leitura);
@@ -236,9 +238,9 @@ int main(void)
         adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
     
-    imprimir_lugar_allegro(entrada);
-    //threads(entrada);
-
+    imprimie_lugar_allegro(entrada);
+    threads(entrada);
+    simulador(entrada);
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
     imprime_lista(entrada, 'e');    
@@ -246,8 +248,9 @@ int main(void)
     imprime_lista_arco_lugar(arcos_lugar);
     imprime_lista_arco_transicao(arcos_transicao);
     imprime_lista_transicao(transicoes);
+    imprimie_lugar_allegro(entrada);
+
 #endif
-    threads(entrada);
     /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     limpa_lista(lugares);
     limpa_lista(entrada);
@@ -258,8 +261,12 @@ int main(void)
     fclose(arquivo);/* fechando o arquivo de entrada*/
     return EXIT_SUCCESS;
 }
-/****************Inicio das funções - Inicio Cria Lista***************/
+/****************Inicio das funções - Inicio Simulador****************/
+void simulador(lista *l)
+{
 
+}
+/****************Inicio Cria lista - Fim Simulador********************/
 lista *cria_lista(void)
 {
     lista *l = malloc(sizeof(lista));
@@ -524,7 +531,6 @@ void imprime_lista(lista *l, char entrada_lugar)
                     break;
                 case 1:
                     printf(" Numero de transicaoes \n");
-                    Qtrans = no->conteudo;
                     break;
                 case 2:
                     printf(" Numero de lugares com tokens \n");
@@ -603,22 +609,22 @@ void *transicao_pt(void *arg)
 
 void threads(lista *l)
 {
- //   node *no;
- //   no = l->cabeca;
- //   no = no->proximo;
- //   int Qtran= no->conteudo;
-    pthread_t threads[Qtrans];
-    int i, arg[Qtrans];
+    node *no;
+    no = l->cabeca;
+    no = no->proximo;
+    int Qtran= no->conteudo;
+    pthread_t threads[Qtran];
 
-    for(i=0; i < Qtrans; i++)
+    int i, arg[Qtran];
+
+    for(i=0; i < Qtran; i++)
     {
         arg[i] = i+1;
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[i]);
-        printf( " Teoricamente criei a thread\n");
     }
 
 }
-void imprimir_lugar_allegro(lista *l)
+void imprimie_lugar_allegro(lista *l)
 {
     node *no;
     no = l->cabeca;
@@ -653,7 +659,7 @@ void imprimir_lugar_allegro(lista *l)
     allegro_exit();                     /* Termina o allegro           */
 
 #ifdef DEBUG
-    printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
+    printf("Imagem %s salva com sucesso!  \n", NOME_IMAGEM);
 #endif
 }
 END_OF_FUNCTION()
