@@ -45,13 +45,13 @@ int main (void)
     Arco_t[2][2]= 3; 
 
     int n2;
-    //printf(" 88888888888888888888 %d 88888888888888 linha 47 ", Qtran);
+   // printf(" 88888888888888888888 %d 88888888888888 linha 47 ", Qtran);
     threads(Qtran);//, 'a'); /*chamar a função transicao*/
    // printf("\n\n Resultado final \n\n");
    // for(n2=0;n2<Qlugar;n2++)
    // {
    //     printf("- lugar[%d] = %d tokens\n",n2,lugar[n2]);
-  //  }
+   // }
     
 
 }
