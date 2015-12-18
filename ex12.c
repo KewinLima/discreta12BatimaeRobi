@@ -411,7 +411,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
             {
                 //int numero = busca_elemento_por_indice_arco_lugar(a_lugar, 0);
-                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n",numero );
+                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", );
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
             }
         }
