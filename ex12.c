@@ -227,7 +227,7 @@ int main(void)
         int lugar;
         int quantidade;
         int transicao;
-        arco_lugar *al = malloc(sizeof(arco_lugar));
+        arco_transicao *at = malloc(sizeof(arco_lugar));
 
         fscanf(arquivo, "%d", &transicao);
         fscanf(arquivo, "%d", &quantidade);
