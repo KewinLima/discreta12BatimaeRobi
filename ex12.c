@@ -150,7 +150,7 @@ void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_a
 void *transicao_pt(void *arg);
 
 /*                    Simulador                        */
-void simulador(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes,int tran_n);
+void simulador(lista *entradas)//,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n);
 
 /****************** Fim dos Protótipos ******************/
 int main(void)
@@ -261,7 +261,7 @@ int main(void)
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
-void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes)
+void threads(lista *entradas);//, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes)
 {
     node *no;
     no = entradas->cabeca;
@@ -335,11 +335,11 @@ void *transicao_pt(void *arg)
                 break;
         }
     }
-
-    simulador(entradas, lugar, a_lugar, a_transicao,transicoes,tran_n);
+    printf(" Cheguei aqui linha 338\n");
+    simulador(entradas);//, lugar, a_lugar, a_transicao,transicoes,tran_n);
 }
 
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
+void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
 {
     int n,n1,sorteio;
 
@@ -412,15 +412,18 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 
             if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
             {
+                
                 int indice;
+                /*
                 for(indice =0;indice <Qarco_l; indice++)
                 {
-                    node *auxiliar = busca_na_lista(lugar,indice);
+                */    node *auxiliar;/* = busca_na_lista(lugar,indice);
                     if(auxiliar == no_al)
                     {
                         break;
                     }
                 }
+                */
                 printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", indice);
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
                 lugar_al->conteudo = lugar_al->conteudo - t_al->coletor;
