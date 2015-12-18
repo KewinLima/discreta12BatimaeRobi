@@ -207,15 +207,15 @@ int main(void)
         int lugar;
         int quantidade;
         int transicao;
-        arco_transicao *at = malloc(sizeof(arco_transicao));
+        arco_lugar *al = malloc(sizeof(arco_transicao));
 
         fscanf(arquivo, "%d", &lugar);
         fscanf(arquivo, "%d", &quantidade);
         fscanf(arquivo, "%d", &transicao);
 
-        at->origem = busca_elemento_por_indice(lugares, lugar);
-        at->destino = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
-        at->destino->coletor = quantidade;
+        al->origem = busca_elemento_por_indice(lugares, lugar);
+        al->destino = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
+        al->destino->coletor = quantidade;
         adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
 
@@ -232,9 +232,9 @@ int main(void)
         fscanf(arquivo, "%d", &transicao);
         fscanf(arquivo, "%d", &quantidade);
         fscanf(arquivo, "%d", &lugar);
-        al->destino = busca_elemento_por_indice(lugares, lugar);
-        al->origem = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
-        al->origem->emissor = quantidade;
+        at->destino = busca_elemento_por_indice(lugares, lugar);
+        at->origem = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
+        at->origem->emissor = quantidade;
         adiciona_na_lista_arco_transicao(arcos_transicao, at);
     }
     
@@ -411,7 +411,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
             {
                 //int numero = busca_elemento_por_indice_arco_lugar(a_lugar, 0);
-                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", );
+                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n" );
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
             }
         }
