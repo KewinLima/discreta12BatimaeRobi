@@ -426,10 +426,10 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 lugar_al->conteudo = lugar_al->conteudo - t_al->conteudo;
                 printf("# Tirei %d do lugar %d\n",t_al->conteudo, indice);
                 printf("#Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
-                for(n1=0;n1<Qaerco_t;n1++)
+                for(n1=0;n1<Qarco_t;n1++)
                 {
                     printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
-                    if(al->origem->conteudo == tran_n)
+                    if(al-> == tran_n)
                     {
                     printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
                     }
@@ -803,7 +803,7 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
         al = no->conteudo;
         t = al->origem;
         lugar = al->destino;
-        printf(" Alnumero = %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n", lugar->conteudo, t->coletor, t->emissor);
+        printf(" Alnumero = %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
         n1++;
     }
 }
