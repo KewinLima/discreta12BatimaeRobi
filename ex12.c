@@ -1,4 +1,4 @@
-/********************************************************
+    /********************************************************
  **| Programa   : Rede de Petri com Processos Paralelos|**
  **| Autores    : Isabella Galvão e Kewin Lima         |**
  **| Orientador : Ruben Carlo                          |**
@@ -427,9 +427,11 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 printf("#Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
                 for(n1=0;n1<Qaerco_t;n1++)
                 {
-                    printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d",n1, tran_n);
-                    if(
-                
+                    printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
+                    if(al->origem->conteudo == tran_n)
+                    {
+                    printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
+                    }
                 }
             }
         }
