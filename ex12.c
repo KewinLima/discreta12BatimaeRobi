@@ -365,15 +365,8 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     node *lugar_al;
     transicao *t_al;
     
-  
-    no_al = a_lugar->cabeca;
-    /*
-    al_al = no_al->conteudo;
-    */
-    t_al= al_al->destino;
-    
     /* Referente a lista_arco_transicao */
-    /*
+
     node_arco_transicao *no_at;
     arco_transicao *al_at;
     node *lugar_at;
@@ -384,7 +377,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     al_at = no_at->conteudo;
     t_at = al_at->origem;
     lugar_at= al_at -> destino;
-    */
+    
     /*Referente as transições */
     /*
     node_transicao *no_t;
