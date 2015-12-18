@@ -727,7 +727,7 @@ void imprime_lista(lista *l, char entrada_lugar)
     }
 }
 
-/* Imprime a lista, elemento por elemento*/
+/* Imprime a lista, elemento por elemento */
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
     int n1=0;
