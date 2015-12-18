@@ -1,4 +1,4 @@
-    /********************************************************
+/********************************************************
  **| Programa   : Rede de Petri com Processos Paralelos|**
  **| Autores    : Isabella Galvão e Kewin Lima         |**
  **| Orientador : Ruben Carlo                          |**
@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-#include <allegro.h>
+//#include <allegro.h>
 
 #define CORBRANCO        (makecol(255,255,255))
 #define CORPRETO         (makecol(0,0,0))
@@ -24,7 +24,7 @@
 #define NOME_ENTRADA     "entrada-petri-1.txt"
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG            1
-#undef DEBUG /* Caso queira um debug,por favor comente essa linha. */ 
+#undef DEBUG /* Caso queira um debug,por favor comente essa linha. */
 
 /************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
@@ -33,6 +33,7 @@ struct struct_transicao
 {
     int coletor;
     int emissor;
+    int indice;
 };
 
 /*Define um node que armazena um inteiro*/
@@ -41,6 +42,7 @@ struct struct_node
 {
     int conteudo;
     node *proximo;
+    int indice;
 };
 /*Define um arco transição*/
 typedef struct struct_arco_transicao arco_transicao;
@@ -150,10 +152,10 @@ void *transicao_pt(void *arg);
 
 /*                    Simulador                        */
 void simulador(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes,int tran_n);
-    
+
 /****************** Fim dos Protótipos ******************/
 int main(void)
-{ 
+{
     int n; /* variável para o laço da leitura do primeiro bloco de entrada */
     int x; /* Variavel para determinar o limite do laço */
     lista *lugares;                          /*Cria ponteiro de  lista de lugares, que serão inteiros*/
@@ -162,7 +164,7 @@ int main(void)
     lista_transicao *transicoes;             /*Cria ponteiro de lista de inteiros*/
     lista *entrada = cria_lista();           /*Cria uma lista para armazenar as entradas iniciais*/
     FILE *arquivo = fopen(NOME_ENTRADA,"r"); /* Abrindo o arquivo de entrada*/
-    
+
     for(n = 0; n < BLOCO_DE_ENTRADA; n++)    /*Laço para leitura do primeiro bloco de entradas*/
     {
         int leitura;
@@ -175,7 +177,7 @@ int main(void)
     x = busca_elemento_por_indice(entrada, 0)->conteudo;
     lugares = cria_lista();
     for(n = 0; n < x; n++)
-        adiciona_na_lista(lugares, 0); 
+        adiciona_na_lista(lugares, 0);
 
     /* Lê quantidade de transições e cria x transições vazias*/
     x = busca_elemento_por_indice(entrada, 1)->conteudo;
@@ -237,13 +239,13 @@ int main(void)
         at->origem->emissor = quantidade;
         adiciona_na_lista_arco_transicao(arcos_transicao, at);
     }
-    
+
     //imprimie_lugar_allegro(entrada);
     threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
-    
+
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
-    imprime_lista(entrada, 'e');    
+    imprime_lista(entrada, 'e');
     imprime_lista(lugares, 'l');
     imprime_lista_arco_lugar(arcos_lugar);
     imprime_lista_arco_transicao(arcos_transicao);
@@ -353,7 +355,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     Qlugar = no_e->conteudo;
     Qarco_t = no_e->proximo->proximo->proximo->conteudo;
     Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
-    
+
     /* Referente a lista_arco_lugar */
 
     node_arco_lugar *no_al;
@@ -364,7 +366,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     no_al = a_lugar->cabeca;
     al_al = no_al->conteudo;
     t_al= al_al->destino;
-    
+
     /* Referente a lista_arco_transicao */
     node_arco_transicao *no_at;
     arco_transicao *al_at;
@@ -380,7 +382,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     /*Referente as transições */
     node_transicao *no_t;
     transicao *t;
-    
+
 
  /*
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
@@ -397,10 +399,10 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     */
 
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
-    
+
     no_al = a_lugar->cabeca;
     no_at = a_transicao->cabeca;
-    al_at
+  //  al_at
     for(n1=0;n1< Qarco_l;n1++)
     {
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
@@ -408,7 +410,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         {
             printf("#Ok, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
             lugar_al = al_al->destino;
-            
+
             if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
             {
                 int indice;
@@ -420,7 +422,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                         break;
                     }
                 }
-                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n" indice);
+                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", indice);
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
                 lugar_al->conteudo = lugar_al->conteudo - t_al->conteudo;
                 printf("# Tirei %d do lugar %d\n",t_al->conteudo, indice);
@@ -517,7 +519,6 @@ lista_transicao *cria_lista_transicao(void)
 void adiciona_na_lista(lista *l, int valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
-    node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice);
     node *novo_node = malloc(sizeof(node));
     novo_node->conteudo = valor;
     novo_node->proximo = NULL;
@@ -526,6 +527,7 @@ void adiciona_na_lista(lista *l, int valor)
     /*Se sim, adiciona o novo_node na cabeça*/
     if(l->cabeca == NULL)
     {
+    	novo_node->indice = 0;
         l->cabeca = novo_node;
     }
     else {
@@ -534,6 +536,7 @@ void adiciona_na_lista(lista *l, int valor)
         for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
 
         /*Nesse último node, adiciona o novo_node como proximo*/
+        novo_node->indice = no->indice + 1;
         no->proximo = novo_node;
         /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     }
@@ -642,6 +645,7 @@ void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
     /* Se sim, adiciona o novo_node na cabeça*/
     if(l->cabeca == NULL)
     {
+    	valor->indice = 0;
         l->cabeca = novo_node;
     }
     else {
@@ -650,6 +654,7 @@ void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
         for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
 
         /* Nesse último node, adiciona o novo_node como proximo*/
+        valor->indice = no->indice + 1;
         no->proximo = novo_node;
     }
 }
@@ -758,7 +763,7 @@ void imprime_lista(lista *l, char entrada_lugar)
                     break;
             }
         }
-        else 
+        else
         {
             if(entrada_lugar == 'l')/* Caso seja referente a lugar */
                 printf(" %dº lugar | %d Quantidade de tokens \n",n, no->conteudo);
@@ -811,10 +816,9 @@ void imprime_lista_transicao(lista_transicao *l)
     transicao *t ;//= no->conteudo;
     int n=0;
     for(no = l->cabeca; no != NULL; no = no->proximo)
-    {   
+    {
         t = no->conteudo;
         printf(" Transicao = %d |  %d = Valor |  %d = Envia \n",n , t->coletor,t->emissor);
         n++;
     }
 }
-
