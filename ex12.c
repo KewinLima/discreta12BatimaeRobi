@@ -389,18 +389,38 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
         n++;
     }
-*/
     printf("------------- %d ------------\n",no->conteudo);
     printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
     printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
     printf("---------- %d ---- %d ----- %d -----\n",al_al->destino->conteudo,t_al->coletor, t_al->emissor);
     printf("------%d----- %d ------%d----\n",al_at->origem->conteudo, t_at->coletor,t_at->emissor);
-    
+    */
+
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
+    
+    no_al = a_lugar->cabeca;
+    no_at = a_transicao->cabeca;
+    
     for(n1=0;n1< Qarco_l;n1++)
     {
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
-        if(
+        if(al_al->origem == tran_n)
+        {
+            printf("#Ok, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
+            lugar = al_al->destino;
+            if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
+            {
+                //int numero = busca_elemento_por_indice_arco_lugar(a_lugar, 0);
+                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n",numero);
+                printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
+            }
+        }
+        else
+        {
+            printf("# O arcolugar %d nao tem relacao com a transicao %d\n",n1, tran_n);
+            continue;
+        }
+    }
 }
 void imprimie_lugar_allegro(lista *l)
 {
@@ -418,8 +438,8 @@ void imprimie_lugar_allegro(lista *l)
     set_color_depth(16);/* Definindo o numero de cores usadas  */
     get_palette(pal);   /* Pega as pelates para usar no codigo */
 
-   /* Criando um buffer para a imagem.*/
-        buff = create_bitmap(TAMANHO_X,TAMANHO_Y);
+    /* Criando um buffer para a imagem.*/
+    buff = create_bitmap(TAMANHO_X,TAMANHO_Y);
     if(buff == NULL)
     {
         printf(" Não foi possivel criar o buffer!\n");
@@ -777,4 +797,4 @@ void imprime_lista_transicao(lista_transicao *l)
         n++;
     }
 }
- 
+
