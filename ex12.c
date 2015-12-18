@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <stdlib.h>
-//#include <allegro.h>
+#include <allegro.h>
 
 #define CORBRANCO        (makecol(255,255,255))
 #define CORPRETO         (makecol(0,0,0))
@@ -416,7 +416,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 int indice;
                 for(indice =0;indice <Qarco_l; indice++)
                 {
-                    node *auxiliar = busca_na_lista(lugares,indice);
+                    node *auxiliar = busca_na_lista(lugar,indice);
                     if(auxiliar == no_al)
                     {
                         break;
