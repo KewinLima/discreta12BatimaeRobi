@@ -46,16 +46,16 @@ struct struct_node
 typedef struct struct_arco_transicao arco_transicao;
 struct struct_arco_transicao
 {
-    node *origem;
-    transicao *destino;
+    node *destino;
+    transicao *origem;
 };
 
 /*Define um arco lugar*/
 typedef struct struct_arco_lugar arco_lugar;
 struct struct_arco_lugar
 {
-    transicao *origem;
-    node *destino;
+    transicao *destino;
+    node *origem;
 };
 
 
@@ -145,12 +145,11 @@ void limpa_lista_transicao(lista_transicao *l);
 void imprimie_lugar_allegro(lista *l);
 
 /*                     Thread                          */
-void threads(lista *l);
+void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes);
 void *transicao_pt(void *arg);
 
 /*                    Simulador                        */
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes);
-
+void simulador(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes,int tran_n);
     
 /****************** Fim dos Protótipos ******************/
 int main(void)
@@ -217,7 +216,7 @@ int main(void)
         at->origem = busca_elemento_por_indice(lugares, lugar);
         at->destino = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
         at->destino->coletor = quantidade;
-        adiciona_na_lista_arco_transicao(arcos_transicao, at);
+        adiciona_na_lista_arco_lugar(arcos_lugar, al);
     }
 
     /*Lê as informações sobre os arcos lugar, cria cada um e os guarda na lista adequada*/
@@ -236,12 +235,12 @@ int main(void)
         al->destino = busca_elemento_por_indice(lugares, lugar);
         al->origem = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
         al->origem->emissor = quantidade;
-        adiciona_na_lista_arco_lugar(arcos_lugar, al);
+        adiciona_na_lista_arco_transicao(arcos_transicao, at);
     }
     
-    imprimie_lugar_allegro(entrada);
-   // threads(entrada);
-    simulador(entrada,lugares,arcos_lugar,arcos_transicao, transicoes);
+    //imprimie_lugar_allegro(entrada);
+    threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
+    
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
     imprime_lista(entrada, 'e');    
@@ -261,29 +260,110 @@ int main(void)
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes)
+void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes)
 {
-    int n=0;
+    node *no;
+    no = entradas->cabeca;
+    no = no->proximo;
+    int Qtran= no->conteudo;
+    pthread_t threads[Qtran];
+    int i=0, arg[5+Qtran];
+
+    arg[0] = entradas;
+    printf(" endereco entrada     = %d \n", entradas);
+    arg[1] = lugar;
+    printf(" endereco lugar       = %d \n", lugar);
+    arg[2] = a_lugar;
+    printf(" endereco a_lugar     = %d \n", a_lugar);
+    arg[3] = a_transicao;
+    printf(" endereco a_transicao = %d \n", a_transicao);
+    arg[4] = transicoes;
+    printf(" endereco transicoes  = %d \n", transicoes);
+    for(i=0; i<5 ;i++)
+    {
+        printf(" arg[%d] = %d \n Endereco arg[%d] = %d \n",i,arg[i],i,&arg[i]);
+    }
+    /*  for(i=0; i < Qtran; i++)
+     *      {
+     *              arg[i+5] = i;*/
+    arg[5]=0;
+    printf("arg[5] == %d\n arg[6] == %d\n", arg[5],arg[6]);
+    /*  pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[0]);*/
+    transicao_pt(&arg[5]);
+    /*  }*/
+}
+
+void *transicao_pt(void *arg)
+{
+    int *pvalor,n=0,tran_n;
+
+    lista *entradas;
+    lista *lugar;
+    lista_arco_lugar *a_lugar;
+    lista_arco_transicao *a_transicao;
+    lista_transicao *transicoes;
+    pvalor = arg;
+    tran_n = *pvalor;
+
+    printf(" arg[0] == *pvalor == %d\n Endereco pvalor == %d\n",*pvalor);
+    printf(" Thread da transicao %d executando \n", tran_n);
+    for(n=0; n<5; n++)
+    {
+        pvalor = pvalor - 1;
+        switch(n)
+        {
+            case 0:
+                transicoes = *pvalor;
+                printf(" transicoes  pvalor[%d] = [%d] \n",n,*pvalor);
+                break;
+            case 1:
+                a_transicao = *pvalor;
+                printf(" arco_trans pvalor[%d] = [%d] \n",n,*pvalor);
+                break;
+            case 2:
+                a_lugar = *pvalor;
+                printf(" arco_lugar pvalor[%d] = [%d] \n",n,*pvalor);
+                break;
+            case 3:
+                lugar = *pvalor;
+                printf(" lugar pvalor[%d] = [%d] \n",n,*pvalor);
+                break;
+            case 4:
+                entradas = *pvalor;
+                printf(" entradas pvalor[%d] = [%d] \n",n,*pvalor);
+                break;
+        }
+    }
+
+    simulador(entradas, lugar, a_lugar, a_transicao,transicoes,tran_n);
+}
+
+void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
+{
+    int n,n1,sorteio;
 
     /* Referente a lista */
     node *no;
     no = lugar->cabeca;//cabeca e' o primeiro lugar
-    no->conteudo=no->conteudo - 1 ; // Aqui ta o inteiro do numero de tokens
+    no = no->proximo->conteudo ; // Aqui ta o inteiro do numero de tokens
+
+    node *no_e;
+    no_e = entradas->cabeca;
+    int Qlugar,Qarco_t,Qarco_l;
+    Qlugar = no_e->conteudo;
+    Qarco_t = no_e->proximo->proximo->proximo->conteudo;
+    Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
     
     /* Referente a lista_arco_lugar */
 
     node_arco_lugar *no_al;
-    arco_lugar *al;
+    arco_lugar *al_al;
     node *lugar_al;
     transicao *t_al;
 
     no_al = a_lugar->cabeca;
-    al = no_al->conteudo;
-    t_al= al -> origem;
-    // al->destino->conteudo  Quantidades de token no lugar de origem do arco
-    // ou lugar_l=al->destino .. lugar1->conteudo ^
-    // t_l->coletor             Valor da transicao
-    // t_l->emissor             Quandos tokens são enviados
+    al_al = no_al->conteudo;
+    t_al= al_al -> origem;
     
     /* Referente a lista_arco_transicao */
     node_arco_transicao *no_at;
@@ -292,35 +372,77 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     transicao *t_at;
 
     no_at = a_transicao->cabeca;
-    
+
     al_at = no_at->conteudo;
     t_at = al_at->destino;
     lugar_at= al_at -> origem;
-    
-    // al_at->origem->conteudo  Quantidades de token no lugar de origem do arco 
-    // lugar_at-> conteudo ^
-    // t_at->coletor             Valor da transicao
-    // t_at->emissor             Quandos tokens são enviados
 
     /*Referente as transições */
     node_transicao *no_t;
     transicao *t;
+    
 
+ /*
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
     {
         t = no_t->conteudo;
         printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
         n++;
     }
-
+*/
     printf("------------- %d ------------\n",no->conteudo);
     printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
     printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
-    printf("------ %d ---- %d ----- %d -----\n",al->destino->conteudo,t_al->coletor, t_al->emissor);
+    printf("---------- %d ---- %d ----- %d -----\n",al_al->destino->conteudo,t_al->coletor, t_al->emissor);
     printf("------%d----- %d ------%d----\n",al_at->origem->conteudo, t_at->coletor,t_at->emissor);
-
+    
+    printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
+    for(n1=0;n1< Qarco_l;n1++)
+    {
+        printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
+        if(
 }
-/****************Inicio Cria lista - Fim Simulador********************/
+void imprimie_lugar_allegro(lista *l)
+{
+    node *no;
+    no = l->cabeca;
+    int n;
+
+    /* Declaração das variáveis que irmão guardar as imagens */
+    BITMAP *buff;  /* Arquivos de bitmap */
+    PALETTE pal;   /* Paletas            */
+
+    if(install_allegro(SYSTEM_NONE, &errno, atexit)!=0) /* Instala o allegro para que ele seja usado no codigo */
+        exit(EXIT_FAILURE);
+
+    set_color_depth(16);/* Definindo o numero de cores usadas  */
+    get_palette(pal);   /* Pega as pelates para usar no codigo */
+
+   /* Criando um buffer para a imagem.*/
+        buff = create_bitmap(TAMANHO_X,TAMANHO_Y);
+    if(buff == NULL)
+    {
+        printf(" Não foi possivel criar o buffer!\n");
+        exit(EXIT_FAILURE);
+    }
+
+    for(n=0; n< (no->conteudo) ; n++)
+    {
+        circle(buff, 50+(n*100), 100, 50, CORAMARELO);/* desenha um circulo */
+    }
+    /*textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");*/
+
+    save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
+    destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
+    allegro_exit();                     /* Termina o allegro           */
+
+#ifdef DEBUG
+    printf("Imagem %s salva com sucesso!  \n", NOME_IMAGEM);
+#endif
+}
+END_OF_FUNCTION()
+
+    /****************Inicio Cria lista - Fim Simulador********************/
 lista *cria_lista(void)
 {
     lista *l = malloc(sizeof(lista));
@@ -608,6 +730,7 @@ void imprime_lista(lista *l, char entrada_lugar)
 /* Imprime a lista, elemento por elemento*/
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
+    int n1=0;
     node_arco_lugar *no;
     arco_lugar *al;
     node *lugar;
@@ -615,9 +738,10 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         al = no->conteudo;
-        t = al->origem;
-        lugar = al->destino;
-        printf(" Qtokensnesselugar =  %d valortransi = %d  transirouba -> %d \n", lugar->conteudo, t->coletor, t->emissor);
+        t = al->destino;
+        lugar = al->origem;
+        printf(" Arcolugar %d Qtokensnesselugar =  %d valortransi = %d  transirouba -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
+        n1++;
     }
 }
 
@@ -625,6 +749,7 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
 
 void imprime_lista_arco_transicao(lista_arco_transicao *l)
 {
+    int n1=0;
     node_arco_transicao *no;
     arco_transicao *al;
     node *lugar;
@@ -632,9 +757,10 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         al = no->conteudo;
-        t = al->destino;
-        lugar = al->origem;
-        printf(" Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n", lugar->conteudo, t->coletor, t->emissor);
+        t = al->origem;
+        lugar = al->destino;
+        printf(" Alnumero = %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n", lugar->conteudo, t->coletor, t->emissor);
+        n1++;
     }
 }
 
@@ -651,68 +777,4 @@ void imprime_lista_transicao(lista_transicao *l)
         n++;
     }
 }
-/*************************** Fim de imprime ************************/
-void *transicao_pt(void *arg)
-{
-    int *pvalor;
-
-    pvalor = arg;
-    printf(" Thread da transicao %d executando \n", *pvalor);
-}
-
-void threads(lista *l)
-{
-    node *no;
-    no = l->cabeca;
-    no = no->proximo;
-    int Qtran= no->conteudo;
-    pthread_t threads[Qtran];
-
-    int i, arg[Qtran];
-
-    for(i=0; i < Qtran; i++)
-    {
-        arg[i] = i+1;
-        pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[i]);
-    }
-
-}
-void imprimie_lugar_allegro(lista *l)
-{
-    node *no;
-    no = l->cabeca;
-    int n;
-
-    /* Declaração das variáveis que irmão guardar as imagens */
-    BITMAP *buff;  /* Arquivos de bitmap */
-    PALETTE pal;   /* Paletas            */
-
-    if(install_allegro(SYSTEM_NONE, &errno, atexit)!=0) /* Instala o allegro para que ele seja usado no codigo */
-        exit(EXIT_FAILURE);
-
-    set_color_depth(16);/* Definindo o numero de cores usadas  */
-    get_palette(pal);   /* Pega as pelates para usar no codigo */
-
-    // Criando um buffer para a imagem.
-    buff = create_bitmap(TAMANHO_X,TAMANHO_Y);
-    if(buff == NULL)
-    {
-        printf(" Não foi possivel criar o buffer!\n");
-        exit(EXIT_FAILURE);
-    }
-
-    for(n=0; n< (no->conteudo) ; n++)
-    {
-        circle(buff, 50+n*100, 100, 50, CORAMARELO);/* desenha um circulo */
-    }
-    //textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");
-
-    save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
-    destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
-    allegro_exit();                     /* Termina o allegro           */
-
-#ifdef DEBUG
-    printf("Imagem %s salva com sucesso!  \n", NOME_IMAGEM);
-#endif
-}
-END_OF_FUNCTION()
+ 
