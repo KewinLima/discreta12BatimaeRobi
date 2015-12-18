@@ -150,7 +150,7 @@ void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_a
 void *transicao_pt(void *arg);
 
 /*                    Simulador                        */
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar);//, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n);
+void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao);//, lista_transicao *transicoes, int tran_n);
 
 /****************** Fim dos Protótipos ******************/
 int main(void)
@@ -336,10 +336,10 @@ void *transicao_pt(void *arg)
         }
     }
     printf(" Cheguei aqui linha 338\n");
-    simulador(entradas, lugar, a_lugar);//, a_transicao,transicoes,tran_n);
+    simulador(entradas, lugar, a_lugar, a_transicao);//,transicoes);//,tran_n);
 }
 
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar)//, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
+void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao)//, lista_transicao *transicoes, int tran_n)
 {
     int n,n1,sorteio;
     printf(" ####### DEGUB Linha 345 ######");
