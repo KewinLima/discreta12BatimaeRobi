@@ -24,7 +24,7 @@
 #define NOME_ENTRADA     "entrada-petri-1.txt"
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG            1
-/*#undef DEBUG*/ /* Caso queira um debug,por favor comente essa linha. */ 
+#undef DEBUG /* Caso queira um debug,por favor comente essa linha. */ 
 
 /************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
@@ -363,7 +363,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 
     no_al = a_lugar->cabeca;
     al_al = no_al->conteudo;
-    t_al= al_al -> origem;
+    t_al= al_al->destino;
     
     /* Referente a lista_arco_transicao */
     node_arco_transicao *no_at;
@@ -374,8 +374,8 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     no_at = a_transicao->cabeca;
 
     al_at = no_at->conteudo;
-    t_at = al_at->destino;
-    lugar_at= al_at -> origem;
+    t_at = al_at->origem;
+    lugar_at= al_at -> destino;
 
     /*Referente as transições */
     node_transicao *no_t;
@@ -400,19 +400,37 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     
     no_al = a_lugar->cabeca;
     no_at = a_transicao->cabeca;
-    
+    al_at
     for(n1=0;n1< Qarco_l;n1++)
     {
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
         if(al_al->origem == tran_n)
         {
             printf("#Ok, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
-            lugar = al_al->destino;
+            lugar_al = al_al->destino;
+            
             if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
             {
-                //int numero = busca_elemento_por_indice_arco_lugar(a_lugar, 0);
-                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n" );
+                int indice;
+                for(indice =0;indice <Qarco_l; indice++)
+                {
+                    node *auxiliar = busca_na_lista(lugares,indice);
+                    if(auxiliar == no_al)
+                    {
+                        break;
+                    }
+                }
+                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n" indice);
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
+                lugar_al->conteudo = lugar_al->conteudo - t_al->conteudo;
+                printf("# Tirei %d do lugar %d\n",t_al->conteudo, indice);
+                printf("#Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
+                for(n1=0;n1<Qaerco_t;n1++)
+                {
+                    printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d",n1, tran_n);
+                    if(
+                
+                }
             }
         }
         else
