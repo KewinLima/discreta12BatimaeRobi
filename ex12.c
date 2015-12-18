@@ -423,16 +423,16 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 }
                 printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", indice);
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
-                lugar_al->conteudo = lugar_al->conteudo - t_al->conteudo;
-                printf("# Tirei %d do lugar %d\n",t_al->conteudo, indice);
+                lugar_al->conteudo = lugar_al->conteudo - t_al->coletor;
+                printf("# Tirei %d do lugar %d\n",t_al->coletor, indice);
                 printf("#Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
                 for(n1=0;n1<Qarco_t;n1++)
                 {
                     printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
-                    if(al-> == tran_n)
-                    {
-                    printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
-                    }
+                 //   if(al-> == tran_n)
+                  //  {
+                  //  printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
+                   // }
                 }
             }
         }
@@ -647,13 +647,14 @@ void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
     	valor->indice = 0;
         l->cabeca = novo_node;
     }
-    else {
+    else
+    {
         /* Se não for vazia, procura o último node da lista*/
         node_transicao *no;
         for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
 
         /* Nesse último node, adiciona o novo_node como proximo*/
-        valor->indice = no->indice + 1;
+        valor->indice = no->conteudo->indice + 1;
         no->proximo = novo_node;
     }
 }
