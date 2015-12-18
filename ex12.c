@@ -345,29 +345,33 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     printf(" ####### DEGUB Linha 345 ######");
 
     /* Referente a lista */
-    /*
+    
     node *no;
     no = lugar->cabeca;//cabeca e' o primeiro lugar
     no = no->proximo->conteudo ; // Aqui ta o inteiro do numero de tokens
 
     node *no_e;
     no_e = entradas->cabeca;
+    
     int Qlugar,Qarco_t,Qarco_l;
     Qlugar = no_e->conteudo;
     Qarco_t = no_e->proximo->proximo->proximo->conteudo;
     Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
-    */
+    
     /* Referente a lista_arco_lugar */
-    /*
+
     node_arco_lugar *no_al;
     arco_lugar *al_al;
     node *lugar_al;
     transicao *t_al;
-
+    
+  
     no_al = a_lugar->cabeca;
+    /*
     al_al = no_al->conteudo;
-    t_al= al_al->destino;
     */
+    t_al= al_al->destino;
+    
     /* Referente a lista_arco_transicao */
     /*
     node_arco_transicao *no_at;
