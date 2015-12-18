@@ -150,7 +150,7 @@ void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_a
 void *transicao_pt(void *arg);
 
 /*                    Simulador                        */
-void simulador(lista *entradas)//,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n);
+void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n);
 
 /****************** Fim dos Protótipos ******************/
 int main(void)
@@ -261,7 +261,7 @@ int main(void)
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
-void threads(lista *entradas);//, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes)
+void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes)
 {
     node *no;
     no = entradas->cabeca;
@@ -339,11 +339,13 @@ void *transicao_pt(void *arg)
     simulador(entradas);//, lugar, a_lugar, a_transicao,transicoes,tran_n);
 }
 
-void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
+void simulador(lista *entradas)//,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
 {
     int n,n1,sorteio;
+    printf(" ####### DEGUB Linha 345 ######");
 
     /* Referente a lista */
+    /*
     node *no;
     no = lugar->cabeca;//cabeca e' o primeiro lugar
     no = no->proximo->conteudo ; // Aqui ta o inteiro do numero de tokens
@@ -354,9 +356,9 @@ void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, li
     Qlugar = no_e->conteudo;
     Qarco_t = no_e->proximo->proximo->proximo->conteudo;
     Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
-
+    */
     /* Referente a lista_arco_lugar */
-
+    /*
     node_arco_lugar *no_al;
     arco_lugar *al_al;
     node *lugar_al;
@@ -365,8 +367,9 @@ void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, li
     no_al = a_lugar->cabeca;
     al_al = no_al->conteudo;
     t_al= al_al->destino;
-
+    */
     /* Referente a lista_arco_transicao */
+    /*
     node_arco_transicao *no_at;
     arco_transicao *al_at;
     node *lugar_at;
@@ -377,11 +380,12 @@ void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, li
     al_at = no_at->conteudo;
     t_at = al_at->origem;
     lugar_at= al_at -> destino;
-
+    */
     /*Referente as transições */
+    /*
     node_transicao *no_t;
     transicao *t;
-
+    */
 
  /*
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
@@ -396,7 +400,7 @@ void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, li
     printf("---------- %d ---- %d ----- %d -----\n",al_al->destino->conteudo,t_al->coletor, t_al->emissor);
     printf("------%d----- %d ------%d----\n",al_at->origem->conteudo, t_at->coletor,t_at->emissor);
     */
-
+/*
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
 
     no_al = a_lugar->cabeca;
@@ -414,16 +418,16 @@ void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, li
             {
                 
                 int indice;
-                /*
+                
                 for(indice =0;indice <Qarco_l; indice++)
                 {
-                */    node *auxiliar;/* = busca_na_lista(lugar,indice);
+                    node *auxiliar; = busca_na_lista(lugar,indice);
                     if(auxiliar == no_al)
                     {
                         break;
                     }
                 }
-                */
+                
                 printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", indice);
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
                 lugar_al->conteudo = lugar_al->conteudo - t_al->coletor;
@@ -445,6 +449,7 @@ void simulador(lista *entradas);//,  lista *lugar, lista_arco_lugar *a_lugar, li
             continue;
         }
     }
+    */
 }
 void imprimie_lugar_allegro(lista *l)
 {
