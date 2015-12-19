@@ -346,6 +346,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     int n,n1,n2,n3,sorteio;
     printf(" ####### DEGUB Linha 346 ######\n");
     /* Referente a lista */
+    tran_n = 1; 
     
     node *no;
     no = lugar->cabeca;
@@ -378,12 +379,12 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     arco_transicao *at_at;
     node *lugar_at;
     transicao *t_at;
-/*
+
     no_at = a_transicao->cabeca;
     at_at = no_at->conteudo;
     t_at = at_at->origem;
     lugar_at= at_at->destino;
-*/
+
     /*Referente as transições */
 
     node_transicao *no_t;
@@ -393,12 +394,13 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     printf(" arcolugar parte de %d \n", al_al->origem);
     printf(" Arcolugar chega em %d \n", al_al->destino);
     printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
-    printf(" Arcotransicao parte de %d \n", at_at->destino);
+    printf(" Arcotransicao parte de %d \n", at_at->origem);
     printf(" Arcotransicao chega em %d \n", at_at->destino);
+    printf(" Quantidade de tokens no lugar = %d \n", lugar_at->conteudo);
     printf(" Valor da transicao %d \n", t_al->coletor);
     printf(" Valor da doacao %d \n",t_al->emissor);
 
-    printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
+    printf("# Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
 
     if(tran_n == 0)/* Caso seja a transicao 0, recebe a cabeca da lista */
     {
@@ -413,25 +415,32 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         }
     }
     t = no->conteudo;
-    printf(" Tranicao == %d \n", *t);
-    printf(" Tranicao envia %d\n", t->emissor);
-    printf(" Tranicao custa %d\n", t->coletor);
+   // printf(" Tranicao == %d \n", *t);
+   // printf(" Tranicao envia %d\n", t->emissor);
+    //printf(" Tranicao custa %d\n", t->coletor);
 
     for(n1=0;n1< Qarco_l;n1++)
     {
-        no_al = a_lugar->cabeca;
-        if(n1 != 0)
+        if(n1 == 0)
         {
+            no_al = a_lugar->cabeca;
+            al_al = no_al->conteudo;
+        }
+        else
+        {
+            no_al = a_lugar->cabeca;
             for(n=0; n<n1 ;n++)/* Encontra o elemento da lista numero n1*/
             {
                 no_al = no_al->proximo;
                 al_al = no_al->conteudo;
             }
         }
+        
+        lugar_al = al_al->origem; /* Após encontrar o lugar desejado relaciona o mesmo com lugar_al */
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
         if(al_al->destino == t)
         {
-            printf(" Endereco de t =%d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
+            printf(" Endereco de t = %d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
             printf("# Sim, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
             if( (lugar_al->conteudo) - (t->coletor) >=0 )/* Condicao para acionar a transicao */
             {    
@@ -443,11 +452,10 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                         break;
                     no->proximo;
                 }
-
                 printf("# Legal, temos tokens suficientes no lugar %d, onde parte o arco lugar %d \n", n2,n1);
                 lugar_al->conteudo = lugar_al->conteudo - t->coletor;
                 printf("# Tirei %d do lugar %d que agora tem %d\n",t->coletor, n2,lugar_al->conteudo);
-                printf("# Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n); 
+                printf("# Ok, vamos agora trabalhar com os arcos transicoes da transicao %d\n",tran_n); 
                 for(n3=0;n3<Qarco_t;n3++)
                 {
                     printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n3,tran_n);
@@ -479,6 +487,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                             printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
                             lugar_at->conteudo = lugar_at->conteudo + t->emissor;
                             printf("# Adicionei %d ao lugar %d \n",t->emissor, n3);// <- errado);
+                            printf("# Que agora tem %d \n",lugar_at->conteudo);
                         }
                     }
                     else
