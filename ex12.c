@@ -381,7 +381,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 
     al_at = no_at->conteudo;
     t_at = al_at->origem;
-    lugar_at= al_at -> destino;
+    lugar_at= al_at->destino;
     
     /*Referente as transições */
     
@@ -401,8 +401,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
     printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
     printf("---------- %d ---- %d ----- %d -----\n",al_al->origem->conteudo,t_al->coletor, t_al->emissor);
-    printf("------%d----- %d ------%d----\n",al_at->destino->conteudo, t_at->coletor,t_at->emissor);
-*/    
+    printf("---    
 
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
 
@@ -439,11 +438,17 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 for(n1=0;n1<Qarco_t;n1++)
                 {
                     printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
-                 //   if(al-> == tran_n)
-                  //  {
-                  //  printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
-                   // }
+                    if( == tran_n)
+                    {
+                    printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
+                  // }
                 }
+            }
+            else
+            {   
+                printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %%d \n");,// indice);
+                printf("# Precisaria de %d tokens mas so' tem %d \n",t_al->coletor,lugar_al->conteudo);
+                continue;
             }
         }
         else
@@ -452,7 +457,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             continue;
         }
     }
-    
+
 }
 void imprimie_lugar_allegro(lista *l)
 {
@@ -537,7 +542,7 @@ void adiciona_na_lista(lista *l, int valor)
     /*Se sim, adiciona o novo_node na cabeça*/
     if(l->cabeca == NULL)
     {
-    	novo_node->indice = 0;
+        novo_node->indice = 0;
         l->cabeca = novo_node;
     }
     else {
@@ -655,7 +660,7 @@ void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
     /* Se sim, adiciona o novo_node na cabeça*/
     if(l->cabeca == NULL)
     {
-    	valor->indice = 0;
+        valor->indice = 0;
         l->cabeca = novo_node;
     }
     else
