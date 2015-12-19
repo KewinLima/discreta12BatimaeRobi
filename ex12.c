@@ -365,6 +365,10 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     node *lugar_al;
     transicao *t_al;
     
+    no_al = a_lugar->cabeca;
+    //al_al = no_al->conteudo;
+    t_al  = al_al->destino;
+
     /* Referente a lista_arco_transicao */
 
     node_arco_transicao *no_at;
@@ -379,29 +383,30 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     lugar_at= al_at -> destino;
     
     /*Referente as transições */
-    /*
+    
     node_transicao *no_t;
     transicao *t;
-    */
+    
 
- /*
+ 
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
     {
         t = no_t->conteudo;
         printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
         n++;
     }
+    /*
     printf("------------- %d ------------\n",no->conteudo);
     printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
     printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
     printf("---------- %d ---- %d ----- %d -----\n",al_al->destino->conteudo,t_al->coletor, t_al->emissor);
     printf("------%d----- %d ------%d----\n",al_at->origem->conteudo, t_at->coletor,t_at->emissor);
-    */
-/*
-    printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
+    
 
-    no_al = a_lugar->cabeca;
-    no_at = a_transicao->cabeca;
+    printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
+*/
+  //  no_al = a_lugar->cabeca;
+   // no_at = a_transicao->cabeca;
   //  al_at
     for(n1=0;n1< Qarco_l;n1++)
     {
@@ -418,7 +423,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 
                 for(indice =0;indice <Qarco_l; indice++)
                 {
-                    node *auxiliar; = busca_na_lista(lugar,indice);
+                    node *auxiliar;// = busca_na_lista(lugar,indice);
                     if(auxiliar == no_al)
                     {
                         break;
@@ -446,7 +451,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             continue;
         }
     }
-    */
+    
 }
 void imprimie_lugar_allegro(lista *l)
 {
