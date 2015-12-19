@@ -343,17 +343,13 @@ void *transicao_pt(void *arg)
 
 void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
 {
-    int n,n1,n2,sorteio,*pont1,*pont2;
+    int n,n1,n2,n3,sorteio;
     printf(" ####### DEGUB Linha 346 ######\n");
-  //  printf(" SUPREMO: endereco a_lista = %d \n",ponteiro);
     /* Referente a lista */
     
     node *no;
-    no = lugar->cabeca;//cabeca e' o primeiro lugar
-    no = no->proximo->conteudo ; // Aqui ta o inteiro do numero de tokens
 
     node *no_e;
-    no_e = entradas->cabeca;
     
     int Qlugar,Qarco_t,Qarco_l;
     Qlugar = no_e->conteudo;
@@ -427,20 +423,23 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             }
         }
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
-        // pont1 = &(al_al->destino);
-        // pont2 = &t;
         if(al_al->destino == t)
         {
             printf(" Endereco de t =%d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
             printf("# Sim, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
             if( (lugar_al->conteudo) - (t->coletor) >=0 )/* Condicao para acionar a transicao */
             {
-                printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", n1);
-                printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t->coletor);
-                lugar_al->conteudo = lugar_al->conteudo - t->coletor;
-                printf("# Tirei %d do lugar %d que agora tem %d\n",t->coletor, n1,lugar_al->conteudo);
+                n2=0;
+                for(no = entradas->cabeca; no!=NULL ; no->proximo)
+                {
+                    if( no == lugar_al)
+                        break;
+                    n2++;
+                }
+                printf("# Legal, temos tokens suficientes no lugar %d, onde parte o arco lugar %d \n", n2,n1);
+                printf("# Tirei %d do lugar %d que agora tem %d\n",t->coletor, n2,lugar_al->conteudo);
                 printf("# Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n); 
-                for(n2=0;n2<Qarco_t;n2++)
+                for(n3=0;n3<Qarco_t;n3++)
                 {
                     printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n2,tran_n);
                     printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n2, tran_n);
@@ -481,7 +480,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             }
             else
             {   
-                printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1);
+                printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1);// <-
                 printf("# Precisaria de %d tokens mas so' tem %d \n",t->coletor,lugar_al->conteudo);
                 continue;
             }
