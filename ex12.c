@@ -352,6 +352,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     no= no->proximo->conteudo;
     
     node *no_e;
+    arco_transicao *at_e;
     no_e = entradas->cabeca;
     
     int Qlugar,Qarco_t,Qarco_l;
@@ -431,17 +432,16 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             printf(" Endereco de t =%d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
             printf("# Sim, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
             if( (lugar_al->conteudo) - (t->coletor) >=0 )/* Condicao para acionar a transicao */
-            {
-                /*
-                n2=0;
-                for(no = entradas->cabeca; no!=NULL ; no->proximo)
+            {    
+                no = entradas ->cabeca;
+                for(n2=0; n2 < Qlugar; n2++)
                 {
-                    printf(" oi \n");
-                    if( no == lugar_al)
+                    at_e = no->conteudo;
+                    if( at_e == lugar_al)
                         break;
-                    n2++;
+                    no->proximo;
                 }
-                */
+
                 printf("# Legal, temos tokens suficientes no lugar %d, onde parte o arco lugar %d \n", n2,n1);
                 lugar_al->conteudo = lugar_al->conteudo - t->coletor;
                 printf("# Tirei %d do lugar %d que agora tem %d\n",t->coletor, n2,lugar_al->conteudo);
