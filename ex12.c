@@ -244,7 +244,7 @@ int main(void)
     no = no->proximo;
     int Qtran= no->conteudo;
     pthread_t threads[Qtran];
-    int i, arg[5];
+    int i, arg[6];
 
     arg[0] = entrada;
     printf(" endereco entrada     = %d \n", entrada);
@@ -263,7 +263,8 @@ int main(void)
     for(i=0; i < Qtran; i++)
     {
         // arg[i+5] = i;
-        arg[5] =i ;
+        arg[5] = i;
+        printf(" TRANSICAO %d ", i);
         // arg[6] =1 ;
         printf("arg[5] == %d\n", arg[5]);
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[5]);
