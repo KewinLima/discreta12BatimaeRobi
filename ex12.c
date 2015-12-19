@@ -27,7 +27,7 @@
 #define DEBUG            1
 //#undef DEBUG /* Caso queira um debug,por favor comente essa linha. */
 
-/************** Definição dos tipos para as listas  ****************/
+/*************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
 typedef struct struct_transicao transicao;
 struct struct_transicao
