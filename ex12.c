@@ -262,16 +262,16 @@ int main(void)
     }
     for(i=0; i < Qtran; i++)
     {
-        // arg[i+5] = i;
         arg[5] = i;
-        printf(" TRANSICAO %d ", i);
-        // arg[6] =1 ;
-        printf("arg[5] == %d\n", arg[5]);
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[5]);
+        printf("-> Transicao %d criada <-\n",arg[5]);
         pthread_join(&threads[i],NULL);
         //transicao_pt(&arg[5]);
     }
-    
+    for(i=0; i<Qtran; i++)
+    {
+        pthread_join(&threads[i],NULL);
+    }
     printf(" -> TODAS AS THREADS TERMINARAM!!\n");
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
@@ -295,7 +295,7 @@ int main(void)
 /****************Inicio das funções - Inicio Simulador****************/
 void *transicao_pt(void *arg)
 {
-    int *pvalor,numero=0,tran_n,temporario;//deve apagar temporario!
+    int *pvalor,numero=0,tran_n;
 
     lista *entradas;
     lista *lugar;
@@ -305,7 +305,6 @@ void *transicao_pt(void *arg)
     pvalor = arg;
     tran_n = *pvalor;
 
-//    printf(" arg[0] == *pvalor == %d\n Endereco pvalor == %d\n",*pvalor);
     printf(" Thread da transicao %d executando \n", tran_n);
     for(numero=0; numero<5; numero++)
     {
@@ -314,32 +313,21 @@ void *transicao_pt(void *arg)
         {
             case 0:
                 transicoes = *pvalor;
-              //  printf(" transicoes  pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 1:
                 a_transicao = *pvalor;
-              //  printf(" arco_trans pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 2:
                 a_lugar = *pvalor;
-              //  printf(" arco_lugar pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 3:
                 lugar = *pvalor;
-              //  printf(" lugar pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 4:
                 entradas = *pvalor;
-              //  printf(" entradas pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
         }
     }
-//    printf(" Cheguei aqui linha 338\n");
-//    simulador(entradas, lugar, a_lugar, a_transicao,transicoes,tran_n);
-//}
-
-//void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
-//{
     printf(" ####### DEGUB Linha 346 ######\n");
     /* Referente a lista */ 
     int parada=0;
@@ -371,7 +359,6 @@ void *transicao_pt(void *arg)
     transicao *t_al;
     no_al = a_lugar->cabeca;
 
-    //printf("#   SUPREMO: endereceo cabeca lista alugar %d \n",ponteiro);
     al_al = no_al->conteudo; 
     t_al  =  al_al->destino;
     lugar_al = al_al->origem;
@@ -418,7 +405,7 @@ void *transicao_pt(void *arg)
     }
     t = no->conteudo;
 
-    while(parada != 100)
+    while(parada != 1)
     {
         for(n1[tran_n]=0;n1[tran_n]< Qarco_l;n1[tran_n]++)
         {
@@ -533,6 +520,7 @@ void *transicao_pt(void *arg)
         //       if();
     parada++;    
     }
+    pthread_exit(NULL);
 }
 void imprimie_lugar_allegro(lista *l)
 {
