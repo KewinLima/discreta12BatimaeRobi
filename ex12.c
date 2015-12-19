@@ -148,11 +148,7 @@ void limpa_lista_transicao(lista_transicao *l);
 void imprimie_lugar_allegro(lista *l);
 
 /*                     Thread                          */
-void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes);
 void *transicao_pt(void *arg);
-
-/*                    Simulador                        */
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n);
 
 /****************** Fim dos Protótipos ******************/
 int main(void)
@@ -242,7 +238,40 @@ int main(void)
     }
 
     //imprimie_lugar_allegro(entrada);
-    threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
+
+    node *no;
+    no = entrada->cabeca;
+    no = no->proximo;
+    int Qtran= no->conteudo;
+    pthread_t threads[Qtran];
+    int i, arg[5];
+
+    arg[0] = entrada;
+    printf(" endereco entrada     = %d \n", entrada);
+    arg[1] = lugares;
+    printf(" endereco lugar       = %d \n", lugares);
+    arg[2] = arcos_lugar;
+    printf(" endereco a_lugar     = %d \n", arcos_lugar->cabeca->conteudo);
+    arg[3] = arcos_transicao;
+    printf(" endereco a_transicao = %d \n", arcos_transicao);
+    arg[4] = transicoes;
+    printf(" endereco transicoes  = %d \n", transicoes);
+    for(i=0; i<5 ;i++)
+    {
+        printf(" arg[%d] = %d \n Endereco arg[%d] = %d \n",i,arg[i],i,&arg[i]);
+    }
+    for(i=0; i < Qtran; i++)
+    {
+        // arg[i+5] = i;
+        arg[5] =i ;
+        // arg[6] =1 ;
+        printf("arg[5] == %d\n", arg[5]);
+        pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[5]);
+        pthread_join(&threads[i],NULL);
+        //transicao_pt(&arg[5]);
+    }
+    
+    printf(" -> TODAS AS THREADS TERMINARAM!!\n");
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -263,45 +292,9 @@ int main(void)
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
-void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_arco_transicao *a_transicao,  lista_transicao *transicoes)
-{
-    node *no;
-    no = entradas->cabeca;
-    no = no->proximo;
-    int Qtran= no->conteudo;
-    pthread_t threads[Qtran];
-    int i, arg[5];
-
-    arg[0] = entradas;
-    printf(" endereco entrada     = %d \n", entradas);
-    arg[1] = lugar;
-    printf(" endereco lugar       = %d \n", lugar);
-    arg[2] = a_lugar;
-    printf(" endereco a_lugar     = %d \n", a_lugar->cabeca->conteudo);
-    arg[3] = a_transicao;
-    printf(" endereco a_transicao = %d \n", a_transicao);
-    arg[4] = transicoes;
-    printf(" endereco transicoes  = %d \n", transicoes);
-    for(i=0; i<5 ;i++)
-    {
-        printf(" arg[%d] = %d \n Endereco arg[%d] = %d \n",i,arg[i],i,&arg[i]);
-    }
-    for(i=0; i < Qtran; i++)
-    {
-       // arg[i+5] = i;
-        arg[5] =i ;
-       // arg[6] =1 ;
-        printf("arg[5] == %d\n", arg[5]);
-        pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[5]);
-        //pthread_join(&threads[i],NULL);
-        //transicao_pt(&arg[5]);
-    }
-    printf(" -> TODAS AS THREADS TERMINARAM!!\n");
-}
-
 void *transicao_pt(void *arg)
 {
-    int *pvalor,n=0,tran_n,temporario;//deve apagar temporario!
+    int *pvalor,numero=0,tran_n,temporario;//deve apagar temporario!
 
     lista *entradas;
     lista *lugar;
@@ -311,41 +304,41 @@ void *transicao_pt(void *arg)
     pvalor = arg;
     tran_n = *pvalor;
 
-    printf(" arg[0] == *pvalor == %d\n Endereco pvalor == %d\n",*pvalor);
+//    printf(" arg[0] == *pvalor == %d\n Endereco pvalor == %d\n",*pvalor);
     printf(" Thread da transicao %d executando \n", tran_n);
-    for(n=0; n<5; n++)
+    for(numero=0; numero<5; numero++)
     {
         pvalor = pvalor - 1;
-        switch(n)
+        switch(numero)
         {
             case 0:
                 transicoes = *pvalor;
-                printf(" transicoes  pvalor[%d] = [%d] \n",n,*pvalor);
+              //  printf(" transicoes  pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 1:
                 a_transicao = *pvalor;
-                printf(" arco_trans pvalor[%d] = [%d] \n",n,*pvalor);
+              //  printf(" arco_trans pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 2:
                 a_lugar = *pvalor;
-                printf(" arco_lugar pvalor[%d] = [%d] \n",n,*pvalor);
+              //  printf(" arco_lugar pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 3:
                 lugar = *pvalor;
-                printf(" lugar pvalor[%d] = [%d] \n",n,*pvalor);
+              //  printf(" lugar pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
             case 4:
                 entradas = *pvalor;
-                printf(" entradas pvalor[%d] = [%d] \n",n,*pvalor);
+              //  printf(" entradas pvalor[%d] = [%d] \n",numero,*pvalor);
                 break;
         }
     }
-    printf(" Cheguei aqui linha 338\n");
-    simulador(entradas, lugar, a_lugar, a_transicao,transicoes,tran_n);
-}
+//    printf(" Cheguei aqui linha 338\n");
+//    simulador(entradas, lugar, a_lugar, a_transicao,transicoes,tran_n);
+//}
 
-void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
-{
+//void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
+//{
     printf(" ####### DEGUB Linha 346 ######\n");
     /* Referente a lista */ 
     int parada=0;
@@ -398,15 +391,15 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     node_transicao *no_t;
     transicao *t;
 
-    printf(" transicao numero %d \n", tran_n);
-    printf(" arcolugar parte de %d \n", al_al->origem);
-    printf(" Arcolugar chega em %d \n", al_al->destino);
-    printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
-    printf(" Arcotransicao parte de %d \n", at_at->origem);
-    printf(" Arcotransicao chega em %d \n", at_at->destino);
-    printf(" Quantidade de tokens no lugar = %d \n", lugar_at->conteudo);
-    printf(" Valor da transicao %d \n", t_al->coletor);
-    printf(" Valor da doacao %d \n",t_al->emissor);
+//    printf(" transicao numero %d \n", tran_n);
+//    printf(" arcolugar parte de %d \n", al_al->origem);
+//    printf(" Arcolugar chega em %d \n", al_al->destino);
+//    printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
+//    printf(" Arcotransicao parte de %d \n", at_at->origem);
+//    printf(" Arcotransicao chega em %d \n", at_at->destino);
+//    printf(" Quantidade de tokens no lugar = %d \n", lugar_at->conteudo);
+//    printf(" Valor da transicao %d \n", t_al->coletor);
+//    printf(" Valor da doacao %d \n",t_al->emissor);
 
     printf("# Ok,estamos trabalhando com  a transicao %d \n", tran_n);
 
@@ -424,7 +417,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     }
     t = no->conteudo;
 
-    while(parada != 1)
+    while(parada != 100)
     {
         for(n1[tran_n]=0;n1[tran_n]< Qarco_l;n1[tran_n]++)
         {
@@ -454,7 +447,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                     n2[tran_n]=0;
                     for(no_e_al=a_lugar->cabeca; no_e_al != NULL; no_e_al = no_e_al->proximo)
                     {
-                        printf(" Linha 455 \n");
+  //                      printf(" Linha 455 \n");
                         al_e = no_e_al->conteudo;
                         if(al_e->origem == lugar_al)
                             break;
@@ -492,7 +485,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                             n2[tran_n]=0;
                             for(no_e_at = a_transicao->cabeca; no_e_at !=NULL; no_e_at = no_e_at->proximo)
                             {
-                                printf(" Linha 492 \n");
+    //                            printf(" Linha 492 \n");
                                 at_e = no->conteudo;
                                 if(at_e->origem == t)
                                     break;
@@ -523,6 +516,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 else
                 {   
                     printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1[tran_n]);// <-
+                    //   vazio[tran_n] = 1;
                     printf("# Precisaria de %d tokens mas so' tem %d \n",t->coletor,lugar_al->conteudo);
                     continue;
                 }
@@ -534,7 +528,9 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 continue;
             }
         }
-    if(
+
+        //       if();
+    parada++;    
     }
 }
 void imprimie_lugar_allegro(lista *l)
