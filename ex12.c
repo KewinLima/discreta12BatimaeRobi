@@ -346,17 +346,20 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     int n,n1,n2,n3,sorteio;
     printf(" ####### DEGUB Linha 346 ######\n");
     /* Referente a lista */
-    //tran_n = 1; 
+    tran_n = 1; 
     
     node *no;
+    node *no_e;
     no = lugar->cabeca;
+    no_e = entradas->cabeca;
     no= no->proximo->conteudo;
     
-    node_arco_lugar *no_e;
+    node_arco_lugar *no_e_al;
+    node_arco_transicao *no_e_at;
     arco_transicao *at_e;
     arco_lugar *al_e;
-    no_e = entradas->cabeca;
-    
+    //no_e_al = entradas->cabeca;
+
     int Qlugar,Qarco_t,Qarco_l;
     Qlugar = no_e->conteudo;
     Qarco_t = no_e->proximo->proximo->proximo->conteudo;
@@ -446,9 +449,9 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             if( (lugar_al->conteudo) - (t->coletor) >=0 )/* Condicao para acionar a transicao */
             {
                 n2=0;
-                for(no=a_lugar->cabeca; no != NULL; no = no->proximo)
+                for(no_e_al=a_lugar->cabeca; no_e_al != NULL; no_e_al = no_e_al->proximo)
                 {
-                    al_e = no->conteudo;
+                    al_e = no_e_al->conteudo;
                     if(al_e->origem == lugar_al)
                        break;
                     n2++;
@@ -482,6 +485,14 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                     if(at_at->origem == t)
                     {
                         printf("# Sim, esse arco transicao e' referente a transicao %d\n",tran_n);
+                        n2=0;
+                        for(no_e_at = a_transicao->cabeca; no_e_at !=NULL; no_e_at = no_e_at->proximo)
+                        {
+                            at_e = no->conteudo;
+                            if(at_e->origem == t)
+                                break;
+                            n2++;
+                        }
                         printf("# Vamos ao sorteio: ");
                         sorteio = rand()%( 100/PORCENTAGEM );
                         if(sorteio != 0)
@@ -493,7 +504,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                         {
                             printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
                             lugar_at->conteudo = lugar_at->conteudo + t->emissor;
-                            printf("# Adicionei %d ao lugar %d \n",t->emissor, n3);// <- errado);
+                            printf("# Adicionei %d ao lugar %d \n",t->emissor, n2);// <- errado);
                             printf("# Que agora tem %d \n",lugar_at->conteudo);
                         }
                     }
