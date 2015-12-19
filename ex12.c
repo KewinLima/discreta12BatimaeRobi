@@ -275,7 +275,7 @@ void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_a
     arg[1] = lugar;
     printf(" endereco lugar       = %d \n", lugar);
     arg[2] = a_lugar;
-    printf("\n SUPREMO: endereco a_lugar     = %d \n", a_lugar);
+    printf(" endereco a_lugar     = %d \n", a_lugar);
     arg[3] = a_transicao;
     printf(" endereco a_transicao = %d \n", a_transicao);
     arg[4] = transicoes;
@@ -344,7 +344,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     int n,n1,sorteio,*ponteiro;
     ponteiro = a_lugar;
     printf(" ####### DEGUB Linha 345 ######\n");
-    printf("\n SUPREMO: endereceo a_lista = %d\n",ponteiro); 
+    printf("\n SUPREMO: endereceo a_lista = %d",ponteiro);
     /* Referente a lista */
     
     node *no;
@@ -798,7 +798,7 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
         al = no->conteudo;
         t = al->destino;
         lugar = al->origem;
-        printf(" Arcolugar %d Qtokensnesselugar =  %d valortransi = %d  transirouba -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
+        printf(" Arcolugarnumero %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
         n1++;
     }
 }
@@ -817,7 +817,7 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
         al = no->conteudo;
         t = al->origem;
         lugar = al->destino;
-        printf(" Alnumero = %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
+        printf(" Atransicaonumero = %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
         n1++;
     }
 }
