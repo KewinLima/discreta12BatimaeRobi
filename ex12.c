@@ -371,7 +371,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     //printf("#   SUPREMO: endereceo cabeca lista alugar %d \n",ponteiro);
     al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
     t_al  =  al_al->destino;
-    lugar_al = al->origem;
+    lugar_al = al_al->origem;
     /* Referente a lista_arco_transicao */
 
     node_arco_transicao *no_at;
