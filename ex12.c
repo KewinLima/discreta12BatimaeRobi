@@ -401,7 +401,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 
   //  no_al = a_lugar->cabeca;
    // no_at = a_transicao->cabeca;
-  //  al_at
+
     for(n1=0;n1< Qarco_l;n1++)
     {
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
@@ -428,14 +428,31 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t_al->coletor);
                 lugar_al->conteudo = lugar_al->conteudo - t_al->coletor;
                 printf("# Tirei %d do lugar %d\n",t_al->coletor, indice);
-                printf("#Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
+                printf("# Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
                 for(n1=0;n1<Qarco_t;n1++)
                 {
-                    printf("#Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
+                    printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
                     if( == tran_n)
                     {
-                    printf("Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
-                  // }
+                        printf("# Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
+                        printf("# Vamos ao sorteio: ");
+                        sorteio = rand()%2;
+                        if(sorteio == 0)
+                        {
+                            printf(" Perdeu no sorteio \n");
+                            continue;
+                        }
+                        else if(sorteio == 1)
+                        {
+                            printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
+                            lugar_at->destino = lugar_at->destino + t_at->emissor;
+                            printf("# Adicionei %d ao lugar %%d \n",t_at->emissor);//, indice);
+                    }
+                    else
+                    {
+                        printf("# Esse arcotrnasicao nao tem relacao com a transicao %d\n", tran_n);
+                        continue;
+                    }
                 }
             }
             else
