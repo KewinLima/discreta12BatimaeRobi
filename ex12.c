@@ -390,8 +390,10 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     transicao *t;
     
     printf(" transicao numero %d \n", tran_n);
-    printf(" arcolugar parte de %d \n", al_al->origem->conteudo);
+    printf(" arcolugar parte de %d \n", al_al->origem);
+    printf(" Arcolugar chega em %d \n", al_al->destino);
     printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
+    printf(" Arcotransicao parte de %d \n", at_at->destino);
     printf(" Arcotransicao chega em %d \n", at_at->destino);
     printf(" Valor da transicao %d \n", t_al->coletor);
     printf(" Valor da doacao %d \n",t_al->emissor);
@@ -461,6 +463,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                         }
                         lugar_at = at_at->destino;
                     }
+                    printf(" Endereco de t = %d \n Endereco de at_at = %d \n",t,at_at->destino);
                     if(at_at->origem == t)
                     {
                         printf("# Sim, esse arco transicao e' referente a transicao %d\n",tran_n);
