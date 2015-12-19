@@ -24,7 +24,7 @@
 #define NOME_ENTRADA     "entrada-petri-1.txt"
 #define BLOCO_DE_ENTRADA 5
 #define DEBUG            1
-#undef DEBUG /* Caso queira um debug,por favor comente essa linha. */
+//#undef DEBUG /* Caso queira um debug,por favor comente essa linha. */
 
 /************** Definição dos tipos para as listas  ****************/
 /*Define uma transição*/
@@ -155,8 +155,8 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 /****************** Fim dos Protótipos ******************/
 int main(void)
 {
-    int n; /* variável para o laço da leitura do primeiro bloco de entrada */
-    int x; /* Variavel para determinar o limite do laço */
+    int n;                                   /* variável para o laço da leitura do primeiro bloco de entrada */
+    int x;                                   /* Variavel para determinar o limite do laço */
     lista *lugares;                          /*Cria ponteiro de  lista de lugares, que serão inteiros*/
     lista_arco_lugar *arcos_lugar;           /*Cria ponteiro de lista de arcos lugar*/
     lista_arco_transicao *arcos_transicao;   /*Cria ponteiro de lista de arcos transição*/
@@ -202,18 +202,17 @@ int main(void)
     }
     //Lê as informações sobre os arcos transicao, cria cada um e os guarda na lista adequada
     x = busca_elemento_por_indice(entrada, 3)->conteudo;
-    arcos_transicao = cria_lista_arco_transicao();
+    arcos_lugar = cria_lista_arco_lugar();
     for(n = 0; n < x; n++)
     {
         int lugar;
         int quantidade;
         int transicao;
-        arco_lugar *al = malloc(sizeof(arco_transicao));
+        arco_lugar *al = malloc(sizeof(arco_lugar));
 
         fscanf(arquivo, "%d", &lugar);
         fscanf(arquivo, "%d", &quantidade);
         fscanf(arquivo, "%d", &transicao);
-
         al->origem = busca_elemento_por_indice(lugares, lugar);
         al->destino = busca_elemento_por_indice_lista_transicao(transicoes, transicao)->conteudo;
         al->destino->coletor = quantidade;
@@ -221,14 +220,14 @@ int main(void)
     }
 
     /*Lê as informações sobre os arcos lugar, cria cada um e os guarda na lista adequada*/
-    x = busca_elemento_por_indice(entrada, 4)->conteudo;
-    arcos_lugar = cria_lista_arco_lugar();
+    x = busca_elemento_por_indice(entrada, 3)->conteudo;
+    arcos_transicao = cria_lista_arco_transicao();
     for(n = 0; n < x; n++)
     {
         int lugar;
         int quantidade;
         int transicao;
-        arco_transicao *at = malloc(sizeof(arco_lugar));
+        arco_transicao *at = malloc(sizeof(arco_transicao));
 
         fscanf(arquivo, "%d", &transicao);
         fscanf(arquivo, "%d", &quantidade);
@@ -240,7 +239,7 @@ int main(void)
     }
 
     //imprimie_lugar_allegro(entrada);
-    threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
+    //threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -275,7 +274,7 @@ void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_a
     arg[1] = lugar;
     printf(" endereco lugar       = %d \n", lugar);
     arg[2] = a_lugar;
-    printf(" endereco a_lugar     = %d \n", a_lugar);
+    printf(" endereco a_lugar     = %d \n", a_lugar->cabeca->conteudo);
     arg[3] = a_transicao;
     printf(" endereco a_transicao = %d \n", a_transicao);
     arg[4] = transicoes;
@@ -323,7 +322,7 @@ void *transicao_pt(void *arg)
                 break;
             case 2:
                 a_lugar = *pvalor;
-                printf("\n SUPREMO arco_lugar pvalor[%d] = [%d] \n",n,*pvalor);
+                printf(" arco_lugar pvalor[%d] = [%d] \n",n,*pvalor);
                 break;
             case 3:
                 lugar = *pvalor;
@@ -343,8 +342,8 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 {
     int n,n1,sorteio,*ponteiro;
     ponteiro = a_lugar;
-    printf(" ####### DEGUB Linha 345 ######\n");
-    printf("\n SUPREMO: endereceo a_lista = %d",ponteiro);
+    printf(" ####### DEGUB Linha 346 ######\n");
+    printf(" SUPREMO: endereco a_lista = %d \n",ponteiro);
     /* Referente a lista */
     
     node *no;
@@ -365,9 +364,13 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     arco_lugar *al_al;
     node *lugar_al;
     transicao *t_al;
-    
+  //  printf(" OI \n" );
+  //  printf(" %d ",a_lugar->cabeca->conteudo);
+  //  printf(" XAU \n");
     no_al = a_lugar->cabeca;
-   // al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
+    ponteiro = no_al;
+    printf("#   SUPREMO: endereceo cabeca lista alugar %d \n",ponteiro);
+     //al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
     t_al  =  al_al->destino;
 
     /* Referente a lista_arco_transicao */
@@ -389,7 +392,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     transicao *t;
     
 
- 
+ /*
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
     {
         t = no_t->conteudo;
@@ -468,7 +471,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             continue;
         }
     }
-
+    */
 }
 void imprimie_lugar_allegro(lista *l)
 {
@@ -811,12 +814,15 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     transicao *t;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
+        ponteiro = no;
+        printf("\n SUPREMO: endereco cabeca lista a_lugar = %d \n",ponteiro);
         al = no->conteudo;
         t = al->destino;
         lugar = al->origem;
         printf(" Arcolugarnumero %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
         n1++;
     }
+    printf(" XAU!!! \n");
 }
 
 /* Imprime a lista, elemento por elemento*/
