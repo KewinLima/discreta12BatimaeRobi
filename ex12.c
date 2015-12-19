@@ -346,14 +346,15 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     int n,n1,n2,n3,sorteio;
     printf(" ####### DEGUB Linha 346 ######\n");
     /* Referente a lista */
-    tran_n = 1; 
+    //tran_n = 1; 
     
     node *no;
     no = lugar->cabeca;
     no= no->proximo->conteudo;
     
-    node *no_e;
+    node_arco_lugar *no_e;
     arco_transicao *at_e;
+    arco_lugar *al_e;
     no_e = entradas->cabeca;
     
     int Qlugar,Qarco_t,Qarco_l;
@@ -400,7 +401,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     printf(" Valor da transicao %d \n", t_al->coletor);
     printf(" Valor da doacao %d \n",t_al->emissor);
 
-    printf("# Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
+    printf("# Ok,estamos trabalhando com  a transicao %d \n", tran_n);
 
     if(tran_n == 0)/* Caso seja a transicao 0, recebe a cabeca da lista */
     {
@@ -437,41 +438,47 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         }
         
         lugar_al = al_al->origem; /* Após encontrar o lugar desejado relaciona o mesmo com lugar_al */
-        printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
+        printf("# Certo, vez do arcolugar numero: %d em relacao a transicao %d\n",n1, tran_n);
         if(al_al->destino == t)
         {
-            printf(" Endereco de t = %d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
+            //printf(" Endereco de t = %d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
             printf("# Sim, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
             if( (lugar_al->conteudo) - (t->coletor) >=0 )/* Condicao para acionar a transicao */
-            {    
-                no = entradas ->cabeca;
-                for(n2=0; n2 < Qlugar; n2++)
+            {
+                n2=0;
+                for(no=a_lugar->cabeca; no != NULL; no = no->proximo)
                 {
-                    at_e = no->conteudo;
-                    if( at_e == lugar_al)
-                        break;
-                    no->proximo;
+                    al_e = no->conteudo;
+                    if(al_e->origem == lugar_al)
+                       break;
+                    n2++;
                 }
+                
                 printf("# Legal, temos tokens suficientes no lugar %d, onde parte o arco lugar %d \n", n2,n1);
                 lugar_al->conteudo = lugar_al->conteudo - t->coletor;
                 printf("# Tirei %d do lugar %d que agora tem %d\n",t->coletor, n2,lugar_al->conteudo);
                 printf("# Ok, vamos agora trabalhar com os arcos transicoes da transicao %d\n",tran_n); 
                 for(n3=0;n3<Qarco_t;n3++)
                 {
-                    printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n3,tran_n);
-                    printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n3, tran_n);
-                    no_at = transicoes->cabeca;
+                    printf("# Certo, vez do arcotransicao numero: %d em relacao a transicao %d\n",n3,tran_n);
+                    if(n3 == 0)
+                    {
+                        no_at = a_transicao->cabeca;
+                        at_at = no_at->conteudo;
+                    
+                    }
                     if(n3 != 0)
                     {
-                        for(n=1; n<n3 ;n++)/* Encontra o elemento da lista numero n2*/
+                        no_at = a_transicao->cabeca;
+                        for(n=0; n<n3 ;n++)/* Encontra o elemento da lista numero n2*/
                         {
-                            if(no_at->proximo != NULL)
                             no_at = no_at->proximo;
                             at_at = no_at->conteudo;
                         }
-                        lugar_at = at_at->destino;
                     }
-                    printf(" Endereco de t = %d \n Endereco de at_at = %d \n",t,at_at->destino);
+
+                    lugar_at = at_at->destino;
+            //        printf(" Endereco de t = %d \n Endereco de at_at = %d \n",t,at_at->destino);
                     if(at_at->origem == t)
                     {
                         printf("# Sim, esse arco transicao e' referente a transicao %d\n",tran_n);
