@@ -395,13 +395,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         t = no_t->conteudo;
         printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
         n++;
-    }
-/*    
-    printf("------------- %d ------------\n",no->conteudo);
-    printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
-    printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
-    printf("---------- %d ---- %d ----- %d -----\n",al_al->origem->conteudo,t_al->coletor, t_al->emissor);
-    printf("---    
+    } 
 
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
 
