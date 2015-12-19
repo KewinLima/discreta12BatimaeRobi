@@ -834,7 +834,7 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
     int n1=0,*ponteiro;
     ponteiro=l;
-    printf("\n\n SUPREMO endereço arco_lugar = %d \n\n", ponteiro);
+    printf(" endereço arco_lugar = %d \n", ponteiro);
     node_arco_lugar *no;
     arco_lugar *al;
     node *lugar;
@@ -842,14 +842,13 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
         ponteiro = no;
-        printf("\n SUPREMO: endereco cabeca lista a_lugar = %d \n",ponteiro);
+        printf(" endereco cabeca lista a_lugar = %d \n",ponteiro);
         al = no->conteudo;
         t = al->destino;
         lugar = al->origem;
         printf(" Arcolugarnumero %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
         n1++;
     }
-    printf(" XAU!!! \n");
 }
 
 /* Imprime a lista, elemento por elemento*/
@@ -858,14 +857,14 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
 {
     int n1=0;
     node_arco_transicao *no;
-    arco_transicao *al;
+    arco_transicao *at;
     node *lugar;
     transicao *t;
     for(no = l->cabeca; no != NULL; no = no->proximo)
     {
-        al = no->conteudo;
-        t = al->origem;
-        lugar = al->destino;
+        at = no->conteudo;
+        t = at->origem;
+        lugar = at->destino;
         printf(" Atransicaonumero = %d Qtokensnesselugar =  %d valortransi = %d  transimanda -> %d \n",n1, lugar->conteudo, t->coletor, t->emissor);
         n1++;
     }
