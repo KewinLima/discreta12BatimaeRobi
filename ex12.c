@@ -9,6 +9,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <allegro.h>
+#include <time.h>
 
 #define CORBRANCO        (makecol(255,255,255))
 #define CORPRETO         (makecol(0,0,0))
@@ -155,6 +156,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 /****************** Fim dos Protótipos ******************/
 int main(void)
 {
+    srand(time(NULL));
     int n;                                   /* variável para o laço da leitura do primeiro bloco de entrada */
     int x;                                   /* Variavel para determinar o limite do laço */
     lista *lugares;                          /*Cria ponteiro de  lista de lugares, que serão inteiros*/
@@ -391,8 +393,6 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     node_transicao *no_t;
     transicao *t;
     
-
- /*
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
     {
         t = no_t->conteudo;
@@ -471,7 +471,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             continue;
         }
     }
-    */
+
 }
 void imprimie_lugar_allegro(lista *l)
 {
