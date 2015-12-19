@@ -392,7 +392,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     printf(" transicao numero %d \n", tran_n);
     printf(" arcolugar parte de %d \n", al_al->origem->conteudo);
     printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
-    printf(" Arcotransicao chega em %d \n", al_at->destino);
+    printf(" Arcotransicao chega em %d \n", at_at->destino);
     printf(" Valor da transicao %d \n", t_al->coletor);
     printf(" Valor da doacao %d \n",t_al->emissor);
 
@@ -431,79 +431,67 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         // pont2 = &t;
         if(al_al->destino == t)
         {
-            //printf(" endereco de pont1 == %d pont2 == %d", pont1,pont2);
             printf(" Endereco de t =%d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
             printf("# Sim, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
-            if( (lugar_al->conteudo) - (t->coletor) >=0 )/* COndicao para acionar a transicao */
+            if( (lugar_al->conteudo) - (t->coletor) >=0 )/* Condicao para acionar a transicao */
             {
                 printf("# Legal, temos tokens suficientes no lugar %d desse arco lugar \n", n1);
                 printf("# Temos: %d e necessitamos de %d \n",lugar_al->conteudo, t->coletor);
                 lugar_al->conteudo = lugar_al->conteudo - t->coletor;
                 printf("# Tirei %d do lugar %d que agora tem %d\n",t_al->coletor, n1,lugar_al->conteudo);
-                printf("# Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n);
-            
-   (        
+                printf("# Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n); 
+                for(n2=0;n2<Qarco_t;n2++)
+                {
+                    printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n2,tran_n);
+                    printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
+                    if(n2 != 0)
+                    {
+                        for(n=0; n<n2 ;n++)/* Encontra o elemento da lista numero n2*/
+                        {
+                            no_at = no_at->proximo;
+                            at_at = no_at->conteudo;
+                        }
+                    }
+                    //lugar = at->destino;
+                    if(at_at->origem == t)
+                    {
+                        printf("# Sim, esse arco transicao e' referente a transicao %d\n",tran_n);
+                        printf("# Vamos ao sorteio: ");
+                        sorteio = rand()%( 100/PORCENTAGEM );
+                        if(sorteio != 0)
+                        {
+                            printf(" Perdeu no sorteio \n");
+                            continue;
+                        }
+                        else
+                        {
+                            printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
+                            lugar_at->destino = lugar_at->destino + t_at->emissor;
+                            printf("# Adicionei %d ao lugar %d \n",t_at->emissor, n2);// <- errado);
+                        }
+                    }
+                    else
+                    {
+                        printf("# Esse arcotransicao nao tem relacao com a transicao %d\n", tran_n);
+                        continue;
+                    }
+                }
+
             }
             else
-            {
-            printf(" Bad news voce nao tem tokens suficientes \n");
-                printf(" Voce tem %d e precisaria de %d ",lugar_al->conteudo,t->coletor);
-            }
-        }
-    }
-
-    for(n2=0;n2<Qarco_t;n2++)
-    {
-        printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n2,tran_n);
-        printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
-        if(n2 != 0)
-        {
-            for(n=0; n<n2 ;n++)/* Encontra o elemento da lista numero n2*/
-            {
-                no_at = no_at->proximo;
-                at_at = no_at->conteudo;
-            }
-        }
-     //   lugar = at->destino;
-     //
-        if(at_at->origem == t)
-        {
-            printf("# Sim, esse arco transicao e' referente a transicao %d\n",tran_n);
-            printf("# Vamos ao sorteio: ");
-            sorteio = rand()%( 100/PORCENTAGEM );
-            if(sorteio != 0)
-            {
-                printf(" Perdeu no sorteio \n");
+            {   
+                printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1);
+                printf("# Precisaria de %d tokens mas so' tem %d \n",t_al->coletor,lugar_al->conteudo);
                 continue;
             }
-            else
-            {
-                printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
-                lugar_at->destino = lugar_at->destino + t_at->emissor;
-                printf("# Adicionei %d ao lugar %d \n",t_at->emissor, n2);// <- errado);
-            }
+
         }
         else
         {
-            printf("# Esse arcotransicao nao tem relacao com a transicao %d\n", tran_n);
+            printf("# O arcolugar %d nao tem relacao com a transicao %d\n",n1, tran_n);
             continue;
         }
     }
-}
-else
-{   
-    printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %%d \n");,// indice);
-        printf("# Precisaria de %d tokens mas so' tem %d \n",t_al->coletor,lugar_al->conteudo);
-    continue;
-}
-}
-else
-{
-    printf("# O arcolugar %d nao tem relacao com a transicao %d\n",n1, tran_n);
-    continue;
-}
-}
-*/   
 }
 void imprimie_lugar_allegro(lista *l)
 {
