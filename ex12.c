@@ -393,14 +393,9 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     printf(" arcolugar parte de %d \n", al_al->origem->conteudo);
     printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
     printf(" Arcotransicao chega em %d \n", al_at->destino);
+    printf(" Valor da transicao %d \n", t_al->coletor;
+    printf(" Valor da doacao %d \n",t_al->emissor);
 
-/*    
-    for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
-    {
-        t = no_t->conteudo;
-        printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
-        n++;
-    } 
     
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
 
@@ -470,7 +465,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             continue;
         }
     }
-*/
+
 }
 void imprimie_lugar_allegro(lista *l)
 {
