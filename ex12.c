@@ -342,8 +342,7 @@ void *transicao_pt(void *arg)
 
 void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
 {
-    int n,n1,sorteio,*ponteiro;
-    ponteiro = a_lugar;
+    int n,n1,sorteio,*pont1,*pont2;
     printf(" ####### DEGUB Linha 346 ######\n");
   //  printf(" SUPREMO: endereco a_lista = %d \n",ponteiro);
     /* Referente a lista */
@@ -369,7 +368,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     no_al = a_lugar->cabeca;
 
     //printf("#   SUPREMO: endereceo cabeca lista alugar %d \n",ponteiro);
-    al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
+    al_al = no_al->conteudo; 
     t_al  =  al_al->destino;
     lugar_al = al_al->origem;
     /* Referente a lista_arco_transicao */
@@ -401,7 +400,6 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     if(tran_n == 0)/* Caso seja a transicao 0, recebe a cabeca da lista */
     {
         no = transicoes->cabeca;
-        printf(" sou a 0 \n");
     }
     if(tran_n != 0)/* Caso seja aponta para os proxmo */
     {
@@ -418,16 +416,22 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
 
     for(n1=0;n1< Qarco_l;n1++)
     {
+        no_al = a_lugar->cabeca;
         if(n1 != 0)
         {
             for(n=0; n<n1 ;n++)/* Encontra o elemento da lista numero n1*/
             {
                 no_al = no_al->proximo;
+                al_al = no_al->conteudo;
             }
         }
             printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
+               // pont1 = &(al_al->destino);
+               // pont2 = &t;
                 if(al_al->destino == t)
                 {
+                    //printf(" endereco de pont1 == %d pont2 == %d", pont1,pont2);
+                    printf(" Endereco de t =%d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
                     printf("#Ok, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
                 }
                 else
