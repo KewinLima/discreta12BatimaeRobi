@@ -275,7 +275,7 @@ void threads(lista *entradas, lista *lugar,  lista_arco_lugar *a_lugar,  lista_a
     arg[1] = lugar;
     printf(" endereco lugar       = %d \n", lugar);
     arg[2] = a_lugar;
-    printf(" endereco a_lugar     = %d \n", a_lugar);
+    printf("\n SUPREMO: endereco a_lugar     = %d \n", a_lugar);
     arg[3] = a_transicao;
     printf(" endereco a_transicao = %d \n", a_transicao);
     arg[4] = transicoes;
@@ -323,7 +323,7 @@ void *transicao_pt(void *arg)
                 break;
             case 2:
                 a_lugar = *pvalor;
-                printf(" arco_lugar pvalor[%d] = [%d] \n",n,*pvalor);
+                printf("\n SUPREMO arco_lugar pvalor[%d] = [%d] \n",n,*pvalor);
                 break;
             case 3:
                 lugar = *pvalor;
@@ -341,9 +341,10 @@ void *transicao_pt(void *arg)
 
 void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
 {
-    int n,n1,sorteio;
-    printf(" ####### DEGUB Linha 345 ######");
-
+    int n,n1,sorteio,*ponteiro;
+    ponteiro = a_lugar;
+    printf(" ####### DEGUB Linha 345 ######\n");
+    printf("\n SUPREMO: endereceo a_lista = %d\n",ponteiro); 
     /* Referente a lista */
     
     node *no;
@@ -366,8 +367,8 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     transicao *t_al;
     
     no_al = a_lugar->cabeca;
-    //al_al = no_al->conteudo;
-    t_al  = al_al->destino;
+   // al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
+    t_al  =  al_al->destino;
 
     /* Referente a lista_arco_transicao */
 
@@ -395,16 +396,16 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
         n++;
     }
-    /*
+/*    
     printf("------------- %d ------------\n",no->conteudo);
     printf("------------- %d ------------\n",*busca_elemento_por_indice(entradas,0));
     printf("------------- %d ------------\n",*busca_elemento_por_indice(lugar,0));
-    printf("---------- %d ---- %d ----- %d -----\n",al_al->destino->conteudo,t_al->coletor, t_al->emissor);
-    printf("------%d----- %d ------%d----\n",al_at->origem->conteudo, t_at->coletor,t_at->emissor);
-    
+    printf("---------- %d ---- %d ----- %d -----\n",al_al->origem->conteudo,t_al->coletor, t_al->emissor);
+    printf("------%d----- %d ------%d----\n",al_at->destino->conteudo, t_at->coletor,t_at->emissor);
+*/    
 
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
-*/
+
   //  no_al = a_lugar->cabeca;
    // no_at = a_transicao->cabeca;
   //  al_at
@@ -785,7 +786,9 @@ void imprime_lista(lista *l, char entrada_lugar)
 /* Imprime a lista, elemento por elemento */
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
-    int n1=0;
+    int n1=0,*ponteiro;
+    ponteiro=l;
+    printf("\n\n SUPREMO endereço arco_lugar = %d \n\n", ponteiro);
     node_arco_lugar *no;
     arco_lugar *al;
     node *lugar;
