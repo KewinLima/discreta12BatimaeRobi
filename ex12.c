@@ -441,12 +441,12 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                 printf("# Ok, vamo agora trabalhar com os arcos transicoes da transicao %d\n",tran_n); 
                 for(n3=0;n3<Qarco_t;n3++)
                 {
-                    printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n2,tran_n);
-                    printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n2, tran_n);
+                    printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n3,tran_n);
+                    printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n3, tran_n);
                     no_at = transicoes->cabeca;
-                    if(n2 != 0)
+                    if(n3 != 0)
                     {
-                        for(n=1; n<n2 ;n++)/* Encontra o elemento da lista numero n2*/
+                        for(n=1; n<n3 ;n++)/* Encontra o elemento da lista numero n2*/
                         {
                             if(no_at->proximo != NULL)
                             no_at = no_at->proximo;
@@ -468,7 +468,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                         {
                             printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
                             lugar_at->conteudo = lugar_at->conteudo + t->emissor;
-                            printf("# Adicionei %d ao lugar %d \n",t->emissor, n2);// <- errado);
+                            printf("# Adicionei %d ao lugar %d \n",t->emissor, n3);// <- errado);
                         }
                     }
                     else
