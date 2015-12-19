@@ -241,7 +241,7 @@ int main(void)
     }
 
     //imprimie_lugar_allegro(entrada);
-    //threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
+    threads(entrada ,lugares ,arcos_lugar ,arcos_transicao ,transicoes);
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
 #ifdef DEBUG
@@ -345,7 +345,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     int n,n1,sorteio,*ponteiro;
     ponteiro = a_lugar;
     printf(" ####### DEGUB Linha 346 ######\n");
-    printf(" SUPREMO: endereco a_lista = %d \n",ponteiro);
+  //  printf(" SUPREMO: endereco a_lista = %d \n",ponteiro);
     /* Referente a lista */
     
     node *no;
@@ -366,15 +366,12 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     arco_lugar *al_al;
     node *lugar_al;
     transicao *t_al;
-  //  printf(" OI \n" );
-  //  printf(" %d ",a_lugar->cabeca->conteudo);
-  //  printf(" XAU \n");
     no_al = a_lugar->cabeca;
-    ponteiro = no_al;
-    printf("#   SUPREMO: endereceo cabeca lista alugar %d \n",ponteiro);
-     //al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
-    t_al  =  al_al->destino;
 
+    //printf("#   SUPREMO: endereceo cabeca lista alugar %d \n",ponteiro);
+    al_al = no_al->conteudo; //Esse ta mostrando segmentation fault
+    t_al  =  al_al->destino;
+    lugar_al = al->origem;
     /* Referente a lista_arco_transicao */
 
     node_arco_transicao *no_at;
@@ -392,35 +389,36 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     
     node_transicao *no_t;
     transicao *t;
-    
+    printf(" transicao numero %d \n", tran_n);
+    printf(" arcolugar parte de %d \n", al_al->origem->conteudo);
+    printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
+    printf(" Arcotransicao chega em %d \n", al_at->destino);
+
+/*    
     for( no_t = transicoes->cabeca; no_t!=NULL; no_t= no_t->proximo)
     {
         t = no_t->conteudo;
         printf(" Transicao = %d | valor = %d | Envia = %d \n",n,t->coletor,t->emissor);
         n++;
     } 
-
+    
     printf("#Ok, nesse momento estamos trabalhando com os arcolugares da transicao %d \n", tran_n);
-
-  //  no_al = a_lugar->cabeca;
-   // no_at = a_transicao->cabeca;
 
     for(n1=0;n1< Qarco_l;n1++)
     {
         printf("# Certo, vez do arcolugar numero: %d da transicao %d\n",n1, tran_n);
-        if(al_al->origem == tran_n)
+        if(al_al->destino->conteudo == tran_n)
         {
             printf("#Ok, o arcolugar %d se refere a transicao %d\n",n1, tran_n);
             lugar_al = al_al->destino;
 
-            if( (lugar_al->conteudo) - (t_al->coletor) >= 0 )
+            if((lugar_al->conteudo) - (t_al->coletor) >= 0)
             {
-                
                 int indice;
                 
                 for(indice =0;indice <Qarco_l; indice++)
                 {
-                    node *auxiliar;// = busca_na_lista(lugar,indice);
+                    node *auxiliar = *busca_na_lista(lugar,indice);
                     if(auxiliar == no_al)
                     {
                         break;
@@ -450,10 +448,11 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
                             printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
                             lugar_at->destino = lugar_at->destino + t_at->emissor;
                             printf("# Adicionei %d ao lugar %%d \n",t_at->emissor);//, indice);
+                        }
                     }
                     else
                     {
-                        printf("# Esse arcotrnasicao nao tem relacao com a transicao %d\n", tran_n);
+                        printf("# Esse arcotransicao nao tem relacao com a transicao %d\n", tran_n);
                         continue;
                     }
                 }
@@ -471,7 +470,7 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
             continue;
         }
     }
-
+*/
 }
 void imprimie_lugar_allegro(lista *l)
 {
