@@ -342,7 +342,7 @@ void *transicao_pt(void *arg)
 
 void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_arco_transicao *a_transicao, lista_transicao *transicoes, int tran_n)
 {
-    int n,n1,sorteio,*pont1,*pont2;
+    int n,n1,n2,sorteio,*pont1,*pont2;
     printf(" ####### DEGUB Linha 346 ######\n");
   //  printf(" SUPREMO: endereco a_lista = %d \n",ponteiro);
     /* Referente a lista */
@@ -374,20 +374,20 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
     /* Referente a lista_arco_transicao */
 
     node_arco_transicao *no_at;
-    arco_transicao *al_at;
+    arco_transicao *at_at;
     node *lugar_at;
     transicao *t_at;
-
+/*
     no_at = a_transicao->cabeca;
-
-    al_at = no_at->conteudo;
-    t_at = al_at->origem;
-    lugar_at= al_at->destino;
-
+    at_at = no_at->conteudo;
+    t_at = at_at->origem;
+    lugar_at= at_at->destino;
+*/
     /*Referente as transições */
 
     node_transicao *no_t;
     transicao *t;
+    
     printf(" transicao numero %d \n", tran_n);
     printf(" arcolugar parte de %d \n", al_al->origem->conteudo);
     printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
@@ -449,48 +449,63 @@ void simulador(lista *entradas,  lista *lugar, lista_arco_lugar *a_lugar, lista_
         }
     }
 
-    /*  
-        for(n1=0;n1<Qarco_t;n1++)
-        {
+    for(n2=0;n2<Qarco_t;n2++)
+    {
+
         printf("# Ok, vejamos se o arcotransicao %d e' referente a transicao %d\n",n1, tran_n);
-        if( == tran_n)
+        
+        at_at = a_transicao->cabeca;
+        if(n2 != 0)
         {
-        printf("# Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
-        printf("# Vamos ao sorteio: ");
-        sorteio = rand()%2;
-        if(sorteio == 0)
-        {
-        printf(" Perdeu no sorteio \n");
-        continue;
+            for(n=0; n<n2 ;n++)/* Encontra o elemento da lista numero n2*/
+            {
+                no_at = no_at->proximo;
+                at_at = no_at->conteudo;
+            }
         }
-        else if(sorteio == 1)
+        lugar = at->destino;
+        printf("# Certo, vez do arcotransicao numero: %d da transicao %d\n",n2, tran_n);
+
+        printf("# Ok, vejamos se o arco transicao %d e' referente a transicao %d\n", n2, tran_n);
+
+        if(at_at->origem == t)
         {
-        printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
-        lugar_at->destino = lugar_at->destino + t_at->emissor;
-        printf("# Adicionei %d ao lugar %%d \n",t_at->emissor);//, indice);
-        }
+            printf("# Ok, esse arco transicao e' referente a transicao %d\n",tran_n);
+            printf("# Vamos ao sorteio: ");
+            sorteio = rand()%( 100/PORCENTAGEM );
+            if(sorteio != 0)
+            {
+                printf(" Perdeu no sorteio \n");
+                continue;
+            }
+            else
+            {
+                printf(" Ganhou o sorteio trans %d ativada\n", tran_n);
+                lugar_at->destino = lugar_at->destino + t_at->emissor;
+                printf("# Adicionei %d ao lugar %%d \n",t_at->emissor);//, indice);
+            }
         }
         else
         {
-        printf("# Esse arcotransicao nao tem relacao com a transicao %d\n", tran_n);
-        continue;
+            printf("# Esse arcotransicao nao tem relacao com a transicao %d\n", tran_n);
+            continue;
         }
-        }
-        }
-        else
-        {   
-        printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %%d \n");,// indice);
+    }
+}
+else
+{   
+    printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %%d \n");,// indice);
         printf("# Precisaria de %d tokens mas so' tem %d \n",t_al->coletor,lugar_al->conteudo);
-        continue;
-        }
-        }
-        else
-        {
-        printf("# O arcolugar %d nao tem relacao com a transicao %d\n",n1, tran_n);
-        continue;
-        }
-        }
-        */   
+    continue;
+}
+}
+else
+{
+    printf("# O arcolugar %d nao tem relacao com a transicao %d\n",n1, tran_n);
+    continue;
+}
+}
+*/   
 }
 void imprimie_lugar_allegro(lista *l)
 {
