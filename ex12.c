@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <allegro.h>
 #include <time.h>
+#include <math.h>
 
 #define CORBRANCO        (makecol(255,255,255))
 #define CORPRETO         (makecol(0,0,0))
@@ -264,19 +265,19 @@ int main(void)
         (int)art;
         art = i;
         //printf(" QTRAN = %d \n",Qtran);
-        pthread_create(&threads[i], NULL,/*imprima*/transicao_pt, (void*) &art);
+        pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
         printf("-> Transicao %d criada <-\n",i);
         // for(n1=0;n1<1000;n1++)
         // {
         //    printf(" dentro do laço\n");
-        //}
+        // }
         sleep(1);
         //arg[5] = i;
         //transicao_pt((void*) &i);/*&arg);*/
     }
     for(i=0; i<Qtran; i++)
     {
-       // pthread_join(&threads[i],NULL);
+   //     pthread_join(&threads[i],NULL);
     }
     // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
 
@@ -296,7 +297,7 @@ int main(void)
     limpa_lista_transicao(transicoes);
 
     fclose(arquivo);/* fechando o arquivo de entrada*/
-    //pthread_exit(NULL);
+ //   pthread_exit(NULL);
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
@@ -441,10 +442,10 @@ void *transicao_pt(void *x)
     t = no->conteudo;
     parada[*cont] = 0;
 
-    while(parada[*cont] != 1000)
+    while(parada[tran_n[*cont]] != 999)
     {
         vazio[tran_n[*cont]] = 0;
-        parada[*cont]++;
+        parada[tran_n[*cont]]++;
         for(n1[tran_n[*cont]]=0;n1[tran_n[*cont]]< Qarco_l;n1[tran_n[*cont]]++)
         {
             if(n1[tran_n[*cont]] == 0)
@@ -543,9 +544,7 @@ void *transicao_pt(void *x)
                 else
                 {   
                     printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1[tran_n[*cont]]);// <-
-                    vazio[tran_n[*cont]]++;
                     printf("# Precisaria de %d tokens mas so' tem %d \n",t->coletor,lugar_al->conteudo);
-                    continue;
                 }
 
             }
@@ -568,7 +567,7 @@ void *transicao_pt(void *x)
             n4++;
         }
     }
- //   pthread_exit(NULL);
+    pthread_exit(NULL);
 }
 void imprimie_lugar_allegro(lista *l)
 {
@@ -593,7 +592,7 @@ void imprimie_lugar_allegro(lista *l)
         printf(" Não foi possivel criar o buffer!\n");
         exit(EXIT_FAILURE);
     }
-
+    
     for(n=0; n< (no->conteudo) ; n++)
     {
         circle(buff, 50+(n*100), 100, 50, CORAMARELO);/* desenha um circulo */
@@ -656,7 +655,8 @@ void adiciona_na_lista(lista *l, int valor)
         novo_node->indice = 0;
         l->cabeca = novo_node;
     }
-    else {
+    else
+    {
         /*Se não for vazia, procura o último node da lista*/
         node *no;
         for(no = l->cabeca; no->proximo != NULL; no = no->proximo);
@@ -667,7 +667,6 @@ void adiciona_na_lista(lista *l, int valor)
         /* Ao fim do código, limpa todas as alocações dinâmicas realizadas */
     }
 }
-
 node *busca_elemento_por_indice(lista *l, int indice)
 {
     int i;
