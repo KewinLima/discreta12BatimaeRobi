@@ -336,9 +336,24 @@ void imprimie_lugar_allegro(lista *l);
 /*                     Thread                          */
 void *transicao_pt(void *arg);
 
-/****************** Fim dos Protótipos ******************/
+/*______________Fim dos Protótipos______________________*/
 int arg[5];/*variavel que ira guardar o endereço das listas */
 
+/**
+ **@ingroup Funções
+ **@brief A função main é a responsável por definir as ações do programa de maneira ordenada e lógica.
+ ** Declara variaveis tipo int.
+ ** Cria ponteiros de lista, e listas para armazenar as entrada.
+ ** Abre o arquivo de entrada.
+ ** Lê a quantidade de lugares e cria estes lugares com 0 tokens, inicialmente.
+ ** Lê a quantidade e transições e cria x transições vazias.
+ ** Caso o debug seja verdadeiro, imprime o conteudo de todas as listas
+ ** Limpa a memória que foi alocada de forma dinamica
+ ** cria a thread
+ ** Armazena os endereços das listas em uma variavel para ser usado nas threads paralelas.
+ **@param[in] n variável tipo int para o laço da leitura do primeiro bloco de entrada
+ **@param[in] x Variavel tipo int para determinar o limite do laço
+ **/
 int main(void)
 {
     srand(time(NULL));
