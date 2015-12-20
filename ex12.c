@@ -1,9 +1,39 @@
-/********************************************************
- **| Programa   : Rede de Petri com Processos Paralelos|**
- **| Autores    : Isabella Galvão e Kewin Lima         |**
- **| Orientador : Ruben Carlo                          |**
- *********************************************************
- **/
+/***************************************************************************
+**   Programa Rede de Petri com processos paralelos, versão                ***                                                                         *
+**   Programa que simula a rede de petri utilizando threads e listas.      *
+**                                                                         *
+**   Copyright (C) 2014  Ruben Carlo Benante <rcb [at] beco [dot] cc>      *
+**                                                                         *
+**   This program is free software; you can redistribute it and/or modify  *
+**   it under the terms of the GNU General Public License as published by  *
+**   the Free Software Foundation; either version 2 of the License, or     *
+**   (at your option) any later version.                                   *
+**                                                                         *
+**   This program is distributed in the hope that it will be useful,       *
+**   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+**   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+**   GNU General Public License for more details.                          *
+**                                                                         *
+**   You should have received a copy of the GNU General Public License     *
+**   along with this program; if not, read it online                       *
+**   at <http://www.gnu.org/licenses/>, or write to the                    *
+**   Free Software Foundation, Inc.,                                       *
+**   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+**                                                                         *
+**   To contact the author, please write to:                               *
+**   Isabella Vitória GAlvão dos Santos                                    *
+**   Kewim Lima da Silva                                                   *
+**   Email: isabella_asg@hotmail.com                                       *
+**          lima_kewin@hotmail.com                                         *
+**   Webpage: http://www.upe.br                                            *
+***************************************************************************/
+
+/**
+** \file ex12.c
+** \brief Programa que simula a rede de petri utilizando threads e listas.
+** \author Isabella Vitória GAlvão dos Santos e Kewin Lima da Silva
+** \date 2015-12-20
+**/
 
 #include <stdio.h>
 #include <pthread.h>
@@ -11,24 +41,110 @@
 #include <allegro.h>
 #include <time.h>
 
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor branca no allegro.
+**/
 #define CORBRANCO        (makecol(255,255,255))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor preta no allegro.
+**/
 #define CORPRETO         (makecol(0,0,0))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar transparência no allegro.
+**/
 #define TRANSPARENTE     (makecol(255,0,255))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor cinza no allegro.
+**/
 #define CORCINZA         (makecol(160,160,160))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor azul no allegro.
+**/
 #define CORAZUL          (makecol(0, 0, 255))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor verde no allegro.
+**/
 #define CORVERDE         (makecol(0, 255, 0))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor caramelo no allegro.
+**/
 #define CORAMARELO       (makecol(255,255,100))
+
+/**
+** @ingroup MACROS
+** @brief - Atalho para utilizar a cor vermelha no allegro.
+**/
 #define CORVERMELHO      (makecol(255, 0, 0))
+
+/**
+** @ingroup MACROS
+** @brief - Define o tamanho horizontal da tela ultilizada pelo allegro.
+**/
 #define TAMANHO_X        800
+
+/**
+** @ingroup MACROS
+** @brief - Define o nome do arquivo gerado pelo alllegro.Nome padrão.
+**/
 #define TAMANHO_Y        800
+
+/**
+** @ingroup MACROS
+** @brief - Define o nome do arquivo gerado pelo alllegro.Nome padrão.
+**/
 #define NOME_IMAGEM      "ex12.bmp"
+
+/**
+** @ingroup MACROS
+** @brief - Define o arquivo de entrada.
+**/
 #define NOME_ENTRADA     "entrada-petri-1.txt"
+
+/**
+** @ingroup MACROS
+** @brief - Número de itens referentes a quantidade de entradas
+**/
 #define BLOCO_DE_ENTRADA 5
+
+/**
+** @ingroup MACROS
+** @brief - Define a probabilidade de uma transição ser ativada ou não.
+**/
 #define PORCENTAGEM      50
+
+/**
+** @ingroup MACROS
+** @brief - Define criado para a opção do debug
+**/
 #define DEBUG            1
+
+/**
+** @ingroup MACROS
+** @brief - Anula o define
+**/
 #undef  DEBUG /* Caso queira um debug,por favor comente essa linha. */
 
 /*************** Definição dos tipos para as listas  ****************/
+/**
+** @ingroup Estruturas
+** @brief Define uma struct -transicao- e nomeiam a mesma. Cria uma struct com elementos do tipos inteiro.
+** @param[in]  coletor é um elemento do topo inteiro onde vai ser guardado o valor que a transição precisa para ser ativada.
+** @param[out]  emissor é um elemento do tipo inteiro que envia o valor armazenado pelo coletor.
+** @param[in]  indice é um elemento que guarda o inteiro que será o número da transição.
+ **/
 /*Define uma transição*/
 typedef struct struct_transicao transicao;
 struct struct_transicao
@@ -38,6 +154,14 @@ struct struct_transicao
     int indice;
 };
 
+
+/**
+ ** @ingroup Estruturas
+ ** @brief Define uma estrutura  node (nó) que armazena um inteiro.
+ ** @param[in]  conteudo é uma variável que recebe um valor do tipo inteiro.
+ ** @param[out] proximo é um ponteiro e aponta para o próximo elemento da lista node.
+ ** @param[in] indice é um elemento que guarda o inteiro que será o número da transição.
+ **/
 /*Define um node que armazena um inteiro*/
 typedef struct struct_node node;
 struct struct_node
@@ -46,6 +170,13 @@ struct struct_node
     node *proximo;
     int indice;
 };
+
+/**
+ ** @ingroup Estruturas
+ ** @brief Define uma estrutura para as interações de  arco transição.
+ ** @param[out] destino é do tipo ponteiro e aponta para o proximo lugar da lista node. Indica o local para o qual o arco está apontando.
+ ** @param[in] origem é um ponteiro e aponta para um elemento da lista transição.Indica que o arco se inicia numa transição.
+ **/
 /*Define um arco transição*/
 typedef struct struct_arco_transicao arco_transicao;
 struct struct_arco_transicao
@@ -54,6 +185,13 @@ struct struct_arco_transicao
     transicao *origem;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define uma estrutura pra as interações de arco lugar
+ **@param[in] destino é um ponteiro que aponta para uma transiçaao.
+ **@param[in] origem é um ponteiro que aponta para a lista node.Indica o local onde o arco se inicia.
+ */
 /*Define um arco lugar*/
 typedef struct struct_arco_lugar arco_lugar;
 struct struct_arco_lugar
@@ -62,6 +200,13 @@ struct struct_arco_lugar
     node *origem;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define um nó que armazena valores das interações arcos transição.
+ **@param[in] conteudo é um ponteiro que aponta para a lista arco_transicao. Encontra um numero inteiro que está nesta lista.
+ **@param[out] proximo é um ponteiro que aponta para o proximo elemento da lista node_arco_transicao.
+ **/
 /*Define um nó que armazena arcos transição.*/
 typedef struct struct_node_at node_arco_transicao;
 struct struct_node_at
@@ -70,6 +215,13 @@ struct struct_node_at
     node_arco_transicao *proximo;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define as interações arco-lugar.
+ **@param[in] conteudo é um ponteiro que aponta para a lista arco_lugar. Esse ponteiro encontra um número inteiro que está nesta lista.
+ **@param[out] proximo é um ponteiro que aponta para o proximo elemento da lista node_arco_lugar.
+ **/
 /*Define um nó que armazena arcos lugar*/
 typedef struct struct_node_al node_arco_lugar;
 struct struct_node_al
@@ -78,6 +230,13 @@ struct struct_node_al
     node_arco_lugar *proximo;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define as interações lugar-transição.
+ **@param[in] conteudo é um ponteiro que aponta para a lista transicao.      Esse ponteiro encontra um número inteiro que está nesta lista.
+ **@param[out] proximo é um ponteiro que aponta para o proximo elemento da lista node_trasicao.
+ **/
 typedef struct struct_node_transicao node_transicao;
 struct struct_node_transicao
 {
@@ -85,8 +244,13 @@ struct struct_node_transicao
     node_transicao *proximo;
 };
 
-/*A lista é definida como um ponteiro para o primeiro elemento da lista*/
 
+/**
+ **@ingroup Estruturas
+ **@brief Define a lista que guarda inteiros. A lista é definida como um ponteiro para o primeiro elemento da lista.
+ **@param[in] cabeca é um ponteiro que aponta para o primeiro elemento da lista node.
+ **/
+/*A lista é definida como um ponteiro para o primeiro elemento da lista*/
 /*Define a lista que guarda inteiros*/
 typedef struct struct_lista lista;
 struct struct_lista
@@ -94,6 +258,12 @@ struct struct_lista
     node *cabeca;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define a lista que guarda arcos transição
+ **@param[in] cabeca é um ponteiro que aponta para o primeiro elemento dalista node_arco_transicao.
+ **/
 /*Define a lista que guarda arcos transição*/
 typedef struct struct_lista_at lista_arco_transicao;
 struct struct_lista_at
@@ -101,6 +271,12 @@ struct struct_lista_at
     node_arco_transicao *cabeca;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define a lista que guarda arcos lugar.
+ **@param[in] cabeca é um ponteiro que aponta para o primeiro elemento dalista node_asrco_lugar.
+ **/
 /*Define a lista que guarda arcos lugar*/
 typedef struct struct_lista_al lista_arco_lugar;
 struct struct_lista_al
@@ -108,13 +284,23 @@ struct struct_lista_al
     node_arco_lugar *cabeca;
 };
 
+
+/**
+ **@ingroup Estruturas
+ **@brief Define a lista que guarda as transições.
+ **@param[in] cabeca é um ponteiro que aponta para a lista node_transicao.
+ **/
 typedef struct struct_lista_transicao lista_transicao;
 struct struct_lista_transicao
 {
     node_transicao *cabeca;
 };
 
-/********************* Protótipos **********************/
+/*_______________Protótipos______________*/
+/**
+ ** @ingroup Protótipos_das_funcoes
+ ** @brief Declaração dos protótipos das funções que serão utilizadas para simular a rede de petri.
+ **/
 
 /*               Operações para a lista                */
 lista *cria_lista(void);
@@ -266,8 +452,8 @@ int main(void)
         //printf(" QTRAN = %d \n",Qtran);
         pthread_create(&threads[i], NULL, transicao_pt, (void*) &art);
         printf("-> Transicao %d criada <-\n",i);
-       // for(n1=0;n1<1000;n1++)
-       // {
+        // for(n1=0;n1<1000;n1++)
+        // {
         //    printf(" dentro do laço\n");
         //}
         sleep(1);
@@ -313,19 +499,19 @@ void *transicao_pt(void *x)
     int tran_n[Qtran];
     tran_n[*cont] = *cont;
     printf("!!!! tran_n[%d] = %d !!!\n Qtran = %d\n",*cont,tran_n[*cont],Qtran);
- //   lista *entradas;
+    //   lista *entradas;
     lista *lugar;
     lista_arco_lugar *a_lugar;
     lista_arco_transicao *a_transicao;
     lista_transicao *transicoes;
     //tran_n = *pvalor;
-/*
-    printf(" linha 308\n");
-    printf(" Endereço de tran_n = %d\n", tran_n);
-    printf(" Valor de tran_n = %d\n", tran_n);
-    printf(" Endereço de pvalor = %d\n", pvalor);
-    printf(" Thread da transicao %d executando \n", tran_n);
-    */
+    /*
+       printf(" linha 308\n");
+       printf(" Endereço de tran_n = %d\n", tran_n);
+       printf(" Valor de tran_n = %d\n", tran_n);
+       printf(" Endereço de pvalor = %d\n", pvalor);
+       printf(" Thread da transicao %d executando \n", tran_n);
+       */
     // pvalor=pvalor-1;
     for(numero=0; numero<5; numero++)
     {
