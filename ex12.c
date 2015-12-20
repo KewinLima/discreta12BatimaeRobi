@@ -151,6 +151,8 @@ void imprimie_lugar_allegro(lista *l);
 void *transicao_pt(void *arg);
 
 /****************** Fim dos Protótipos ******************/
+int arg[5];/*variavel que ira guardar o endereço das listas */
+
 int main(void)
 {
     srand(time(NULL));
@@ -245,7 +247,7 @@ int main(void)
     int Qtran= no->conteudo;
     Qtran = 3;
     pthread_t threads[Qtran];
-    int i, arg[5+Qtran];
+    int i; /*arg[6];*/
 
     arg[0] = transicoes;
     printf(" endereco transicoes arg[%d] = %d \n",0, &arg[0]);//entrada);
@@ -257,18 +259,21 @@ int main(void)
     printf(" endereco arco_t     arg[%d] = %d \n",3, &arg[3]);//arcos_transicao);
     arg[4] = entrada;
     printf(" endereco entrada    arg[%d] = %d \n",4, &arg[4]);//transicoes);
+    /*
     for(i=0; i<Qtran; i++)
     {
-        arg[5+i] = i;/* Essas variaveis guardaram o numero da transicao em questao */
+        arg[5+i] = i; // Essas variaveis guardaram o numero da transicao em questao 
         printf(" arg[%d] = %d  Endereco arg[%d] = %d \n",5+i,arg[5+i],5+i,&arg[5+i]);
     }
+    */
     for(i=0; i<Qtran ;i++)
     {
-      //  printf(" QTRAN = %d \n",Qtran);
+        //printf(" QTRAN = %d \n",Qtran);
         //pthread_create(&threads[i], NULL, transicao_pt, (void*) &arg[5]);
-      //  printf("-> Transicao %d criada <-\n",arg[5+i]);
+        //printf("-> Transicao %d criada <-\n",arg[5+i]);
         //pthread_join(&threads[i],NULL);
-        transicao_pt(&arg);
+        //arg[5] = i;
+        transicao_pt(&i);/*&arg);*/
     }
    // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
 
@@ -291,24 +296,32 @@ int main(void)
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
-void *transicao_pt(void *arg)
+void *transicao_pt(void *x)
 {
-    int *pvalor,numero=0,tran_n;
-
+    int Qtran,*pvalor,numero =0,*cont;
+    cont = x;
+    pvalor = arg;
     lista *entradas;
+    entradas = pvalor[4];
+    node *no_e;
+    no_e = entradas->cabeca;
+    Qtran=no_e->proximo->conteudo;
+    int tran_n[Qtran];
+    tran_n[*cont] = *cont;
+    printf("!!!! tran_n[%d] = %d !!!\n Qtran = %d\n",*cont,tran_n[*cont],Qtran);
+ //   lista *entradas;
     lista *lugar;
     lista_arco_lugar *a_lugar;
     lista_arco_transicao *a_transicao;
     lista_transicao *transicoes;
-    pvalor = arg;
-    tran_n = *pvalor;
-
+    //tran_n = *pvalor;
+/*
     printf(" linha 308\n");
     printf(" Endereço de tran_n = %d\n", tran_n);
     printf(" Valor de tran_n = %d\n", tran_n);
     printf(" Endereço de pvalor = %d\n", pvalor);
     printf(" Thread da transicao %d executando \n", tran_n);
-
+*/
    // pvalor=pvalor-1;
     for(numero=0; numero<5; numero++)
     {
@@ -342,9 +355,9 @@ void *transicao_pt(void *arg)
     int parada=0;
 
     node *no;
-    node *no_e;
+   // node *no_e;
     no = lugar->cabeca;
-    no_e = entradas->cabeca;
+   // no_e = entradas->cabeca;
     no= no->proximo->conteudo;
 
     node_arco_lugar *no_e_al;
@@ -353,9 +366,9 @@ void *transicao_pt(void *arg)
     arco_lugar *al_e;
     //no_e_al = entradas->cabeca;
 
-    int Qlugar,Qtran,Qarco_t,Qarco_l;
+    int Qlugar,/*Qtran,*/Qarco_t,Qarco_l;
     Qlugar  = no_e->conteudo;
-    Qtran   = no_e->proximo->conteudo;
+   // Qtran   = no_e->proximo->conteudo;
     Qarco_t = no_e->proximo->proximo->proximo->conteudo;
     Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
     int vazio[Qtran],n[Qtran],n1[Qtran],n2[Qtran],n3[Qtran],sorteio;
@@ -397,7 +410,7 @@ void *transicao_pt(void *arg)
     //    printf(" Quantidade de tokens no lugar = %d \n", lugar_at->conteudo);
     //    printf(" Valor da transicao %d \n", t_al->coletor);
     //    printf(" Valor da doacao %d \n",t_al->emissor);
-    /*
+/*
        printf("# Ok,estamos trabalhando com a transicao %d \n", tran_n);
 
        if(tran_n == 0)// Caso seja a transicao 0, recebe a cabeca da lista 
