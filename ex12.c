@@ -499,7 +499,24 @@ int main(void)
     fclose(arquivo);/* fechando o arquivo de entrada*/
     return EXIT_SUCCESS;
 }
-/****************Inicio das funções - Inicio Simulador****************/
+/*_____________Inicio das funções - Inicio Simulador_____________*/
+/**
+ **@ingroup Funções
+ **@brief Função que simula as interações da  rede de petri
+ **@param[in] Qtran é uma variável tipo inteiro que indica a quantidade de transições. 
+ **@param[in] pvalor é uma variável tipo ponteiro que recebe um valor inteiro
+ **@param[out] numero é uma variável do tipo inteiro utilizada nos cases
+ **@param[out] cont é um ponteiro que recebe um  valor inteiro. FAz parte do contador que tem o mesmo endereço do contador na chamada da thread
+ **@param[out] tran_n[Qtran] é um vetor de tamanho Qtran 
+ **@param[in] parada variável tipo inteiro criada como critério para a parada. 0=falso, logo não haverá parada. 1=verdadeiro, logo irá parar.
+ **@param[in] Qlugar 
+ **@param[in] vazio[Qtran] é um vetor de tramanho Qtran e tem como função determinar se todas as origens estão vazias ou não.
+ **@param[out] n[Qtran] é um contador e tem como tamanho a quantidade de transições
+ **@param[out] n1[Qtran] é um contador e tem como tamanho a quantidade de transições
+ **@param[out] n2[Qtran] é um contador e tem como tamanho a quantidade de transições
+ **@param[out] n3[Qtran] é um contador e tem como tamanho a quantidade de transições
+ **@param[out] sorteio 
+ **/
 void *transicao_pt(void *x)
 {
     printf("linha 294\n");
@@ -762,6 +779,11 @@ void *transicao_pt(void *x)
     pthread_exit(NULL);
 
 }
+
+/**
+ **@ingroup Funções
+ **@brief  Função que imprime os lugares da rede de petri no allegro.
+ */
 void imprimie_lugar_allegro(lista *l)
 {
     node *no;
@@ -803,12 +825,21 @@ void imprimie_lugar_allegro(lista *l)
 END_OF_FUNCTION()
 
     /****************Inicio Cria lista - Fim Simulador********************/
+/**
+ **@ingroup Funções
+ **@brief Função que cria lista
+ **/
 lista *cria_lista(void)
 {
     lista *l = malloc(sizeof(lista));
     l->cabeca = NULL;
     return l;
 }
+
+/**
+ **@ingroup Funções
+ **@brief Função que cria a lista arco_lugar
+ **/
 /* Cria a lista arco_lugar */
 lista_arco_lugar *cria_lista_arco_lugar(void)
 {
@@ -816,6 +847,11 @@ lista_arco_lugar *cria_lista_arco_lugar(void)
     l->cabeca = NULL;
     return l; /* retorna seu endereço */
 }
+
+/**
+ **@ingroup Funções
+ **@brief Frunção que cria a lista arco_transicao
+ **/
 /* Cria a lista arco_transicao */
 lista_arco_transicao *cria_lista_arco_transicao(void)
 {
@@ -823,6 +859,11 @@ lista_arco_transicao *cria_lista_arco_transicao(void)
     l->cabeca = NULL;
     return l;
 }
+
+/**
+ **@ingroup Funções
+ **@brief Fução que cria a lista transicao
+ **/
 /* Cria a lista transicao */
 lista_transicao *cria_lista_transicao(void)
 {
@@ -832,6 +873,11 @@ lista_transicao *cria_lista_transicao(void)
 }
 
 /***************** Fim de criar lista  - Começo adicionar lista ************/
+
+/**
+ **@ingroup Funções
+ **@brief Fução que adiciona um valor ao final da lista, este valor deve ser do mesmo tipo que o conteúdo do node.
+ **/
 /*Adiciona um valor ao final da lista*/
 /*O valor deve ser do mesmo tipo que o conteúdo do node*/
 void adiciona_na_lista(lista *l, int valor)
@@ -860,6 +906,11 @@ void adiciona_na_lista(lista *l, int valor)
     }
 }
 
+/**
+ **@ingroup Função
+ **@brief Função que busca um elemento pelo valor do seu índice.
+ **@param[out] i é uma variável tipo int que faz parte do contador da função.
+ **/
 node *busca_elemento_por_indice(lista *l, int indice)
 {
     int i;
@@ -875,7 +926,12 @@ node *busca_elemento_por_indice(lista *l, int indice)
 
     return no;
 }
-/*Adiciona um arco lugar na lista*/
+
+/**
+ **@ingroup Funções
+ **@brief Função que adicionaum elemento na lista um arco-lugar.
+ **/
+ /*Adiciona um arco lugar na lista*/
 void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
@@ -898,6 +954,12 @@ void adiciona_na_lista_arco_lugar(lista_arco_lugar *l, arco_lugar *valor)
         no->proximo = novo_node;
     }
 }
+
+/**
+ **@ingroup Funções 
+ **@brief Função que busca um elemento pelo seu indice na lista arco_lugar. 
+ **@param[out] i é uma variável que atua no contador da função.
+ **/
 node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int indice)
 {
     int i;
@@ -913,6 +975,11 @@ node_arco_lugar *busca_elemento_por_indice_arco_lugar(lista_arco_lugar *l, int i
 
     return no;
 }
+
+/**
+ **@ingroup Funções
+ **@brief Função que adiciona um elemento à lista arco_transição.
+ **/
 void adiciona_na_lista_arco_transicao(lista_arco_transicao *l, arco_transicao *valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
@@ -935,6 +1002,12 @@ void adiciona_na_lista_arco_transicao(lista_arco_transicao *l, arco_transicao *v
         no->proximo = novo_node;
     }
 }
+
+/**
+ **@ingroup Funções
+ **@brief Função que busca um elemento de uma lista pelo seu índice
+ **@param[out] i é uma variável que atua no contador da função
+ **/
 node_arco_transicao *busca_elemento_por_indice_arco_transicao(lista_arco_transicao *l, int indice)
 {
     int i;
@@ -952,6 +1025,11 @@ node_arco_transicao *busca_elemento_por_indice_arco_transicao(lista_arco_transic
 }
 /*Adiciona um valor ao final da lista*/
 /*O valor deve ser do mesmo tipo que o conteúdo do node*/
+
+/**
+ **@ingroup Funções
+ **@brief Adiciona um elemento ao fim da lista. O valor deste elemento deve ser do mesmo tipo que o conteúdo do node.
+ **/
 void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
 {
     /*Cria um novo node com o valor a ser adicionado*/
@@ -980,6 +1058,12 @@ void adiciona_na_lista_transicao(lista_transicao *l, transicao *valor)
 /*Recebe uma lista e um indice*/
 /*Retorna o elemento posicionado no índice desejado*/
 /*Caso o indice não exista, a função retorna null*/
+
+/**
+ **@ingroup Funções
+ **@brief Função que busca um elemento de uma lista pelo seu índice.REcebe uma lista e um índice, retorna o elemento posicionado no índice desejado e caso o índice n]ao exista, a função retorna null.
+ **@param i é uma variável de tipo inteiro que atua no contador da função.
+ **/
 node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, int indice)
 {
     int i;
@@ -993,7 +1077,10 @@ node_transicao *busca_elemento_por_indice_lista_transicao(lista_transicao *l, in
 }
 
 /***********************Fim de adiciona - Começo de limpa *********************************/
-
+/**
+ **@ingroup Funções
+ **@brief Função que libera a memória alocada para a lista e seus nós.
+ **/
 /*Libera a memória alocada para a lista e seus nós*/
 void limpa_lista(lista *l)
 {
@@ -1007,6 +1094,11 @@ void limpa_lista(lista *l)
     }
     free(l);
 }
+
+/**
+ **@ingroup Funções
+ **@brief Função que libera a memória alocada para a lista e seus nós
+ **/
 /* Limpa a alocação dinamica da lista*/
 void limpa_lista_arco_lugar(lista_arco_lugar *l)
 {
@@ -1022,6 +1114,11 @@ void limpa_lista_arco_lugar(lista_arco_lugar *l)
     free(l);
 }
 /*Libera a memória alocada para a lista e seus nós*/
+
+/**
+ **@ingroup Funções
+ **@brief Função que libera a memória alocada para a lista e seus nós
+ **/
 void limpa_lista_arco_transicao(lista_arco_transicao *l)
 {
     node_arco_transicao *no = l->cabeca;
@@ -1037,6 +1134,11 @@ void limpa_lista_arco_transicao(lista_arco_transicao *l)
     free(l);
 }
 /* Libera a memória alocada para a lista e seus nós */
+
+/**
+ **@ingroup Funções 
+ **@brief Função que libera a memória alocada para a lista e seus nós
+ **/
 void limpa_lista_transicao(lista_transicao *l)
 {
     node_transicao *no = l->cabeca;
@@ -1054,6 +1156,12 @@ void limpa_lista_transicao(lista_transicao *l)
 
 /**************************** Fim de libera - Começo de imprime *************************/
 /* Imprime a lista, elemento por elemento */
+/**
+ **@ingroup Funções 
+ **@brief Função que imprime lista elemento por elemento
+ **@param[out] no é um um ponteiro que aponta
+ **@param[out] n é uma variável que 
+ **/
 void imprime_lista(lista *l, char entrada_lugar)
 {
     node *no;
@@ -1091,6 +1199,17 @@ void imprime_lista(lista *l, char entrada_lugar)
     }
 }
 
+/**
+ * **@ingroup Funções
+ * **@brief Função que imprime lista lista_arco_lugar, elemento por elemento.
+ * **@param[out] no é um ponteiro que aponta para a lista node_arco_lugar. E atua no contador da função.
+ * **@param[out] al é um ponteiro que aponta para a lista arco_lugar.
+ * **@param[out] ponteiro é um ponteiro que recebe um valor inteiro.
+ * **@param[out] l é uma variável que recebe o valor do endereço de ponteiro.
+ * **@param[out] lugar é um ponteiro que aponta para uma lista node.
+ * **@param[out] t é um ponteiro que aponta para a lista transição.
+ * **@param[out] n1 é uma variável tipo inteiro e conta quantas vezes o laço é rodado.
+ * **/
 /* Imprime a lista, elemento por elemento */
 void imprime_lista_arco_lugar(lista_arco_lugar *l)
 {
@@ -1113,8 +1232,12 @@ void imprime_lista_arco_lugar(lista_arco_lugar *l)
     }
 }
 
+/**
+**@ingroup Funções
+**@brief Função que imprime lista das transições, elemento por elemento.
+**@param[out] no é um ponteiro que aponta para a lista node_arco_transicao e atua no contador da função.
+**/
 /* Imprime a lista, elemento por elemento*/
-
 void imprime_lista_arco_transicao(lista_arco_transicao *l)
 {
     int n1=0;
@@ -1133,6 +1256,11 @@ void imprime_lista_arco_transicao(lista_arco_transicao *l)
 }
 
 /* Imprime a lista, elemento por elemento */
+/**
+ **@ingroup Funções
+ **@brief Função que imprime lista das transições, elemento por elemento.
+  **@param[out] no é um ponteiro que aponta para a lista node_transicao e atua no contador da função.
+ **/
 void imprime_lista_transicao(lista_transicao *l)
 {
     node_transicao *no;
