@@ -770,7 +770,7 @@ void imprimie_lugar_allegro()
     {
         printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
         circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORAZUL);/* desenha um circulo */
-     textprintf_ex(buff, font, x_l[n]-tamanho_c, y_l[n], CORVERDE, CORAZUL, " Lugar %d", n);
+     textprintf_ex(buff, font, x_l[n]-tamanho_c, y_l[n], CORVERDE, CORBRANCO, " Lugar %d", n);
     }
 
     save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
