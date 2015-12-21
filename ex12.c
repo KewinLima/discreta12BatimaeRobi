@@ -259,13 +259,13 @@ int main(void)
     arg[4] = entrada;
     printf(" endereco entrada    arg[%d] = %d \n",4, &arg[4]);//transicoes);
     printf(" !!! Qtran = %d\n", Qtran);
-    imprimie_lugar_allegro(entrada);
+    
     for(i=0; i<Qtran ;i++)
     {
         (int)art;
         art = i;
         //printf(" QTRAN = %d \n",Qtran);
-    //    pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
+        pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
         printf("-> Transicao %d criada <-\n",i);
         // for(n1=0;n1<1000;n1++)
         // {
@@ -280,7 +280,7 @@ int main(void)
    //     pthread_join(&threads[i],NULL);
     }
     // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
-
+    imprimie_lugar_allegro(entrada);
     /*Com o objetivo de um debug funções de imprimir na tela*/
 
 #ifdef DEBUG
