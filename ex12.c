@@ -147,7 +147,7 @@ void imprime_lista_transicao(lista_transicao *l);
 void limpa_lista_transicao(lista_transicao *l);
 
 /*                     Allegro                         */
-void imprimie_lugar_allegro(lista *l);
+void imprimie_lugar_allegro();
 
 /*                     Thread                          */
 void *transicao_pt(void *x);
@@ -271,7 +271,7 @@ int main(void)
         // {
         //    printf(" dentro do laço\n");
         // }
-        sleep(1);
+       // sleep(1);
         //arg[5] = i;
         //transicao_pt((void*) &i);/*&arg);*/
     }
@@ -280,7 +280,7 @@ int main(void)
    //     pthread_join(&threads[i],NULL);
     }
     // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
-    imprimie_lugar_allegro(entrada);
+    imprimie_lugar_allegro();
     /*Com o objetivo de um debug funções de imprimir na tela*/
 
 #ifdef DEBUG
@@ -308,7 +308,7 @@ void *imprima(void *x)
     X=x;
     printf(" transicao %d \n", *X);
     sleep(1);
-    printf(" transicao %d terminada.. \n",*X);
+    printf(" transicao %d terminada.. \n",X);
 }
 
 void *transicao_pt(void *x)
@@ -570,20 +570,73 @@ void *transicao_pt(void *x)
     }
     pthread_exit(NULL);
 }
-void imprimie_lugar_allegro(lista *l)
+void imprimie_lugar_allegro()
 {
+    lista *entradas;
+    lista *lugar;
+    lista_arco_lugar *a_lugar;
+    lista_arco_transicao *a_transicao;
+    lista_transicao *transicoes;
+
+    transicoes  = arg[0];
+    lugar       = arg[1];
+    a_lugar     = arg[2];
+    a_transicao = arg[3];
+    entradas    = arg[4];
+
     node *no;
-    no = l->cabeca;
-    int Qtran,n,n2,n3,total;
-    Qtran = no->conteudo;
+    node *no_e;
+    no = lugar->cabeca;
+    no_e = entradas->cabeca;
+    no= no->proximo->conteudo;
+
+    node_arco_lugar *no_e_al;
+    node_arco_transicao *no_e_at;
+    arco_transicao *at_e;
+    arco_lugar *al_e;
+    no_e_al = entradas->cabeca; 
+    int Qlugar,Qtran,Qarco_t,Qarco_l;
+    Qlugar  = no_e->conteudo;
+    Qtran = no_e->proximo->conteudo;
+    Qarco_t = no_e->proximo->proximo->proximo->conteudo;
+    Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
+
+    /* Referente a lista_arco_lugar */
+
+    node_arco_lugar *no_al;
+    arco_lugar *al_al;
+    node *lugar_al;
+    transicao *t_al;
+    no_al = a_lugar->cabeca;
+    al_al = no_al->conteudo;
+    t_al  =  al_al->destino;
+    lugar_al = al_al->origem;
     
-    /* referente aos lugares */
-    if(Qtran%2 ==0)//par
-        total=Qtran;
+    // Referente a lista_arco_transicao 
+
+    node_arco_transicao *no_at;
+    arco_transicao *at_at;
+    node *lugar_at;
+    transicao *t_at;
+    no_at = a_transicao->cabeca;
+    at_at = no_at->conteudo;
+    t_at = at_at->origem;
+    lugar_at= at_at->destino;
+    
+    //referente a transicao
+    
+    node_transicao *no_t;
+    transicao *t;
+
+    int n,n2,n3,total;
+
+    // referente aos lugares do allegro
+    if(Qlugar%2 ==0)//par
+        total=Qlugar;
     else if(Qtran%2==1)// Impar
-        total=Qtran+1;
-    float x_l[total], y_l[total];
-    
+        total=Qlugar+1;
+    int x_l[total], y_l[total];
+
     /*referente a origem */
     int xo,yo; 
     xo=(TAMANHO_X/2);
@@ -608,50 +661,64 @@ void imprimie_lugar_allegro(lista *l)
     }
     else
         printf(" Imagem criada com sucesso! \n");
-    
-    int limite,parcela,raio;
-    n2 = TAMANHO_X;
-    n3 = TAMANHO_Y;
-    if(n2<=n3)
-        raio = (TAMANHO_X - 2*TAMANHO_C)/2;
-    else if(n3<n2)
-        raio = (TAMANHO_Y - 2*TAMANHO_C)/2;
-    
+
+    int limite,parcela,raio,tamanho_c,tamanho_x,tamanho_y;
+    tamanho_x = TAMANHO_X;
+    tamanho_y = TAMANHO_Y;
+    tamanho_c = TAMANHO_C;
+
+    if(tamanho_x<=tamanho_y)
+        raio = (tamanho_x - 2*tamanho_c)/2;
+    else if(tamanho_y<tamanho_x)
+        raio = (tamanho_y - 2*tamanho_c)/2;
+
     limite = total/2;
-    parcela = raio/limite;
-    x_l[0]= TAMANHO_C * 2; // Defino a posicao x do mais proximo a parede
-    x_l[total/2] = TAMANHO_X-TAMANHO_C * 2; // Define a posicao x do mais afastado do centro
+    parcela = 2*raio/limite;
+    x_l[0]= tamanho_c * 2; // Defino a posicao x do mais proximo a parede
+    x_l[total/2] = tamanho_x-tamanho_c * 2; // Define a posicao x do mais afastado do centro
     y_l[0]= yo;
     y_l[total/2]=yo;
+    printf("yo = %d\n",yo);
+    printf("xo = %d\n",xo);
+    printf("total= %d\n",total);
+    printf("limite = %d\n",limite);
+    printf("parcela = %d\n",parcela);
+    printf("raio = %d\n",raio);
+    printf("tamanho_x = %d\n",tamanho_x);
+    printf("tamanho_c = %d\n",tamanho_c);
+    printf("x_l[0] = %d\n",x_l[0]); 
+    printf("y_l[0] = %d\n",y_l[0]);
     
     n3=1;
     for( n=1; n<total ;n++)
     {
         if( n == limite)
-            break;
+            continue;
         if(n < limite)
-            x_l[n] = parcela*n + TAMANHO_C;
+            x_l[n] = parcela*n + tamanho_c;
         if(n>limite)
         {
-            x_l[n] = parcela*n3 + TAMANHO_C;
+            x_l[n] = parcela*n3 + tamanho_c;
             n3++;
         }
     }
+    n3=0;
     for( n=1; n<total ;n++)
     {
         if(n == limite)
-            break;
-        
+            continue;   
         if(n < limite)
-            y_l[n] = y_l[0] - parcela*n + TAMANHO_C;
-        
+            y_l[n] = y_l[0] - parcela*n + tamanho_c;
         if(n > limite)
-            y_l[n] = y_l[0] + parcela*n - TAMANHO_C;
+        {
+            y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
+            n3++;
+        }
     }
 
     for(n=0; n<(Qtran) ; n++)
     {
-        if(Qtran%2 ==1 && n+1==Qtran)
+        if(Qtran%2 ==1 && n+1==Qtran)/* Caso a quantidade de lugares seja impar não imprima o lugar fantasma*/
         {
             break;
         }
