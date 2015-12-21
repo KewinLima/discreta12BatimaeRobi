@@ -612,7 +612,7 @@ void imprimie_lugar_allegro(lista *l)
     int limite,parcela,raio;
     n2 = TAMANHO_X;
     n3 = TAMANHO_Y;
-    if(n2<n3)
+    if(n2<=n3)
         raio = (TAMANHO_X - 2*TAMANHO_C)/2;
     else if(n3<n2)
         raio = (TAMANHO_Y - 2*TAMANHO_C)/2;
@@ -645,7 +645,7 @@ void imprimie_lugar_allegro(lista *l)
     for(n=0; n<(Qtran) ; n++)
     {
         y_l[n]=50*n;
-     //   x_l[n]=50*n;
+     //  x_l[n]=50*n;
         if(Qtran%2 ==1 && n+1==Qtran)
         {
             break;
