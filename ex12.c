@@ -728,7 +728,7 @@ void imprimie_lugar_allegro()
     if(total >=2)
     {
         x_t[total/2] = xo + raio; // Define a posicao x do mais afastado
-        y_t[total/2]=yo;
+        y_t[total/2] = yo;
     }
     y_t[0] = yo;
     n3=1;
@@ -740,6 +740,7 @@ void imprimie_lugar_allegro()
         {
             x_t[n] = parcela*n + x_t[0];
             y_t[n] = yo - parcela*n ;
+            printf(" linha 743 \n");
         }
         if(n>limite)
         {
@@ -750,7 +751,7 @@ void imprimie_lugar_allegro()
             n3++;
         }
     }
-    for(n=0; n< Qtran ; n++)
+    for(n=0; n< total ; n++)
     {
         printf(" xt[%d] = %d \n yt[%d] = %d\n",n,x_t[n],n,y_t[n]);
         rectfill(buff, x_t[n]-(TAM_TRAN_X/2), y_t[n]-TAM_TRAN_Y/2,x_t[n]+(TAM_TRAN_X/2),y_t[n]+(TAM_TRAN_Y/2), CORBRANCO);
