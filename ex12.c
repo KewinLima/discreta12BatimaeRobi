@@ -659,7 +659,7 @@ void imprimie_lugar_allegro(lista *l)
     allegro_exit();                     /* Termina o allegro           */
 
 #ifdef DEBUG
-    printf("Imagem %s salva com sucesso!  \n", NOME_IMAGEM);
+    printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
 #endif
 }
 END_OF_FUNCTION()
