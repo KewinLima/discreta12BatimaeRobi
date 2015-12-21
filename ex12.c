@@ -716,12 +716,13 @@ void imprimie_lugar_allegro()
         }
     }
 
-    for(n=0; n<(Qtran) ; n++)
+    for(n=0; n<(Qlugar) ; n++)
     {
         if(Qtran%2 ==1 && n+1==Qtran)/* Caso a quantidade de lugares seja impar não imprima o lugar fantasma*/
         {
             break;
         }
+        printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
         circle(buff, x_l[n], y_l[n], TAMANHO_C, CORAMARELO);/* desenha um circulo */
     }
     /* textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");*/
