@@ -619,27 +619,34 @@ void imprimie_lugar_allegro(lista *l)
     
     limite = total/2;
     parcela = raio/limite;
-    x_l[0]= TAMANHO_C; // Defino a posicao x do mais proximo a parede
-    x_l[total/2] = TAMANHO_X-TAMANHO_C; // Define a posicao x do mais afastado do centro
+    x_l[0]= TAMANHO_C*2; // Defino a posicao x do mais proximo a parede
+    x_l[total/2] = TAMANHO_X-TAMANHO_C*2; // Define a posicao x do mais afastado do centro
     y_l[0]= yo;
     y_l[total/2]=yo;
-
+    
+    n3=1;
     for( n=1; n<total ;n++)
     {
         if( n == limite)
             break;
-        x_l[n] = parcela*n + TAMANHO_C;
+        if(n < limite)
+            x_l[n] = parcela*n + TAMANHO_C;
+        if(n>limite)
+        {
+            x_l[n] = parcela*n3 + TAMANHO_C;
+            n3++;
+        }
     }
-    for(n=1; n<total ;n++)
+    for( n=1; n<total ;n++)
     {
         if(n == limite)
             break;
         
         if(n < limite)
-            y_l[n] = y_l[0] - parcela*n;
+            y_l[n] = y_l[0] - parcela*n + TAMANHO_C;
         
         if(n > limite)
-            y_l[n] = y_l[0] + parcela*n;
+            y_l[n] = y_l[0] + parcela*n - TAMANHO_C;
     }
 
     for(n=0; n<(Qtran) ; n++)
