@@ -679,7 +679,7 @@ void imprimie_lugar_allegro()
 
     limite = total/2;
     parcela = 2*raio/limite;
-    x_l[0]= xo-raio+(tamanho_c/2) // Defino a posicao x do mais proximo a parede
+    x_l[0]= xo-raio+(tamanho_c/2); // Defino a posicao x do mais proximo a parede
     if(total>=2)
     {    
         x_l[total/2] = xo + raio + (tamanho_c/2); // Define a posicao x do mais afastado do centro
