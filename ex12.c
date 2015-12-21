@@ -641,6 +641,8 @@ void imprimie_lugar_allegro(lista *l)
 
     for(n=0; n<(Qtran) ; n++)
     {
+        y_l[n]=yo;
+        x_l[n]=xo;
         if(Qtran%2 ==1 && n+1==Qtran)
         {
             break;
