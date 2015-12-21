@@ -723,7 +723,7 @@ void imprimie_lugar_allegro()
     raio = (int)(raio*0.4);
     printf(" RAIO %d\n",raio);
     limite = total/2;
-    parcela = raio/limite;
+    parcela = 2*raio/limite;
     x_t[0] = xo - raio; // Defino a posicao x do mais proximo a parede
     if(total >=2)
     {
@@ -739,14 +739,14 @@ void imprimie_lugar_allegro()
         if(n < limite)
         {
             x_t[n] = parcela*n + x_t[0];
-            y_t[n] = yo - parcela*n ;
+            y_t[n] = yo - parcela*n;
             printf(" linha 743  \n");
         }
         if(n>limite)
         {
             printf(" limite = %d e n= %d\n",limite,n);
             x_t[n] = parcela*n3 + x_t[0];
-            y_t[n] = yo + parcela*n3;
+            y_t[n] = yo + parcela*n;
             printf("743\n");
             n3++;
         }
