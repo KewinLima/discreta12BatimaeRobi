@@ -23,6 +23,8 @@
 #define TAMANHO_X        800
 #define TAMANHO_Y        800
 #define TAMANHO_C        50
+#define TAM_TRAN_X       20
+#define TAM_TRAN_Y       50
 #define NOME_IMAGEM      "ex12.bmp"
 #define NOME_ENTRADA     "entrada-petri-1.txt"
 #define BLOCO_DE_ENTRADA 5
@@ -641,6 +643,9 @@ void imprimie_lugar_allegro()
     int xo,yo; 
     xo=(TAMANHO_X/2);
     yo=(TAMANHO_Y/2);
+    
+    /*referente as transicoes*/
+    int x_t[2],y_t[2];
 
     /* Declaração das variáveis que irmão guardar as imagens */
     BITMAP *buff;  /* Arquivos de bitmap */
@@ -674,10 +679,13 @@ void imprimie_lugar_allegro()
 
     limite = total/2;
     parcela = 2*raio/limite;
-    x_l[0]= tamanho_c * 2; // Defino a posicao x do mais proximo a parede
-    x_l[total/2] = tamanho_x-tamanho_c * 2; // Define a posicao x do mais afastado do centro
-    y_l[0]= yo;
-    y_l[total/2]=yo;
+    x_l[0]= xo-raio; // Defino a posicao x do mais proximo a parede
+    if(total>=2)
+    {    
+        x_l[total/2] = xo + raio; // Define a posicao x do mais afastado do centro
+        y_l[total/2]=yo;
+    }
+    y_l[0] = yo;
     printf("yo = %d\n",yo);
     printf("xo = %d\n",xo);
     printf("total= %d\n",total);
@@ -702,21 +710,61 @@ void imprimie_lugar_allegro()
         if(n>limite)
         {
             x_l[n] = parcela*n3 + tamanho_c;
-            printf(" y_l[0] = %d parcela = %d n3 =%d tamanho_c = %d\n",y_l[0],parcela,n3,tamanho_c);
             y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
             n3++;
         }
     }
-    n3=0;
-
-    for(n=0; n<(Qlugar) ; n++)
+    Qtran = 4;
+    raio = (int)(raio*0.4);
+    printf(" RAIO %d\n",raio);
+    limite = Qtran/2;
+    parcela = 2*raio/limite;
+    x_t[0]= raio - xo; // Defino a posicao x do mais proximo a parede
+    if(total >=2)
     {
-        if(Qtran%2 ==1 && n+1==Qtran)/* Caso a quantidade de lugares seja impar não imprima o lugar fantasma*/
+        x_t[Qtran/2] = xo + raio; // Define a posicao x do mais afastado
+        y_t[Qtran/2]=yo;
+    }
+    y_t[0] = yo;
+    n3=1;
+    for( n=1; n<Qtran ;n++)
+    {
+        if( n == limite)
+            continue;
+        if(n < limite)
         {
-            break;
+            x_t[n] = parcela*n + x_t[0];
+            y_t[n] = y_t[0] - parcela*n ;
+            printf(" 737 \n");
+        }
+        if(n>limite)
+        {
+            printf(" limite = %d e n= %d\n",limite,n);
+            x_t[n] = parcela*n3 + x_t[0];
+            y_t[n] = y_t[0] + parcela*n3 - tamanho_c;
+            printf("743\n");
+            n3++;
+        }
+    }
+    for(n=0; n< Qtran ; n++)
+    {
+        if((Qtran%2 == 1 && n+1 == Qtran) && n!=0)
+        {
+            printf(" oi!\n");
+            continue;
+        }
+        printf(" xt[%d] = %d \n yt[%d] = %d\n",n,x_t[n],n,y_t[n]);
+        rectfill(buff, x_t[n]-(TAM_TRAN_X/2), y_t[n]-TAM_TRAN_Y/2,x_t[n]+(TAM_TRAN_X/2),y_t[n]+(TAM_TRAN_Y/2), CORBRANCO);
+    }
+
+    for(n=0; n<Qlugar ; n++)
+    {
+        if((Qlugar%2 ==1 && n+1==Qlugar)&& n!=0)/* Caso a quantidade de lugares seja impar não imprima o lugar fantasma*/
+        {
+            continue;
         }
         printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
-        circle(buff, x_l[n], y_l[n], TAMANHO_C, CORAMARELO);/* desenha um circulo */
+        circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORVERDE);/* desenha um circulo */
     }
     /* textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");*/
 
