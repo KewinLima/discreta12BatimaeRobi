@@ -630,7 +630,7 @@ void imprimie_lugar_allegro()
     node_transicao *no_t;
     transicao *t;
 
-    int n,n2,n3,total,artificio;
+    int n,n1,n2,n3,n4,total,artificio;
 
     // referente aos lugares do allegro
     if(Qlugar%2 ==0)//par
@@ -680,7 +680,7 @@ void imprimie_lugar_allegro()
     total = 8;//<----------------------
     limite = total/2;
     parcela = 2*raio/limite;
-    x_l[0]= xo-raio+(tamanho_c/2); // Defino a posicao x do mais proximo a parede
+    x_l[0]= xo - raio;//(tamanho_c/2); // Defino a posicao x do mais proximo a parede
     if(total>=2)
     {    
         x_l[total/2] = xo + raio - (tamanho_c/2); // Define a posicao x do mais afastado do centro
@@ -696,27 +696,37 @@ void imprimie_lugar_allegro()
     printf("tamanho_x = %d\n",tamanho_x);
     printf("tamanho_c = %d\n",tamanho_c);
     
-    n3=1;
+    n1=1,n2=1,n3=1,n4=0;
     for( n=1; n<total ;n++)
     {
         if( n == limite)
             continue;
         if(n < limite)
         {
-            x_l[n] = parcela*n + x_l[0];
-           // y_l[n] = y_l[0] - parcela*n + tamanho_c;
-            artificio = abs( xo-x_l[n]);
-            y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) -(n*4)*parcela + 1;
+           // if(x_l[n] <= xo)
+           // {
+             x_l[n] = parcela*n + x_l[0];
+             if(x_l[n] <= xo)
+             {
+                y_l[n] = yo - parcela*n1 + tamanho_c;
+                n1++;
+                n4++;
+             }
+                //artificio = abs( xo-x_l[n]);
+            //y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) -(n*4)*parcela + 1;
+            //}
             if(x_l[n] > xo)
             {
-                y_l[n] = raio - n3*parcela;
-                n3++;
+             //   x_l[n] = parcela*n + xo;
+                n4--;
+                y_l[n] = yo - parcela*n4 + tamanho_c;
+                printf(" OI SOU %d \n", n);
             }
         }
         if(n>limite)
         {
             x_l[n] = parcela*(n - limite) + x_l[0];
-            artificio = abs( xo-x_l[n]);
+            artificio = abs( xo - x_l[n]);
             y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) + 1;
            // y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
            // n3++;
