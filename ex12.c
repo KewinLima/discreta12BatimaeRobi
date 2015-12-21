@@ -690,7 +690,7 @@ void imprimie_lugar_allegro()
     printf("yo = %d\n",yo);
     printf("xo = %d\n",xo);
     printf("total= %d\n",total);
-    printf("limite = %d\n",limite);
+    printf("limite = %d \n",limite);
     printf("parcela = %d\n",parcela);
     printf("raio = %d \n",raio);
     printf("tamanho_x = %d\n",tamanho_x);
