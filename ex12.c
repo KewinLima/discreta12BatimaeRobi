@@ -153,7 +153,6 @@ void imprimie_lugar_allegro();
 
 /*                     Thread                          */
 void *transicao_pt(void *x);
-void *imprima(void *x);
 /****************** Fim dos Protótipos ******************/
 int arg[5];/*variavel que ira guardar o endereço das listas */
 
@@ -251,39 +250,20 @@ int main(void)
     int i,n1,art; /*arg[6];*/
 
     arg[0] = transicoes;
-    printf(" endereco transicoes arg[%d] = %d \n",0, &arg[0]);//entrada);
     arg[1] = lugares;
-    printf(" endereco lugares    arg[%d] = %d \n",1, &arg[1]);//lugares);
     arg[2] = arcos_lugar;
-    printf(" endereco arcos_luga arg[%d] = %d \n",2, &arg[2]);//arcos_lugar);
     arg[3] = arcos_transicao;
-    printf(" endereco arco_t     arg[%d] = %d \n",3, &arg[3]);//arcos_transicao);
     arg[4] = entrada;
-    printf(" endereco entrada    arg[%d] = %d \n",4, &arg[4]);//transicoes);
-    printf(" !!! Qtran = %d\n", Qtran);
     
     for(i=0; i<Qtran ;i++)
     {
         (int)art;
         art = i;
-        //printf(" QTRAN = %d \n",Qtran);
-   //     pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
+        pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
         printf("-> Transicao %d criada <-\n",i);
-        // for(n1=0;n1<1000;n1++)
-        // {
-        //    printf(" dentro do laço\n");
-        // }
-       // sleep(1);
-        //arg[5] = i;
-        //transicao_pt((void*) &i);/*&arg);*/
+        sleep(1);
     }
-    for(i=0; i<Qtran; i++)
-    {
-   //     pthread_join(&threads[i],NULL);
-    }
-    // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
     imprimie_lugar_allegro();
-    /*Com o objetivo de um debug funções de imprimir na tela*/
 
 #ifdef DEBUG
     imprime_lista(entrada, 'e');
@@ -300,7 +280,7 @@ int main(void)
     limpa_lista_transicao(transicoes);
 
     fclose(arquivo);/* fechando o arquivo de entrada*/
- //   pthread_exit(NULL);
+    pthread_exit(NULL);
     return EXIT_SUCCESS;
 }
 /****************Inicio das funções - Inicio Simulador****************/
@@ -325,43 +305,29 @@ void *transicao_pt(void *x)
     Qtran=no_e->proximo->conteudo;
     int tran_n[Qtran];
     tran_n[*cont] = *cont;
-  //  printf("!!!! tran_n[%d] = %d !!!\n Qtran = %d\n",*cont,tran_n[*cont],Qtran);
  //   lista *entradas;
     lista *lugar;
     lista_arco_lugar *a_lugar;
     lista_arco_transicao *a_transicao;
     lista_transicao *transicoes;
-    //tran_n = *pvalor;
-/*
-    printf(" linha 308\n");
-    printf(" Endereço de tran_n = %d\n", tran_n);
-    printf(" Valor de tran_n = %d\n", tran_n);
-    printf(" Endereço de pvalor = %d\n", pvalor);
-    printf(" Thread da transicao %d executando \n", tran_n);
-    */
-    // pvalor=pvalor-1;
+    
     for(numero=0; numero<5; numero++)
     {
         switch(numero)
         {
             case 4:
-       //         printf(" entradas  pvalor[%d] == %d \n",numero,pvalor);
                 entradas = *pvalor;
                 break;
             case 3:
-        //        printf(" a_t    pvalor[%d] == %d \n",numero,pvalor);
                 a_transicao = *pvalor;
                 break;
             case 2:
-       //         printf(" a_l     pvalor[%d] == %d \n",numero,pvalor);
                 a_lugar = *pvalor;
                 break;
             case 1:
-     //           printf(" lugar   pvalor[%d] == %d \n",numero,pvalor);
                 lugar = *pvalor;
                 break;
             case 0:
-    //            printf(" transi  pvalor[%d] == %d \n",numero,pvalor);
                 transicoes = *pvalor;
                 break;
         }
@@ -372,20 +338,16 @@ void *transicao_pt(void *x)
     int parada[Qtran];
 
     node *no;
-    // node *no_e;
     no = lugar->cabeca;
-    // no_e = entradas->cabeca;
     no= no->proximo->conteudo;
 
     node_arco_lugar *no_e_al;
     node_arco_transicao *no_e_at;
     arco_transicao *at_e;
     arco_lugar *al_e;
-    //no_e_al = entradas->cabeca;
 
     int Qlugar,/*Qtran,*/Qarco_t,Qarco_l;
     Qlugar  = no_e->conteudo;
-    // Qtran   = no_e->proximo->conteudo;
     Qarco_t = no_e->proximo->proximo->proximo->conteudo;
     Qarco_l = no_e->proximo->proximo->proximo->proximo->conteudo;
     int vazio[Qtran],n[Qtran],n1[Qtran],n2[Qtran],n3[Qtran],sorteio;
@@ -417,16 +379,6 @@ void *transicao_pt(void *x)
 
     node_transicao *no_t;
     transicao *t;
-
-    //    printf(" transicao numero %d \n", tran_n);
-    //    printf(" arcolugar parte de %d \n", al_al->origem);
-    //    printf(" Arcolugar chega em %d \n", al_al->destino);
-    //    printf(" Quantidade de tokens no lugar = %d \n", lugar_al->conteudo);
-    //    printf(" Arcotransicao parte de %d \n", at_at->origem);
-    //    printf(" Arcotransicao chega em %d \n", at_at->destino);
-    //    printf(" Quantidade de tokens no lugar = %d \n", lugar_at->conteudo);
-    //    printf(" Valor da transicao %d \n", t_al->coletor);
-    //    printf(" Valor da doacao %d \n",t_al->emissor);
 
     printf("# Ok,estamos trabalhando com a transicao %d \n", tran_n[*cont]);
 
@@ -470,14 +422,12 @@ void *transicao_pt(void *x)
             printf("# Certo, vez do arcolugar numero: %d em relacao a transicao %d\n",n1[tran_n[*cont]], tran_n[*cont]);
             if(al_al->destino == t)
             {
-                //printf(" Endereco de t = %d \n Endereco de al_al->destino == %d \n",t,al_al->destino);
                 printf("# Sim, o arcolugar %d se refere a transicao %d\n",n1[tran_n[*cont]], tran_n[*cont]);
                 if( (lugar_al->conteudo) - (t->coletor) >=0 )// Condicao para acionar a transicao 
                 {
                     n2[tran_n[*cont]]=0;
                     for(no_e_al=a_lugar->cabeca; no_e_al != NULL; no_e_al = no_e_al->proximo)
                     {
-                        //                      printf(" Linha 455 \n");
                         al_e = no_e_al->conteudo;
                         if(al_e->origem == lugar_al)
                             break;
@@ -509,14 +459,12 @@ void *transicao_pt(void *x)
                         }
 
                         lugar_at = at_at->destino;
-                        //        printf(" Endereco de t = %d \n Endereco de at_at = %d \n",t,at_at->destino);
                         if(at_at->origem == t)
                         {
                             printf("# Sim, esse arco transicao e' referente a transicao %d\n",tran_n[*cont]);
                             n2[tran_n[*cont]]=0;
                             for(no_e_at = a_transicao->cabeca; no_e_at !=NULL; no_e_at = no_e_at->proximo)
                             {
-                                //                            printf(" Linha 492 \n");
                                 at_e = no->conteudo;
                                 if(at_e->origem == t)
                                     break;
@@ -767,10 +715,26 @@ void imprimie_lugar_allegro()
         printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
         circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORAZUL);/* desenha um circulo */    
     }
-    for(n=0;n<Qlugar;n++)
+    n4=0;
+    for(no = lugar->cabeca; no != NULL; no = no->proximo)
     {
-        textprintf_ex(buff, font, x_l[n]-tamanho_c, y_l[n], CORVERDE, CORBRANCO," Lugar %d", n);
+        //printf(" lugar %d | Quantidade de tokens %d\n",n4, no->conteudo);  
+        n4++;
+        textprintf_ex(buff, font, x_l[n4]-tamanho_c, y_l[n4], CORVERDE, CORVERMELHO," LUGAR %d\n %d TOKENS", n4,no->conteudo);
     }
+
+    line(buff, x_l[0],y_l[0],x_t[0],y_t[0],CORBRANCO);
+    triangle(buff, x_t[0],y_t[0],x_t[0]+5,y_t[0]-5,x_t[0]-5,y_t[0]-5,CORBRANCO);
+    line(buff, x_t[0],y_t[0],x_l[1],y_l[1],CORBRANCO);
+    triangle(buff, x_l[1],y_l[1],x_l[1]+5,y_l[1]-5,x_l[1]-5,y_l[1]-5,CORBRANCO); 
+    line(buff, x_l[1],y_l[1],x_t[1],y_t[1],CORBRANCO);
+    triangle(buff, x_t[1],y_t[1],x_t[1]+5,y_t[1]-5,x_t[1]-5,y_t[1]-5,CORBRANCO);  
+    line(buff, x_l[2],y_l[2],x_t[1],y_t[1],CORBRANCO);
+    triangle(buff, x_t[1],y_t[1],x_t[1]+5,y_t[1]-5,x_t[1]-5,y_t[1]-5,CORBRANCO);
+    line(buff, x_t[1],y_t[1],x_l[2],y_l[2],CORBRANCO);
+    triangle(buff, x_l[2],y_l[2],x_l[2]+5,y_l[2]-5,x_l[2]-5,y_l[2]-5,CORBRANCO);
+    line(buff, x_t[1],y_t[1],x_l[3],y_l[3],CORBRANCO);
+    triangle(buff, x_l[3],y_l[3],x_l[3]+5,y_l[3]-5,x_l[3]-5,y_l[3]-5,CORBRANCO);
 
     save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
     destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
