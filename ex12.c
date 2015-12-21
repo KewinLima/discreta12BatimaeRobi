@@ -630,7 +630,7 @@ void imprimie_lugar_allegro()
     node_transicao *no_t;
     transicao *t;
 
-    int n,n2,n3,total;
+    int n,n2,n3,total,artificio;
 
     // referente aos lugares do allegro
     if(Qlugar%2 ==0)//par
@@ -667,7 +667,7 @@ void imprimie_lugar_allegro()
     else
         printf(" Imagem criada com sucesso! \n");
 
-    int limite,parcela,raio,tamanho_c,tamanho_x,tamanho_y,artificio;
+    int limite,parcela,raio,tamanho_c,tamanho_x,tamanho_y;
     tamanho_x = TAMANHO_X;
     tamanho_y = TAMANHO_Y;
     tamanho_c = TAMANHO_C;
@@ -676,7 +676,8 @@ void imprimie_lugar_allegro()
         raio = (tamanho_x - 2*tamanho_c)/2;
     else if(tamanho_y<tamanho_x)
         raio = (tamanho_y - 2*tamanho_c)/2;
-
+    raio = 400;// <--------------------------
+    total = 8;//<----------------------
     limite = total/2;
     parcela = 2*raio/limite;
     x_l[0]= xo-raio+(tamanho_c/2); // Defino a posicao x do mais proximo a parede
@@ -691,27 +692,29 @@ void imprimie_lugar_allegro()
     printf("total= %d\n",total);
     printf("limite = %d\n",limite);
     printf("parcela = %d\n",parcela);
-    printf("raio = %d\n",raio);
+    printf("raio = %d \n",raio);
     printf("tamanho_x = %d\n",tamanho_x);
     printf("tamanho_c = %d\n",tamanho_c);
-    printf("x_l[0] = %d\n",x_l[0]); 
-    printf("y_l[0] = %d\n",y_l[0]);
-    
-    n3=1;
+    //n3=1;
     for( n=1; n<total ;n++)
     {
         if( n == limite)
             continue;
         if(n < limite)
         {
-            x_l[n] = parcela*n + tamanho_c;
-            y_l[n] = y_l[0] - parcela*n + tamanho_c;
+            x_l[n] = parcela*n + x_l[0];
+           // y_l[n] = y_l[0] - parcela*n + tamanho_c;
+            artificio = abs( xo-x_l[n]);
+            y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2)));
         }
         if(n>limite)
         {
-            x_l[n] = parcela*n3 + tamanho_c;
-            y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
-            n3++;
+            x_l[n] = parcela*(n - limite) + x_l[0];
+            artificio = abs( xo-x_l[n]);
+            y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2)));
+
+           // y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
+           // n3++;
         }
     }
     if(Qlugar%2 ==0)//par
@@ -719,9 +722,9 @@ void imprimie_lugar_allegro()
     else if(Qtran%2==1)// Impar
         total=Qlugar+1;
 
-    total = 8;
+    total = 8; // <-----------------
     raio = (int)(raio*0.4);
-    printf(" RAIO %d\n",raio);
+    //printf(" RAIO %d\n",raio);
     limite = total/2;
     parcela = 2*raio/limite;
     x_t[0] = xo - raio; // Defino a posicao x do mais proximo a parede
@@ -740,16 +743,15 @@ void imprimie_lugar_allegro()
         {
             x_t[n] = parcela*n + x_t[0];
             y_t[n] = yo - parcela*n;
-            printf(" linha 743  \n");
+           // printf(" linha 743  \n");
         }
-        printf("linha 745 n= %d\n", n);
+        //printf("linha 745 n= %d\n", n);
         if(n>limite)
         {
             printf("yo = %d limite = %d e n= %d parcela=%d n3=%d valor = %d\n",yo,limite,n,parcela,n3,( (parcela*n3) + y_t[0]));
             artificio = ((parcela*n3) + y_t[0]);
             x_t[n] = parcela*n3 + x_t[0];
             y_t[n] = artificio;
-            printf("743 y_t[%d] = %d\n",n,y_t[n]);
             n3++;
         }
     }
@@ -758,7 +760,7 @@ void imprimie_lugar_allegro()
         printf(" xt[%d] = %d \n yt[%d] = %d\n",n,x_t[n],n,y_t[n]);
         rectfill(buff, x_t[n]-(TAM_TRAN_X/2), y_t[n]-TAM_TRAN_Y/2,x_t[n]+(TAM_TRAN_X/2),y_t[n]+(TAM_TRAN_Y/2), CORBRANCO);
     }
-
+    Qlugar=8;
     for(n=0; n<Qlugar ; n++)
     {
         printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
