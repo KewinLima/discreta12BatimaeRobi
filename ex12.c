@@ -676,7 +676,7 @@ void imprimie_lugar_allegro()
         raio = (tamanho_x - 2*tamanho_c)/2;
     else if(tamanho_y<tamanho_x)
         raio = (tamanho_y - 2*tamanho_c)/2;
-    raio = 400;// <--------------------------
+    //raio = 400;// <--------------------------
     total = 8;//<----------------------
     limite = total/2;
     parcela = 2*raio/limite;
@@ -770,7 +770,7 @@ void imprimie_lugar_allegro()
     {
         printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
         circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORAZUL);/* desenha um circulo */
-     textprintf_ex(buff, font, x_l[n], y_l[n], CORVERDE, CORPRETO, " Lugar %d", n);
+     textprintf_ex(buff, font, x_l[n]-tamanho_c, y_l[n], CORVERDE, CORAZUL, " Lugar %d", n);
     }
 
     save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
