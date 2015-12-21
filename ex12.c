@@ -667,7 +667,7 @@ void imprimie_lugar_allegro()
     else
         printf(" Imagem criada com sucesso! \n");
 
-    int limite,parcela,raio,tamanho_c,tamanho_x,tamanho_y;
+    int limite,parcela,raio,tamanho_c,tamanho_x,tamanho_y,artificio;
     tamanho_x = TAMANHO_X;
     tamanho_y = TAMANHO_Y;
     tamanho_c = TAMANHO_C;
@@ -742,12 +742,14 @@ void imprimie_lugar_allegro()
             y_t[n] = yo - parcela*n;
             printf(" linha 743  \n");
         }
+        printf("linha 745 n= %d\n", n);
         if(n>limite)
         {
-            printf(" limite = %d e n= %d\n",limite,n);
+            printf("yo = %d limite = %d e n= %d parcela=%d n3=%d valor = %d\n",yo,limite,n,parcela,n3,( (parcela*n3) + y_t[0]));
+            artificio = ((parcela*n3) + y_t[0]);
             x_t[n] = parcela*n3 + x_t[0];
-            y_t[n] = yo + parcela*n;
-            printf("743\n");
+            y_t[n] = artificio;
+            printf("743 y_t[%d] = %d\n",n,y_t[n]);
             n3++;
         }
     }
