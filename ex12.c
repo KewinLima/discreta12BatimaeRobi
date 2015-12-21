@@ -265,7 +265,7 @@ int main(void)
         (int)art;
         art = i;
         //printf(" QTRAN = %d \n",Qtran);
-        pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
+    //    pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
         printf("-> Transicao %d criada <-\n",i);
         // for(n1=0;n1<1000;n1++)
         // {
