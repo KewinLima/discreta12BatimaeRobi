@@ -397,7 +397,7 @@ void *transicao_pt(void *x)
     t = no->conteudo;
     parada[*cont] = 0;
 
-    while(parada[tran_n[*cont]] != 999)
+    while(parada[tran_n[*cont]] != 99)
     {
         vazio[tran_n[*cont]] = 0;
         parada[tran_n[*cont]]++;
@@ -707,12 +707,10 @@ void imprimie_lugar_allegro()
     }
     for(n=0; n< total ; n++)
     {
-        printf(" xt[%d] = %d \n yt[%d] = %d\n",n,x_t[n],n,y_t[n]);
         rectfill(buff, x_t[n]-(TAM_TRAN_X/2), y_t[n]-TAM_TRAN_Y/2,x_t[n]+(TAM_TRAN_X/2),y_t[n]+(TAM_TRAN_Y/2), CORBRANCO);
     }
     for(n=0; n<Qlugar ; n++)
     {
-        printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
         circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORAZUL);/* desenha um circulo */    
     }
     n4=0;
@@ -735,9 +733,9 @@ void imprimie_lugar_allegro()
     line(buff, x_t[1],y_t[1],x_l[3],y_l[3],CORBRANCO);
     triangle(buff, x_l[3],y_l[3],x_l[3]+5,y_l[3]-5,x_l[3]-5,y_l[3]-5,CORBRANCO);
 
-    save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
-    destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
-    allegro_exit();                     /* Termina o allegro           */
+    save_bitmap(NOME_IMAGEM, buff, pal);/*  Salva a imagem no diretorio */
+    destroy_bitmap(buff);               /*  Destroi a imagem do buffer  */
+    allegro_exit();                     /*  Termina o allegro           */
 
 #ifdef DEBUG
     printf("Imagem %s salva com sucesso!\n", NOME_IMAGEM);
