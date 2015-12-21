@@ -259,6 +259,7 @@ int main(void)
     arg[4] = entrada;
     printf(" endereco entrada    arg[%d] = %d \n",4, &arg[4]);//transicoes);
     printf(" !!! Qtran = %d\n", Qtran);
+    imprimie_lugar_allegro(entrada);
     for(i=0; i<Qtran ;i++)
     {
         (int)art;
@@ -281,7 +282,6 @@ int main(void)
     // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
-  imprimie_lugar_allegro(entrada);
 
 #ifdef DEBUG
     imprime_lista(entrada, 'e');
