@@ -533,7 +533,7 @@ void *transicao_pt(void *x)
                             {
                                 printf(" Ganhou o sorteio trans %d ativada\n", tran_n[*cont]);
                                 lugar_at->conteudo = lugar_at->conteudo + t->emissor;
-                                printf("# Adicionei %d ao lugar %d \n",t->emissor, n2[tran_n[*cont]]);// <- errado);
+                                printf("# Adicionei %d ao lugar %d \n",t->emissor, n2[tran_n[*cont]]);
                                 printf("# Que agora tem %d \n",lugar_at->conteudo);
                             }
                         }
@@ -546,7 +546,7 @@ void *transicao_pt(void *x)
                 }
                 else
                 {   
-                    printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1[tran_n[*cont]]);// <-
+                    printf("# Pessima noticia, Voce nao tem tokens suficientes no lugar %d \n",n1[tran_n[*cont]]);
                     printf("# Precisaria de %d tokens mas so' tem %d \n",t->coletor,lugar_al->conteudo);
                 }
 
@@ -635,7 +635,7 @@ void imprimie_lugar_allegro()
     // referente aos lugares do allegro
     if(Qlugar%2 ==0)//par
         total=Qlugar;
-    else if(Qtran%2==1)// Impar
+    else if(Qlugar%2==1)// Impar
         total=Qlugar+1;
     int x_l[total], y_l[total];
 
@@ -676,25 +676,15 @@ void imprimie_lugar_allegro()
         raio = (tamanho_x - 2*tamanho_c)/2;
     else if(tamanho_y<tamanho_x)
         raio = (tamanho_y - 2*tamanho_c)/2;
-    //raio = 400;// <--------------------------
-    total = 8;//<----------------------
     limite = total/2;
     parcela = 2*raio/limite;
-    x_l[0]= xo - raio;//(tamanho_c/2); // Defino a posicao x do mais proximo a parede
+    x_l[0]= xo - raio; // Defino a posicao x do mais proximo a parede
     if(total>=2)
     {    
         x_l[total/2] = xo + raio - (tamanho_c/2); // Define a posicao x do mais afastado do centro
         y_l[total/2]=yo;
     }
     y_l[0] = yo;
-    printf("yo = %d\n",yo);
-    printf("xo = %d\n",xo);
-    printf("total= %d\n",total);
-    printf("limite = %d \n",limite);
-    printf("parcela = %d\n",parcela);
-    printf("raio = %d \n",raio);
-    printf("tamanho_x = %d\n",tamanho_x);
-    printf("tamanho_c = %d\n",tamanho_c);
     
     n1=1,n2=1,n3=1,n4=0;
     for( n=1; n<total ;n++)
@@ -703,8 +693,6 @@ void imprimie_lugar_allegro()
             continue;
         if(n < limite)
         {
-           // if(x_l[n] <= xo)
-           // {
              x_l[n] = parcela*n + x_l[0];
              if(x_l[n] <= xo)
              {
@@ -712,15 +700,10 @@ void imprimie_lugar_allegro()
                 n1++;
                 n4++;
              }
-                //artificio = abs( xo-x_l[n]);
-            //y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) -(n*4)*parcela + 1;
-            //}
             if(x_l[n] > xo)
             {
-             //   x_l[n] = parcela*n + xo;
                 n4--;
                 y_l[n] = yo - parcela*n4 + tamanho_c;
-                printf(" OI SOU %d \n", n);
             }
         }
         if(n>limite)
@@ -728,18 +711,14 @@ void imprimie_lugar_allegro()
             x_l[n] = parcela*(n - limite) + x_l[0];
             artificio = abs( xo - x_l[n]);
             y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) + 1;
-           // y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
-           // n3++;
         }
     }
-    if(Qlugar%2 ==0)//par
-        total=Qlugar;
+    if(Qtran%2 ==0)//par
+        total=Qtran;
     else if(Qtran%2==1)// Impar
-        total=Qlugar+1;
+        total=Qtran+1;
 
-    total = 8; // <-----------------
     raio = (int)(raio*0.4);
-    //printf(" RAIO %d\n",raio);
     limite = total/2;
     parcela = 2*raio/limite;
     x_t[0] = xo - raio; // Defino a posicao x do mais proximo a parede
@@ -755,19 +734,27 @@ void imprimie_lugar_allegro()
         if( n == limite)
             continue;
         if(n < limite)
-        {
+        {   
             x_t[n] = parcela*n + x_t[0];
-            y_t[n] = yo - parcela*n;
-           // printf(" linha 743  \n");
+            if(x_t[n] <= xo)
+            {
+                y_t[n] = yo - parcela*n1;
+                n1++;
+                n4++;
+            }
+            if(x_t[n] > xo)
+            {
+                n4--;
+                y_t[n] = yo - parcela*n4;
+            }
+
         }
-        //printf("linha 745 n= %d\n", n);
         if(n>limite)
         {
-            printf("yo = %d limite = %d e n= %d parcela=%d n3=%d valor = %d\n",yo,limite,n,parcela,n3,( (parcela*n3) + y_t[0]));
-            artificio = ((parcela*n3) + y_t[0]);
-            x_t[n] = parcela*n3 + x_t[0];
-            y_t[n] = artificio;
-            n3++;
+            x_t[n] = parcela*(n - limite) + x_t[0];
+            artificio = abs( xo - x_t[n]);
+            y_t[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) + 1;
+
         }
     }
     for(n=0; n< total ; n++)
@@ -775,12 +762,14 @@ void imprimie_lugar_allegro()
         printf(" xt[%d] = %d \n yt[%d] = %d\n",n,x_t[n],n,y_t[n]);
         rectfill(buff, x_t[n]-(TAM_TRAN_X/2), y_t[n]-TAM_TRAN_Y/2,x_t[n]+(TAM_TRAN_X/2),y_t[n]+(TAM_TRAN_Y/2), CORBRANCO);
     }
-    Qlugar=8;
     for(n=0; n<Qlugar ; n++)
     {
         printf(" x[%d]=%d \n y[%d]= %d \n",n,x_l[n],n,y_l[n]);
-        circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORAZUL);/* desenha um circulo */
-     textprintf_ex(buff, font, x_l[n]-tamanho_c, y_l[n], CORVERDE, CORBRANCO, " Lugar %d", n);
+        circlefill(buff, x_l[n], y_l[n], TAMANHO_C, CORAZUL);/* desenha um circulo */    
+    }
+    for(n=0;n<Qlugar;n++)
+    {
+        textprintf_ex(buff, font, x_l[n]-tamanho_c, y_l[n], CORVERDE, CORBRANCO," Lugar %d", n);
     }
 
     save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
