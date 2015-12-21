@@ -265,7 +265,7 @@ int main(void)
         (int)art;
         art = i;
         //printf(" QTRAN = %d \n",Qtran);
-        pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
+   //     pthread_create(&threads[i], NULL,transicao_pt, (void*) &art);
         printf("-> Transicao %d criada <-\n",i);
         // for(n1=0;n1<1000;n1++)
         // {
@@ -606,6 +606,9 @@ void imprimie_lugar_allegro(lista *l)
         printf(" Não foi possivel criar o buffer!\n");
         exit(EXIT_FAILURE);
     }
+    else
+        printf(" Imagem criada com sucesso! \n");
+    
     int limite,parcela,raio;
     n2 = TAMANHO_X;
     n3 = TAMANHO_Y;
