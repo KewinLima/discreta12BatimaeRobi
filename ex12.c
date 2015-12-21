@@ -22,6 +22,7 @@
 #define CORVERMELHO      (makecol(255, 0, 0))
 #define TAMANHO_X        800
 #define TAMANHO_Y        800
+#define TAMANHO_C        50
 #define NOME_IMAGEM      "ex12.bmp"
 #define NOME_ENTRADA     "entrada-petri-1.txt"
 #define BLOCO_DE_ENTRADA 5
@@ -240,8 +241,6 @@ int main(void)
         adiciona_na_lista_arco_transicao(arcos_transicao, at);
     }
 
-    //imprimie_lugar_allegro(entrada);
-
     node *no;
     no = entrada->cabeca;
     no = no->proximo;
@@ -282,6 +281,8 @@ int main(void)
     // printf(" -> TODAS AS THREADS TERMINARAM!!\n");
 
     /*Com o objetivo de um debug funções de imprimir na tela*/
+  imprimie_lugar_allegro(entrada);
+
 #ifdef DEBUG
     imprime_lista(entrada, 'e');
     imprime_lista(lugares, 'l');
@@ -573,7 +574,20 @@ void imprimie_lugar_allegro(lista *l)
 {
     node *no;
     no = l->cabeca;
-    int n;
+    int Qtran,n,n2,n3,total;
+    Qtran = no->conteudo;
+    
+    /* referente aos lugares */
+    if(Qtran%2 ==0)//par
+        total=Qtran;
+    else if(Qtran%2==1)// Impar
+        total=Qtran+1;
+    float x_l[total], y_l[total];
+    
+    /*referente a origem */
+    int xo,yo; 
+    xo=(TAMANHO_X/2);
+    yo=(TAMANHO_Y/2);
 
     /* Declaração das variáveis que irmão guardar as imagens */
     BITMAP *buff;  /* Arquivos de bitmap */
@@ -592,10 +606,46 @@ void imprimie_lugar_allegro(lista *l)
         printf(" Não foi possivel criar o buffer!\n");
         exit(EXIT_FAILURE);
     }
+    int limite,parcela,raio;
+    n2 = TAMANHO_X;
+    n3 = TAMANHO_Y;
+    if(n2<n3)
+        raio = (TAMANHO_X - 2*TAMANHO_C)/2;
+    else if(n3<n2)
+        raio = (TAMANHO_Y - 2*TAMANHO_C)/2;
     
-    for(n=0; n< (no->conteudo) ; n++)
+    limite = total/2;
+    parcela = raio/limite;
+    x_l[0]= TAMANHO_C; // Defino a posicao x do mais proximo a parede
+    x_l[total/2] = TAMANHO_X-TAMANHO_C; // Define a posicao x do mais afastado do centro
+    y_l[0]= yo;
+    y_l[total/2]=yo;
+
+    for( n=1; n<total ;n++)
     {
-        circle(buff, 50+(n*100), 100, 50, CORAMARELO);/* desenha um circulo */
+        if( n == limite)
+            break;
+        x_l[n] = parcela*n + TAMANHO_C;
+    }
+    for(n=1; n<total ;n++)
+    {
+        if(n == limite)
+            break;
+        
+        if(n < limite)
+            y_l[n] = y_l[0] - parcela*n;
+        
+        if(n > limite)
+            y_l[n] = y_l[0] + parcela*n;
+    }
+
+    for(n=0; n<(Qtran) ; n++)
+    {
+        if(Qtran%2 ==1 && n+1==Qtran)
+        {
+            break;
+        }
+        circle(buff, x_l[n], y_l[n], TAMANHO_C, CORAMARELO);/* desenha um circulo */
     }
     /*textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");*/
 
