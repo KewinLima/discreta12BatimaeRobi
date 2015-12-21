@@ -706,10 +706,10 @@ void imprimie_lugar_allegro()
             x_l[n] = parcela*n + x_l[0];
            // y_l[n] = y_l[0] - parcela*n + tamanho_c;
             artificio = abs( xo-x_l[n]);
-            y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) -(n*2)*parcela + 1;
+            y_l[n] =(int)(yo + sqrt(pow(raio,2) - pow(artificio,2))) -(n*4)*parcela + 1;
             if(x_l[n] > xo)
             {
-                y_l[n] = raio + n3*parcela;
+                y_l[n] = raio - n3*parcela;
                 n3++;
             }
         }
