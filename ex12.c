@@ -649,7 +649,7 @@ void imprimie_lugar_allegro(lista *l)
         }
         circle(buff, x_l[n], y_l[n], TAMANHO_C, CORAMARELO);/* desenha um circulo */
     }
-    /*textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");*/
+    /* textprintf_ex(buff, font, 50, 50, CORVERDE, CORPRETO, "Teste do circulo!");*/
 
     save_bitmap(NOME_IMAGEM, buff, pal);/* Salva a imagem no diretorio */
     destroy_bitmap(buff);               /* Destroi a imagem do buffer  */
