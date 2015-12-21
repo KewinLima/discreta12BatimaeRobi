@@ -695,26 +695,19 @@ void imprimie_lugar_allegro()
         if( n == limite)
             continue;
         if(n < limite)
+        {
             x_l[n] = parcela*n + tamanho_c;
+            y_l[n] = y_l[0] - parcela*n + tamanho_c;
+        }
         if(n>limite)
         {
             x_l[n] = parcela*n3 + tamanho_c;
-            n3++;
-        }
-    }
-    n3=0;
-    for( n=1; n<total ;n++)
-    {
-        if(n == limite)
-            continue;   
-        if(n < limite)
-            y_l[n] = y_l[0] - parcela*n + tamanho_c;
-        if(n > limite)
-        {
+            printf(" y_l[0] = %d parcela = %d n3 =%d tamanho_c = %d\n",y_l[0],parcela,n3,tamanho_c);
             y_l[n] = y_l[0] + parcela*n3 - tamanho_c;
             n3++;
         }
     }
+    n3=0;
 
     for(n=0; n<(Qlugar) ; n++)
     {
