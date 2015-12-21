@@ -718,9 +718,8 @@ void imprimie_lugar_allegro()
     n4=0;
     for(no = lugar->cabeca; no != NULL; no = no->proximo)
     {
-        //printf(" lugar %d | Quantidade de tokens %d\n",n4, no->conteudo);  
+        textprintf_ex(buff, font, x_l[n4]-tamanho_c, y_l[n4], CORPRETO, CORBRANCO," LUGAR %d\n %d TOKENS", n4,no->conteudo);
         n4++;
-        textprintf_ex(buff, font, x_l[n4]-tamanho_c, y_l[n4], CORVERDE, CORVERMELHO," LUGAR %d\n %d TOKENS", n4,no->conteudo);
     }
 
     line(buff, x_l[0],y_l[0],x_t[0],y_t[0],CORBRANCO);
